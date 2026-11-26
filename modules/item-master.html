@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Item master</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench. Item master BRD S07 (material master list and search): find an item by code, ERP code, description, part number or GTIN. -->
+<body data-shell="buyer" data-root=".." data-group="items" data-module="item-master" data-crumbs="Item Master|Item master">
+<main id="main"><p class="t-body-md ink-3" aria-busy="true">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script src="/assets/js/item-master.js"></script>
+<script src="/assets/js/item-ui.js"></script>
+<script>
+{
+  const U = IMUI, all = IM.db().items;
+  const rows = all.map(i => ({ id: i.code, i, desc: i.desc, type: i.type, cat: IM.CATS[i.cat]?.path || '', uom: i.uom, plants: i.plants.map(p => p.name).join(', '), status: i.status, price: i.price, tags: [i.status.toLowerCase(), i.type.toLowerCase(), i.catalog && i.status === 'Active' ? 'catalog' : ''].filter(Boolean).join(' ') }));
+  const n = m => rows.filter(r => r.tags.split(' ').includes(m)).length;
+  window.PAGE = {
+    title: 'Item master',
+    meta: () => `${rows.length} items · one code for every plant, search by code, ERP code, description, part number or barcode`,
+    statuses: IM.ITEM_STATUS,
+    kpis: [
+      { label: 'Active items', value: n('active'), sub: 'Usable in requests, RFx and catalogues', icon: 'check_circle', tone: 'success', match: 'active' },
+      { label: 'Catalogue eligible', value: n('catalog'), sub: 'Buyers can list them', icon: 'storefront', tone: 'info', match: 'catalog' },
+      { label: 'Blocked', value: n('blocked'), sub: 'Hidden from new documents', icon: 'block', tone: 'danger', match: 'blocked' },
+      { label: 'Inactive', value: n('inactive'), sub: 'Replacement suggested', icon: 'do_not_disturb_on', tone: 'neutral', match: 'inactive' },
+    ],
+    tableTitle: 'All items', search: 'Item code, ERP code, description, part number or barcode…',
+    create: [{ label: 'New item request', icon: 'add', href: 'item-request-new.html' }],
+    views: [{ label: 'All', match: '' }, { label: 'Active', match: 'active' }, { label: 'Blocked', match: 'blocked' }, { label: 'Inactive', match: 'inactive' }, { label: 'Goods', match: 'goods' }, { label: 'Services', match: 'service' }, { label: 'Assets', match: 'asset' }],
+    columns: [
+      { key: 'id', label: 'Item code', sticky: true, sort: true, render: r => `<a class="cell-id" href="item-record.html?code=${U.esc(r.id)}">${U.esc(r.id)}</a><span class="sr-only"> ${U.esc([r.i.erp, r.i.mpn, r.i.gtin, r.i.mfr].join(' '))}</span>` },
+      { key: 'desc', label: 'Description', sort: true, wrap: true, render: r => H.two(r.desc, [r.i.mfr, r.i.mpn].filter(Boolean).join(' · ') || r.i.long.slice(0, 60)) },
+      { key: 'type', label: 'Type', sort: true, render: r => H.chip('plain', r.type) },
+      { key: 'cat', label: 'Category', sort: true, opt: true },
+      { key: 'uom', label: 'Unit', opt: true, render: r => U.esc(IM.UOM[r.uom] || r.uom) },
+      { key: 'plants', label: 'Plants', wrap: true },
+      { key: 'price', label: 'Standard price', num: true, sort: true, opt: true, sortVal: r => r.price, render: r => U.money(r.price, r.i.cur) },
+      { key: 'status', label: 'Status', sort: true, render: r => H.status(r) },
+    ],
+    rowAction: r => `<a class="ps-iconbtn ps-iconbtn--sm" href="item-record.html?code=${U.esc(r.id)}" aria-label="Open ${U.esc(r.id)}"><span class="ms" aria-hidden="true">open_in_new</span></a>`,
+    rowMenu: r => [{ label: 'View details', icon: 'visibility', preview: r.id }, r.status === 'Active' ? { label: 'Request update', icon: 'edit', href: `item-request-new.html?type=Update&item=${r.id}` } : null, r.status === 'Active' ? { label: 'Extend to plant', icon: 'add_location', href: `item-request-new.html?type=Extend&item=${r.id}` } : null, r.status === 'Active' ? { label: 'Add to purchase request', icon: 'add_shopping_cart', href: 'pr-create.html' } : null].filter(Boolean),
+    rows,
+    preview: {
+      title: r => r.id, sub: r => r.desc,
+      alert: r => r.status === 'Blocked' ? '<div class="ps-alert ps-alert--danger" role="note"><span class="ms" aria-hidden="true">block</span><div><div class="ps-alert__title">Blocked</div><div class="ps-alert__text">Not available for new purchase requests, RFx or catalogues.</div></div></div>' : r.status === 'Inactive' ? `<div class="ps-alert ps-alert--info" role="note"><span class="ms" aria-hidden="true">do_not_disturb_on</span><div><div class="ps-alert__title">Inactive${r.i.replacement ? '. Use ' + U.esc(r.i.replacement) : ''}</div><div class="ps-alert__text">Obsolete. Users are redirected to the replacement.</div></div></div>` : '',
+      fields: [['Type', r => U.esc(r.type)], ['ERP material code', r => H.dash(r.i.erp)], ['Category', r => U.esc(r.cat)], ['UNSPSC', r => U.esc(IM.CATS[r.i.cat]?.unspsc || '—')], ['Unit', r => U.esc(IM.UOM[r.uom] || r.uom)], ['Plants', r => U.esc(r.plants)], ['Standard price', r => U.money(r.price, r.i.cur)]],
+      timelineTitle: 'History', timeline: r => r.i.history.slice(-3).map(h => ['done', h.action, U.fmtDate(h.at)]),
+      record: r => 'item-record.html?code=' + r.id,
+      primary: r => r.status === 'Active' ? 'Request update' : '', primaryHref: r => `item-request-new.html?type=Update&item=${r.id}`,
+    },
+  };
+}
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,1904 @@
+{
+  "screens": [
+    {
+      "id": "S-01",
+      "name": "Foundations",
+      "route": "/",
+      "file": "index.html",
+      "purpose": "Read the design-system foundations: principles, colour with the live contrast check, status map, type, spacing, layout, icons and accessibility [knowledge: index.html]",
+      "archetype": "docs: intro with colour block, aside plus specimen sections",
+      "shell": "docs",
+      "features": [
+        "F-01",
+        "F-06",
+        "F-09"
+      ],
+      "journeys": [
+        "J-01",
+        "J-09"
+      ],
+      "states": [
+        "success"
+      ],
+      "components": [
+        "documentation header with wordmark and five links",
+        "intro with core colour swatches",
+        "table of contents",
+        "principles",
+        "colour specimens with computed contrast",
+        "status map table",
+        "type scale specimens",
+        "spacing and layout specimens",
+        "icon specimens",
+        "accessibility notes"
+      ]
+    },
+    {
+      "id": "S-02",
+      "name": "Components",
+      "route": "/components.html",
+      "file": "components.html",
+      "purpose": "See every component with its variants and states, interactively [knowledge: components.html]",
+      "archetype": "docs: aside plus specimen sections",
+      "shell": "docs",
+      "features": [
+        "F-06"
+      ],
+      "journeys": [
+        "J-01"
+      ],
+      "states": [
+        "success",
+        "validation"
+      ],
+      "components": [
+        "buttons",
+        "chips",
+        "inputs and fields with error states",
+        "tables",
+        "tiles and KPIs",
+        "tabs",
+        "dialog, drawer, menu, toast specimens",
+        "alerts, steppers, timelines, skeletons"
+      ]
+    },
+    {
+      "id": "S-03",
+      "name": "Page templates",
+      "route": "/templates.html",
+      "file": "templates.html",
+      "purpose": "Read the three landing archetypes and the module to template map, and open each template [knowledge: templates.html]",
+      "archetype": "docs: index list with links",
+      "shell": "docs",
+      "features": [
+        "F-06",
+        "F-07"
+      ],
+      "journeys": [
+        "J-01",
+        "J-08"
+      ],
+      "states": [
+        "success"
+      ],
+      "components": [
+        "archetype cards linking to templates/",
+        "module to template map table"
+      ]
+    },
+    {
+      "id": "S-04",
+      "name": "Screens",
+      "route": "/screens.html",
+      "file": "screens.html",
+      "purpose": "Read the consistency review and open any of the 42 module pages and the six Home persona views [knowledge: screens.html]",
+      "archetype": "docs: index list grouped by phase",
+      "shell": "docs",
+      "features": [
+        "F-06",
+        "F-09",
+        "F-11"
+      ],
+      "journeys": [
+        "J-01",
+        "J-02"
+      ],
+      "states": [
+        "success"
+      ],
+      "components": [
+        "screen index grouped by module with links",
+        "consistency review table"
+      ]
+    },
+    {
+      "id": "S-05",
+      "name": "Validation",
+      "route": "/validation.html",
+      "file": "validation.html",
+      "purpose": "Read the seven success criteria, before and after, accessibility and responsive results, audit issues and open gaps [knowledge: validation.html]",
+      "archetype": "docs: report with tables",
+      "shell": "docs",
+      "features": [
+        "F-06"
+      ],
+      "journeys": [
+        "J-01"
+      ],
+      "states": [
+        "success"
+      ],
+      "components": [
+        "criteria cards",
+        "before and after table",
+        "accessibility results",
+        "responsive results",
+        "audit issues",
+        "open gaps table"
+      ]
+    },
+    {
+      "id": "S-06",
+      "name": "Workbench template",
+      "route": "/templates/workbench.html",
+      "file": "templates/workbench.html",
+      "purpose": "Try archetype 1 on purchase requests: tiles filter the table, views, bulk bar, preview drawer [knowledge: templates/workbench.html]",
+      "archetype": "workbench template (hand-built markup of the archetype)",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-04",
+        "F-07"
+      ],
+      "journeys": [
+        "J-08"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the purchase requests table (count, meta, tone)",
+        "view tabs",
+        "table of purchase requests with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-07",
+      "name": "Event console template",
+      "route": "/templates/event-console.html",
+      "file": "templates/event-console.html",
+      "purpose": "Watch archetype 2, the reverse auction live console: clock strip and ranking board [knowledge: templates/event-console.html]",
+      "archetype": "event console: clock strip, ranking board, bid ladder chart",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-07",
+        "F-08"
+      ],
+      "journeys": [
+        "J-08"
+      ],
+      "states": [
+        "success",
+        "live"
+      ],
+      "components": [
+        "clock strip with time remaining",
+        "ranking board of bidders",
+        "bid ladder chart",
+        "event actions"
+      ]
+    },
+    {
+      "id": "S-08",
+      "name": "Insight template",
+      "route": "/templates/insight.html",
+      "file": "templates/insight.html",
+      "purpose": "Read archetype 3, the supplier risk overview with KPIs and charts [knowledge: templates/insight.html]",
+      "archetype": "insight: KPI row, charts, ranked list",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-07",
+        "F-08"
+      ],
+      "journeys": [
+        "J-08"
+      ],
+      "states": [
+        "success"
+      ],
+      "components": [
+        "filters",
+        "KPI row",
+        "line and column charts",
+        "risk matrix",
+        "ranked suppliers list"
+      ]
+    },
+    {
+      "id": "S-09",
+      "name": "Supplier portal template",
+      "route": "/templates/supplier-portal.html",
+      "file": "templates/supplier-portal.html",
+      "purpose": "See the supplier portal shell skin on the supplier home [knowledge: templates/supplier-portal.html]",
+      "archetype": "home: tasks and cards",
+      "shell": "supplier",
+      "features": [
+        "F-03",
+        "F-07"
+      ],
+      "journeys": [
+        "J-08"
+      ],
+      "states": [
+        "success"
+      ],
+      "components": [
+        "supplier rail",
+        "tasks to act on",
+        "invitations, orders and shipments cards"
+      ]
+    },
+    {
+      "id": "S-10",
+      "name": "Home",
+      "route": "/modules/home.html",
+      "file": "modules/home.html",
+      "purpose": "See tasks, events and activity for the signed-in persona; view=business|buyer|approver|category|cpo|cfo switches persona [knowledge: modules/home.html]",
+      "archetype": "home: hero metrics, split lists, cards",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-11",
+        "F-08"
+      ],
+      "journeys": [
+        "J-02"
+      ],
+      "states": [
+        "success"
+      ],
+      "components": [
+        "persona switch",
+        "KPI row per persona",
+        "my tasks list with actions",
+        "events table",
+        "supplier scout activity",
+        "spend chart"
+      ]
+    },
+    {
+      "id": "S-11",
+      "name": "Purchase Request",
+      "route": "/modules/pr.html",
+      "file": "modules/pr.html",
+      "purpose": "Find the purchase requests that need attention and act on them [knowledge: modules/pr.html]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-04"
+      ],
+      "journeys": [
+        "J-02",
+        "J-03"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the purchase requests table (count, meta, tone)",
+        "view tabs",
+        "table of purchase requests with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-12",
+      "name": "Create Purchase Request",
+      "route": "/modules/pr-create.html",
+      "file": "modules/pr-create.html",
+      "purpose": "Raise a purchase request with header, lines and attachments [knowledge: modules/pr-create.html]",
+      "archetype": "single-column form with summary rail",
+      "shell": "buyer",
+      "features": [
+        "F-05"
+      ],
+      "journeys": [
+        "J-03"
+      ],
+      "states": [
+        "validation",
+        "confirmation",
+        "success"
+      ],
+      "components": [
+        "stepper",
+        "header fields",
+        "line items table with add and remove",
+        "attachments",
+        "error summary",
+        "summary rail with totals",
+        "confirm dialog",
+        "toast"
+      ]
+    },
+    {
+      "id": "S-13",
+      "name": "Purchase request",
+      "route": "/modules/pr-detail.html",
+      "file": "modules/pr-detail.html",
+      "purpose": "Read PR-2025-00123 Business laptops and approve, return or reject it [knowledge: modules/pr-detail.html]",
+      "archetype": "record: header, sections, action rail",
+      "shell": "buyer",
+      "features": [
+        "F-05"
+      ],
+      "journeys": [
+        "J-02"
+      ],
+      "states": [
+        "validation",
+        "success"
+      ],
+      "components": [
+        "record header with status",
+        "lines table",
+        "approvals timeline",
+        "decision card with required comment",
+        "toast"
+      ]
+    },
+    {
+      "id": "S-14",
+      "name": "Approvals",
+      "route": "/modules/approvals.html",
+      "file": "modules/approvals.html",
+      "purpose": "Review and decide pending approvals in a list plus detail inbox [knowledge: modules/approvals.html]",
+      "archetype": "split-pane master-detail",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-05"
+      ],
+      "journeys": [
+        "J-02"
+      ],
+      "states": [
+        "empty",
+        "validation",
+        "success"
+      ],
+      "components": [
+        "inbox list",
+        "detail pane",
+        "approve, return, reject with comment",
+        "toast"
+      ]
+    },
+    {
+      "id": "S-15",
+      "name": "E-Catalog",
+      "route": "/modules/e-catalogue.html",
+      "file": "modules/e-catalogue.html",
+      "purpose": "Manage catalogues and their items [knowledge: modules/e-catalogue.html]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-04"
+      ],
+      "journeys": [
+        "J-07"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the catalogues table (count, meta, tone)",
+        "view tabs",
+        "table of catalogues with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-16",
+      "name": "Catalog Marketplace",
+      "route": "/modules/e-catalogue-marketplace.html",
+      "file": "modules/e-catalogue-marketplace.html",
+      "purpose": "Shop catalogue items into a requisition [knowledge: modules/e-catalogue-marketplace.html]",
+      "archetype": "gallery with facets and basket",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-05"
+      ],
+      "journeys": [
+        "J-03"
+      ],
+      "states": [
+        "empty",
+        "success"
+      ],
+      "components": [
+        "facet filters",
+        "item cards with add",
+        "basket drawer with totals",
+        "toast"
+      ]
+    },
+    {
+      "id": "S-17",
+      "name": "ASN",
+      "route": "/modules/asn.html",
+      "file": "modules/asn.html",
+      "purpose": "Track advance shipping notices expected at the dock [knowledge: modules/asn.html]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-04"
+      ],
+      "journeys": [
+        "J-05"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the shipping notices table (count, meta, tone)",
+        "view tabs",
+        "table of shipping notices with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-18",
+      "name": "GRN",
+      "route": "/modules/grn.html",
+      "file": "modules/grn.html",
+      "purpose": "Track goods receipts and start receiving [knowledge: modules/grn.html]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-04"
+      ],
+      "journeys": [
+        "J-05"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the goods receipts table (count, meta, tone)",
+        "view tabs",
+        "table of goods receipts with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-19",
+      "name": "Receive ASN",
+      "route": "/modules/grn-receive.html",
+      "file": "modules/grn-receive.html",
+      "purpose": "Record received quantities for ASN030000021 one line at a time at the dock [knowledge: modules/grn-receive.html]",
+      "archetype": "record: one line at a time with large targets",
+      "shell": "buyer",
+      "features": [
+        "F-05"
+      ],
+      "journeys": [
+        "J-05"
+      ],
+      "states": [
+        "validation",
+        "confirmation",
+        "success"
+      ],
+      "components": [
+        "shipment header",
+        "line stepper with quantity controls",
+        "variance alert",
+        "confirm receipt dialog",
+        "toast"
+      ]
+    },
+    {
+      "id": "S-20",
+      "name": "Demand Intake",
+      "route": "/modules/demand-intake.html",
+      "file": "modules/demand-intake.html",
+      "purpose": "Triage incoming demands before they become purchase requests [knowledge: modules/demand-intake.html]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-04"
+      ],
+      "journeys": [
+        "J-03"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the demands table (count, meta, tone)",
+        "view tabs",
+        "table of demands with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-21",
+      "name": "Vendor Onboarding",
+      "route": "/modules/onboarding.html",
+      "file": "modules/onboarding.html",
+      "purpose": "Progress supplier onboarding cases [knowledge: modules/onboarding.html]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-04"
+      ],
+      "journeys": [
+        "J-07"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the onboarding cases table (count, meta, tone)",
+        "view tabs",
+        "table of onboarding cases with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-22",
+      "name": "Supplier Scout",
+      "route": "/modules/supplier-scout.html",
+      "file": "modules/supplier-scout.html",
+      "purpose": "Discover and shortlist suppliers [knowledge: modules/supplier-scout.html]",
+      "archetype": "index list with cards",
+      "shell": "buyer",
+      "features": [
+        "F-02"
+      ],
+      "journeys": [
+        "J-07"
+      ],
+      "states": [
+        "success"
+      ],
+      "components": [
+        "scope note",
+        "shortlist cards",
+        "compare action"
+      ]
+    },
+    {
+      "id": "S-23",
+      "name": "Supplier Risk Analysis",
+      "route": "/modules/supplier-risk.html",
+      "file": "modules/supplier-risk.html",
+      "purpose": "See which suppliers carry risk and why [knowledge: modules/supplier-risk.html]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-04"
+      ],
+      "journeys": [
+        "J-07"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the suppliers at risk table (count, meta, tone)",
+        "view tabs",
+        "table of suppliers at risk with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-24",
+      "name": "Supplier Relationship",
+      "route": "/modules/srm.html",
+      "file": "modules/srm.html",
+      "purpose": "Review segmentation, quarterly scorecards, business reviews and improvement plans [knowledge: modules/srm.html]",
+      "archetype": "insight with scorecard table",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-08"
+      ],
+      "journeys": [
+        "J-07"
+      ],
+      "states": [
+        "success"
+      ],
+      "components": [
+        "segment and period filters",
+        "scope assumed note",
+        "scorecard KPIs",
+        "suppliers below target table",
+        "review calendar"
+      ]
+    },
+    {
+      "id": "S-25",
+      "name": "Supplier profile",
+      "route": "/modules/supplier-profile.html",
+      "file": "modules/supplier-profile.html",
+      "purpose": "Read Aster Components Ltd: profile, performance, documents and risk [knowledge: modules/supplier-profile.html]",
+      "archetype": "record with tabs",
+      "shell": "buyer",
+      "features": [
+        "F-05",
+        "F-08"
+      ],
+      "journeys": [
+        "J-07"
+      ],
+      "states": [
+        "success"
+      ],
+      "components": [
+        "profile header",
+        "tabs",
+        "performance chart",
+        "documents table",
+        "contacts"
+      ]
+    },
+    {
+      "id": "S-26",
+      "name": "RFx",
+      "route": "/modules/rfq.html",
+      "file": "modules/rfq.html",
+      "purpose": "Run sourcing events and see which need attention [knowledge: modules/rfq.html]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-04"
+      ],
+      "journeys": [
+        "J-04"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the RFx events table (count, meta, tone)",
+        "view tabs",
+        "table of RFx events with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-27",
+      "name": "Compare quotes",
+      "route": "/modules/rfq-compare.html",
+      "file": "modules/rfq-compare.html",
+      "purpose": "Compare supplier quotes for RFQ-2025-636 line by line [knowledge: modules/rfq-compare.html]",
+      "archetype": "comparison matrix",
+      "shell": "buyer",
+      "features": [
+        "F-05"
+      ],
+      "journeys": [
+        "J-04"
+      ],
+      "states": [
+        "success"
+      ],
+      "components": [
+        "event header",
+        "quote comparison matrix with best per line",
+        "totals row",
+        "recommend action"
+      ]
+    },
+    {
+      "id": "S-28",
+      "name": "RFx Automation",
+      "route": "/modules/rfq-automation.html",
+      "file": "modules/rfq-automation.html",
+      "purpose": "Manage the rules that turn approved PRs into RFQs and review their runs [knowledge: modules/rfq-automation.html]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-04"
+      ],
+      "journeys": [
+        "J-04"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the automation rules table (count, meta, tone)",
+        "view tabs",
+        "table of automation rules with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-29",
+      "name": "Evaluation",
+      "route": "/modules/evaluation.html",
+      "file": "modules/evaluation.html",
+      "purpose": "See evaluations in progress and open one to score [knowledge: modules/evaluation.html]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-04"
+      ],
+      "journeys": [
+        "J-04"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the evaluations table (count, meta, tone)",
+        "view tabs",
+        "table of evaluations with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-30",
+      "name": "Evaluation scoring",
+      "route": "/modules/evaluation-scoring.html",
+      "file": "modules/evaluation-scoring.html",
+      "purpose": "Score the responses to ES-2025-028 against the criteria [knowledge: modules/evaluation-scoring.html]",
+      "archetype": "scoring grid with side totals",
+      "shell": "buyer",
+      "features": [
+        "F-05"
+      ],
+      "journeys": [
+        "J-04"
+      ],
+      "states": [
+        "validation",
+        "success"
+      ],
+      "components": [
+        "criteria by supplier scoring grid",
+        "weighted totals",
+        "comment per score",
+        "submit scores"
+      ]
+    },
+    {
+      "id": "S-31",
+      "name": "Negotiation",
+      "route": "/modules/negotiation.html",
+      "file": "modules/negotiation.html",
+      "purpose": "Run negotiation rounds with Kolon Industries and read the bid trend [knowledge: modules/negotiation.html]",
+      "archetype": "conversation plus chart",
+      "shell": "buyer",
+      "features": [
+        "F-05",
+        "F-08"
+      ],
+      "journeys": [
+        "J-04"
+      ],
+      "states": [
+        "success"
+      ],
+      "components": [
+        "rounds timeline",
+        "offer and counter chart",
+        "message composer",
+        "terms summary"
+      ]
+    },
+    {
+      "id": "S-32",
+      "name": "Awarding",
+      "route": "/modules/e-awarding.html",
+      "file": "modules/e-awarding.html",
+      "purpose": "See awards awaiting recommendation or approval [knowledge: modules/e-awarding.html]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-04"
+      ],
+      "journeys": [
+        "J-04"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the awards table (count, meta, tone)",
+        "view tabs",
+        "table of awards with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-33",
+      "name": "Award decision",
+      "route": "/modules/award-decision.html",
+      "file": "modules/award-decision.html",
+      "purpose": "Approve, return or reject award AW-2025-041 with the conflict-of-interest declaration [knowledge: modules/award-decision.html]",
+      "archetype": "record with decision rail",
+      "shell": "buyer",
+      "features": [
+        "F-05"
+      ],
+      "journeys": [
+        "J-04"
+      ],
+      "states": [
+        "validation",
+        "success"
+      ],
+      "components": [
+        "award summary with split slider",
+        "bidders comparison",
+        "decision card with comment and declaration",
+        "toast"
+      ]
+    },
+    {
+      "id": "S-34",
+      "name": "Reverse Auctions",
+      "route": "/modules/reverse-auction.html",
+      "file": "modules/reverse-auction.html",
+      "purpose": "Schedule, run and award reverse auctions [knowledge: modules/reverse-auction.html]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-04"
+      ],
+      "journeys": [
+        "J-04"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the auctions table (count, meta, tone)",
+        "view tabs",
+        "table of auctions with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-35",
+      "name": "E-Sourcing",
+      "route": "/modules/e-sourcing.html",
+      "file": "modules/e-sourcing.html",
+      "purpose": "Run sourcing events through prepare, responses, evaluation and award [knowledge: modules/e-sourcing.html]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-04"
+      ],
+      "journeys": [
+        "J-04"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the sourcing events table (count, meta, tone)",
+        "view tabs",
+        "table of sourcing events with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-36",
+      "name": "Agreement Architect",
+      "route": "/modules/agreement-architect.html",
+      "file": "modules/agreement-architect.html",
+      "purpose": "Draft agreements from awards, templates and the clause library [knowledge: modules/agreement-architect.html]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-04"
+      ],
+      "journeys": [
+        "J-04"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the agreement drafts table (count, meta, tone)",
+        "view tabs",
+        "table of agreement drafts with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-37",
+      "name": "Contract Workbench",
+      "route": "/modules/contract-workbench.html",
+      "file": "modules/contract-workbench.html",
+      "purpose": "Track active, expiring and in-review agreements [knowledge: modules/contract-workbench.html]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-04"
+      ],
+      "journeys": [
+        "J-04"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the contracts table (count, meta, tone)",
+        "view tabs",
+        "table of contracts with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-38",
+      "name": "Contract",
+      "route": "/modules/contract-detail.html",
+      "file": "modules/contract-detail.html",
+      "purpose": "Read C-022 Office supplies West and choose extend, source or expire. Award and renewal action [J-04]: after an award, choose the renewal action on the contract record [knowledge: modules/contract-detail.html]",
+      "archetype": "record with renewal rail",
+      "shell": "buyer",
+      "features": [
+        "F-05"
+      ],
+      "journeys": [
+        "J-04"
+      ],
+      "states": [
+        "success"
+      ],
+      "components": [
+        "contract header",
+        "consumption chart",
+        "terms and documents",
+        "renewal choice with action",
+        "toast"
+      ]
+    },
+    {
+      "id": "S-39",
+      "name": "Invoicing",
+      "route": "/modules/invoicing.html",
+      "file": "modules/invoicing.html",
+      "purpose": "Find blocked, pending and due invoices [knowledge: modules/invoicing.html]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-04"
+      ],
+      "journeys": [
+        "J-07"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the invoices table (count, meta, tone)",
+        "view tabs",
+        "table of invoices with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-40",
+      "name": "Spend Analytics",
+      "route": "/modules/spend.html",
+      "file": "modules/spend.html",
+      "purpose": "Read spend by category, supplier and period [knowledge: modules/spend.html]",
+      "archetype": "insight: KPI row, charts, ranked list",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-08"
+      ],
+      "journeys": [
+        "J-07"
+      ],
+      "states": [
+        "success"
+      ],
+      "components": [
+        "period filters",
+        "KPI row",
+        "spend trend chart",
+        "category columns",
+        "top suppliers table"
+      ]
+    },
+    {
+      "id": "S-41",
+      "name": "Reports",
+      "route": "/modules/reports.html",
+      "file": "modules/reports.html",
+      "purpose": "Open, schedule and share saved reports [knowledge: modules/reports.html]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-04"
+      ],
+      "journeys": [
+        "J-07"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the reports table (count, meta, tone)",
+        "view tabs",
+        "table of reports with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-42",
+      "name": "Users",
+      "route": "/modules/users.html",
+      "file": "modules/users.html",
+      "purpose": "Invite, filter and manage users [knowledge: modules/users.html]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-04"
+      ],
+      "journeys": [
+        "J-07"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the users table (count, meta, tone)",
+        "view tabs",
+        "table of users with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-43",
+      "name": "Roles & Permissions",
+      "route": "/modules/roles.html",
+      "file": "modules/roles.html",
+      "purpose": "See the nine roles, what each can do and how many users hold it [knowledge: modules/roles.html]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-02",
+        "F-04"
+      ],
+      "journeys": [
+        "J-07"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the roles table (count, meta, tone)",
+        "view tabs",
+        "table of roles with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-44",
+      "name": "Master Data Management",
+      "route": "/modules/mdm.html",
+      "file": "modules/mdm.html",
+      "purpose": "Open master data areas [knowledge: modules/mdm.html]",
+      "archetype": "hub of cards",
+      "shell": "buyer",
+      "features": [
+        "F-02"
+      ],
+      "journeys": [
+        "J-07"
+      ],
+      "states": [
+        "success"
+      ],
+      "components": [
+        "scope note",
+        "master data area cards"
+      ]
+    },
+    {
+      "id": "S-45",
+      "name": "Administration",
+      "route": "/modules/administration.html",
+      "file": "modules/administration.html",
+      "purpose": "Open system configuration: workflows, limits, SLA, procurement setup [knowledge: modules/administration.html]",
+      "archetype": "hub of cards",
+      "shell": "buyer",
+      "features": [
+        "F-02"
+      ],
+      "journeys": [
+        "J-07"
+      ],
+      "states": [
+        "success"
+      ],
+      "components": [
+        "no Figma reference note",
+        "setting cards grouped by area"
+      ]
+    },
+    {
+      "id": "S-46",
+      "name": "Supplier home",
+      "route": "/modules/supplier-home.html",
+      "file": "modules/supplier-home.html",
+      "purpose": "See invitations, orders and shipments to act on as Aster Components Ltd [knowledge: modules/supplier-home.html]",
+      "archetype": "home: tasks and cards",
+      "shell": "supplier",
+      "features": [
+        "F-03"
+      ],
+      "journeys": [
+        "J-06"
+      ],
+      "states": [
+        "success"
+      ],
+      "components": [
+        "tasks to act on",
+        "invitations card",
+        "orders card",
+        "shipments card"
+      ]
+    },
+    {
+      "id": "S-47",
+      "name": "Invitations",
+      "route": "/modules/supplier-invitations.html",
+      "file": "modules/supplier-invitations.html",
+      "purpose": "See RFQ invitations and open one to respond [knowledge: modules/supplier-invitations.html]",
+      "archetype": "workbench",
+      "shell": "supplier",
+      "features": [
+        "F-03",
+        "F-04"
+      ],
+      "journeys": [
+        "J-06"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the invitations table (count, meta, tone)",
+        "view tabs",
+        "table of invitations with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-48",
+      "name": "Respond to RFQ",
+      "route": "/modules/supplier-rfq-response.html",
+      "file": "modules/supplier-rfq-response.html",
+      "purpose": "Price the four lines of RFQ-2025-644, set validity, accept the terms and submit [knowledge: modules/supplier-rfq-response.html]",
+      "archetype": "single-column form with summary rail",
+      "shell": "supplier",
+      "features": [
+        "F-05"
+      ],
+      "journeys": [
+        "J-06"
+      ],
+      "states": [
+        "validation",
+        "confirmation",
+        "success"
+      ],
+      "components": [
+        "RFQ header",
+        "line prices with live totals",
+        "validity and terms",
+        "error summary",
+        "confirm dialog",
+        "toast"
+      ]
+    },
+    {
+      "id": "S-49",
+      "name": "Orders",
+      "route": "/modules/supplier-orders.html",
+      "file": "modules/supplier-orders.html",
+      "purpose": "Acknowledge and ship purchase orders from Mindsprint Digital [knowledge: modules/supplier-orders.html]",
+      "archetype": "workbench",
+      "shell": "supplier",
+      "features": [
+        "F-03",
+        "F-04"
+      ],
+      "journeys": [
+        "J-06"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the orders table (count, meta, tone)",
+        "view tabs",
+        "table of orders with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-50",
+      "name": "Shipments",
+      "route": "/modules/supplier-shipments.html",
+      "file": "modules/supplier-shipments.html",
+      "purpose": "Track shipment notices and their receipt [knowledge: modules/supplier-shipments.html]",
+      "archetype": "workbench",
+      "shell": "supplier",
+      "features": [
+        "F-03",
+        "F-04"
+      ],
+      "journeys": [
+        "J-06"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the shipments table (count, meta, tone)",
+        "view tabs",
+        "table of shipments with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-51",
+      "name": "Create shipment notice",
+      "route": "/modules/supplier-asn-create.html",
+      "file": "modules/supplier-asn-create.html",
+      "purpose": "Create an advance shipping notice against an order [knowledge: modules/supplier-asn-create.html]",
+      "archetype": "single-column form",
+      "shell": "supplier",
+      "features": [
+        "F-05"
+      ],
+      "journeys": [
+        "J-06"
+      ],
+      "states": [
+        "validation",
+        "confirmation",
+        "success"
+      ],
+      "components": [
+        "order picker",
+        "lines to ship",
+        "carrier and dates",
+        "error summary",
+        "confirm dialog",
+        "toast"
+      ]
+    },
+    {
+      "id": "S-52",
+      "name": "Not found",
+      "route": "/404.html",
+      "file": "404.html",
+      "purpose": "Tell the person the address is not a page of the design system and send them to Foundations [added; J-09]",
+      "archetype": "statement",
+      "shell": "docs",
+      "features": [
+        "F-10"
+      ],
+      "journeys": [
+        "J-09"
+      ],
+      "states": [
+        "not_found"
+      ],
+      "components": [
+        "documentation header",
+        "statement with one link"
+      ]
+    },
+    {
+      "id": "S-53",
+      "name": "Item requests",
+      "route": "/modules/item-requests.html",
+      "file": "modules/item-requests.html",
+      "purpose": "Track item requests and work the MDM worklist and In review queue [Item master BRD S05, Stages and Statuses]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-12",
+        "F-13"
+      ],
+      "journeys": [
+        "J-10",
+        "J-11"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the item requests table (count, meta, tone)",
+        "view tabs",
+        "table of item requests with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-54",
+      "name": "New item request",
+      "route": "/modules/item-request-new.html",
+      "file": "modules/item-request-new.html",
+      "purpose": "Raise a New, Update, Extend or Block, Unblock and Inactivate request, with the similar-item panel and AI suggestions beside the form [Item master BRD S01, S02, Workflow, BR01-BR29]",
+      "archetype": "stepper form with similar-item and suggestion rail",
+      "shell": "buyer",
+      "features": [
+        "F-12",
+        "F-16",
+        "F-17"
+      ],
+      "journeys": [
+        "J-10",
+        "J-12"
+      ],
+      "states": [
+        "validation",
+        "success",
+        "blocked",
+        "confirmation"
+      ],
+      "components": [
+        "stepper by request type",
+        "request type switch and item type cards",
+        "item details form with live short description rules",
+        "similar items panel with exact, blocked, similar and inactive matches and Use this item, Extend, Not a duplicate with reason",
+        "Describe with AI suggestions with confidence",
+        "plants with storage location per plant, tax code, attachments",
+        "old and new values table for updates",
+        "review summary and workflow preview",
+        "error summary"
+      ]
+    },
+    {
+      "id": "S-55",
+      "name": "Item request",
+      "route": "/modules/item-request.html",
+      "file": "modules/item-request.html",
+      "purpose": "Follow one request, withdraw, edit and resubmit, and see the created item and ERP sync [Item master BRD S05, state management, step 7 Item created]",
+      "archetype": "record: summary, workflow rail, decision bar",
+      "shell": "buyer",
+      "features": [
+        "F-13"
+      ],
+      "journeys": [
+        "J-10"
+      ],
+      "states": [
+        "sent_back",
+        "rejected",
+        "success",
+        "confirmation",
+        "not_found"
+      ],
+      "components": [
+        "status banner by state",
+        "request summary",
+        "workflow timeline",
+        "activity history",
+        "created item panel with ERP sync and notifications",
+        "withdraw and discard dialogs"
+      ]
+    },
+    {
+      "id": "S-56",
+      "name": "MDM review",
+      "route": "/modules/item-mdm-review.html",
+      "file": "modules/item-mdm-review.html",
+      "purpose": "Validate and complete the item data, tick the checklist, and send back, reject, send to review or forward [Item master BRD S03, BR30-BR33, BR47]",
+      "archetype": "record: editable data, checklist, data quality, workflow rail",
+      "shell": "buyer",
+      "features": [
+        "F-13"
+      ],
+      "journeys": [
+        "J-11"
+      ],
+      "states": [
+        "readonly",
+        "validation",
+        "confirmation",
+        "success",
+        "empty"
+      ],
+      "components": [
+        "editable item data",
+        "five point MDM checklist",
+        "data quality score with threshold 80",
+        "impact on open documents for lifecycle requests",
+        "send back, reject and send to review dialogs with mandatory comment"
+      ]
+    },
+    {
+      "id": "S-57",
+      "name": "Review",
+      "route": "/modules/item-review.html",
+      "file": "modules/item-review.html",
+      "purpose": "Review a request that matched the review rule before MDM: checks, remarks, approve, send back or reject [Item master BRD step 2A, BR46]",
+      "archetype": "record: review checks and remarks",
+      "shell": "buyer",
+      "features": [
+        "F-13"
+      ],
+      "journeys": [
+        "J-11"
+      ],
+      "states": [
+        "readonly",
+        "confirmation",
+        "success",
+        "empty"
+      ],
+      "components": [
+        "why is it here alert with the matched rule",
+        "review checks",
+        "review remarks",
+        "item summary"
+      ]
+    },
+    {
+      "id": "S-58",
+      "name": "Asset class review",
+      "route": "/modules/item-finance-review.html",
+      "file": "modules/item-finance-review.html",
+      "purpose": "Set asset class, regular or CWIP, useful life and GL for an Asset item [Item master BRD S12, BR09, BR34]",
+      "archetype": "record: asset accounting form",
+      "shell": "buyer",
+      "features": [
+        "F-13"
+      ],
+      "journeys": [
+        "J-11"
+      ],
+      "states": [
+        "readonly",
+        "validation",
+        "confirmation",
+        "success",
+        "empty"
+      ],
+      "components": [
+        "asset class and useful life defaults",
+        "asset GL account",
+        "send back to MDM dialog"
+      ]
+    },
+    {
+      "id": "S-59",
+      "name": "Approval task",
+      "route": "/modules/item-approval.html",
+      "file": "modules/item-approval.html",
+      "purpose": "Approve, reject or send back a request, view only, with the rule that routed it [Item master BRD S04, BR35-BR37]",
+      "archetype": "record: view-only summary and decision",
+      "shell": "buyer",
+      "features": [
+        "F-13"
+      ],
+      "journeys": [
+        "J-11"
+      ],
+      "states": [
+        "readonly",
+        "validation",
+        "confirmation",
+        "success",
+        "permission",
+        "empty"
+      ],
+      "components": [
+        "rule matched banner",
+        "request summary and reviewed by",
+        "decision comment mandatory on reject and send back",
+        "same requester and approver block"
+      ]
+    },
+    {
+      "id": "S-60",
+      "name": "Item master",
+      "route": "/modules/item-master.html",
+      "file": "modules/item-master.html",
+      "purpose": "Find an item by code, ERP code, description, part number or barcode [Item master BRD S07]",
+      "archetype": "workbench",
+      "shell": "buyer",
+      "features": [
+        "F-14"
+      ],
+      "journeys": [
+        "J-10",
+        "J-12"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "success"
+      ],
+      "components": [
+        "page head with title, meta line and page actions",
+        "tiles that filter the items table (count, meta, tone)",
+        "view tabs",
+        "table of items with search, sortable columns, sticky id column, row selection and bulk bar",
+        "preview drawer: title, subtitle, alert, fields, timeline, primary action",
+        "pager"
+      ]
+    },
+    {
+      "id": "S-61",
+      "name": "Item record",
+      "route": "/modules/item-record.html",
+      "file": "modules/item-record.html",
+      "purpose": "View one item and request an update, extension, block, unblock or inactivation [Item master BRD S06, BR41-BR45]",
+      "archetype": "record: header, tabs, actions",
+      "shell": "buyer",
+      "features": [
+        "F-14",
+        "F-16"
+      ],
+      "journeys": [
+        "J-12"
+      ],
+      "states": [
+        "empty",
+        "success",
+        "readonly",
+        "not_found"
+      ],
+      "components": [
+        "header with code, ERP code and status",
+        "blocked and inactive banner with replacement",
+        "tabs Details, Plants, Tax and finance, Documents, History, Alternates",
+        "request change actions"
+      ]
+    },
+    {
+      "id": "S-62",
+      "name": "Bulk upload",
+      "route": "/modules/item-bulk-upload.html",
+      "file": "modules/item-bulk-upload.html",
+      "purpose": "Load many new items from a CSV: template, row validation, error file, submit valid rows [Item master BRD S09, user journey Portal bulk upload]",
+      "archetype": "single-column upload form with result table",
+      "shell": "buyer",
+      "features": [
+        "F-15"
+      ],
+      "journeys": [
+        "J-13"
+      ],
+      "states": [
+        "empty",
+        "validation",
+        "error",
+        "success"
+      ],
+      "components": [
+        "template download",
+        "file upload and sample file",
+        "row result table with Ready, Flagged and Error",
+        "error file download",
+        "submit valid rows"
+      ]
+    },
+    {
+      "id": "S-63",
+      "name": "Request by chat",
+      "route": "/modules/item-ask-me.html",
+      "file": "modules/item-ask-me.html",
+      "purpose": "Request an item in a conversation through the Ask Me or MS Teams agent, with a summary card to confirm [Item master BRD S08, Autonomy and AI Agent L2]",
+      "archetype": "conversation with summary card",
+      "shell": "buyer",
+      "features": [
+        "F-17"
+      ],
+      "journeys": [
+        "J-14"
+      ],
+      "states": [
+        "empty",
+        "blocked",
+        "confirmation",
+        "success"
+      ],
+      "components": [
+        "channel switch",
+        "conversation log",
+        "duplicate buttons",
+        "summary card with Submit, Edit in portal, Cancel",
+        "what the agent does and never does"
+      ]
+    },
+    {
+      "id": "S-64",
+      "name": "Item insights",
+      "route": "/modules/item-insights.html",
+      "file": "modules/item-insights.html",
+      "purpose": "See turnaround, right first time, duplicates prevented, queue age and requests by channel [Item master BRD S10, Outcomes and KPIs, phase 2]",
+      "archetype": "insight: KPIs and bars",
+      "shell": "buyer",
+      "features": [
+        "F-18"
+      ],
+      "journeys": [
+        "J-11"
+      ],
+      "states": [
+        "success"
+      ],
+      "components": [
+        "KPI row",
+        "where requests wait bars and queue age table",
+        "requests by channel bars"
+      ]
+    }
+  ],
+  "navigation": {
+    "model": "Design-system pages: top documentation bar with Foundations, Components, Templates, Screens, Validation. Buyer pages: left sidebar from ps.js NAV (Home; Procurement; Supplier Management; Sourcing; Contracts; Invoicing; Reports & Analytics; User Management; Item Master; Master Data Management; Administration), collapsible to 64px, drawer under 905px. Supplier pages: left rail with Home, Invitations, Orders, Shipments. Buyer and supplier pages share a page banner above the content: breadcrumbs and the page title on the left, approvals, notifications, Ask Me (buyer) and Refresh on the right. Item Master has Item requests, Item master, Bulk upload, Request by chat and Item insights; its request, review, approval and record pages are reached from rows and next-step buttons. Record and form pages are reached from workbench rows, drawers and page actions.",
+    "items": [
+      {
+        "label": "Foundations",
+        "screen": "S-01",
+        "shell": "docs"
+      },
+      {
+        "label": "Components",
+        "screen": "S-02",
+        "shell": "docs"
+      },
+      {
+        "label": "Templates",
+        "screen": "S-03",
+        "shell": "docs"
+      },
+      {
+        "label": "Screens",
+        "screen": "S-04",
+        "shell": "docs"
+      },
+      {
+        "label": "Validation",
+        "screen": "S-05",
+        "shell": "docs"
+      },
+      {
+        "label": "Home",
+        "screen": "S-10",
+        "shell": "buyer"
+      },
+      {
+        "label": "Procurement",
+        "screens": [
+          "S-11",
+          "S-15",
+          "S-17",
+          "S-18",
+          "S-20"
+        ],
+        "shell": "buyer"
+      },
+      {
+        "label": "Supplier Management",
+        "screens": [
+          "S-21",
+          "S-22",
+          "S-23",
+          "S-24"
+        ],
+        "shell": "buyer"
+      },
+      {
+        "label": "Sourcing",
+        "screens": [
+          "S-26",
+          "S-28",
+          "S-29",
+          "S-32",
+          "S-34",
+          "S-35"
+        ],
+        "shell": "buyer"
+      },
+      {
+        "label": "Contracts",
+        "screens": [
+          "S-36",
+          "S-37"
+        ],
+        "shell": "buyer"
+      },
+      {
+        "label": "Invoicing",
+        "screen": "S-39",
+        "shell": "buyer"
+      },
+      {
+        "label": "Reports & Analytics",
+        "screens": [
+          "S-40",
+          "S-41"
+        ],
+        "shell": "buyer"
+      },
+      {
+        "label": "User Management",
+        "screens": [
+          "S-42",
+          "S-43"
+        ],
+        "shell": "buyer"
+      },
+      {
+        "label": "Item Master",
+        "screens": [
+          "S-53",
+          "S-60",
+          "S-62",
+          "S-63",
+          "S-64"
+        ],
+        "shell": "buyer"
+      },
+      {
+        "label": "Master Data Management",
+        "screen": "S-44",
+        "shell": "buyer"
+      },
+      {
+        "label": "Administration",
+        "screen": "S-45",
+        "shell": "buyer"
+      },
+      {
+        "label": "Home",
+        "screen": "S-46",
+        "shell": "supplier"
+      },
+      {
+        "label": "Invitations",
+        "screen": "S-47",
+        "shell": "supplier"
+      },
+      {
+        "label": "Orders",
+        "screen": "S-49",
+        "shell": "supplier"
+      },
+      {
+        "label": "Shipments",
+        "screen": "S-50",
+        "shell": "supplier"
+      }
+    ]
+  }
+}

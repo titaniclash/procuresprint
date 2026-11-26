@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>E-Sourcing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_b.py -->
+<body data-shell="buyer" data-root=".." data-group="sourcing" data-module="e-sourcing" data-crumbs="Sourcing|E-Sourcing">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+window.PAGE = {
+  title: 'E-Sourcing events',
+  meta: rows => `${rows.filter(r => ['open', 'eval'].includes(r.status)).length} strategic events running · RFI, RFP and multi-round tenders`,
+  actions: [{ label: 'Templates', icon: 'library_books' }, { label: 'Create event', icon: 'add', kind: 'primary' }],
+  statuses: { draft: ['', 'Draft'], open: ['info', 'Responses open'], eval: ['warning', 'Under evaluation'], awarded: ['success', 'Awarded'], cancelled: ['', 'Cancelled'] },
+  tiles: [
+    { label: 'Closing in 7 days', icon: 'timer', tone: 'warning', match: 'closing', meta: m => `${m.filter(r => r.resp < 3).length} with fewer than 3 responses` },
+    { label: 'Low response', icon: 'person_off', tone: 'danger', match: 'low', meta: () => 'fewer than 3 suppliers responded' },
+    { label: 'Questions to answer', icon: 'help', tone: 'info', match: 'qa', meta: m => `${sum(m, 'qa')} supplier questions open` },
+    { label: 'Ready to evaluate', icon: 'fact_check', tone: 'success', match: 'eval', meta: m => `${lakh(sum(m, 'v'))} in scope` },
+    { label: 'Savings FY26 YTD', icon: 'savings', static: { value: '₹14.8', unit: 'Cr', meta: '82% of ₹18 Cr target' } },
+  ],
+  views: [{ label: 'All', match: '' }, { label: 'Drafts', match: 'draft' }, { label: 'Responses open', match: 'open' }, { label: 'Under evaluation', match: 'eval' }, { label: 'Awarded', match: 'awarded' }],
+  tableTitle: 'Events', search: 'Event, category, owner', total: 23,
+  columns: [
+    { key: 'id', label: 'Event', sticky: true, sort: true, render: r => H.id(r.id) },
+    { key: 't', label: 'Title · Type', wrap: true, render: r => H.two(r.t, r.type) },
+    { opt: true, key: 'cat', label: 'Category' },
+    { key: 'v', label: 'Est. value (₹)', num: true, sort: true, render: r => inr(r.v) },
+    { key: 'resp', label: 'Responses', render: r => r.inv ? H.progress(Math.round(r.resp / r.inv * 100), `${r.resp} of ${r.inv}`) : '—' },
+    { key: 'close', label: 'Closes', sort: true, sortVal: r => r.closeN, render: r => r.tags.includes('closing') ? H.age(r.close, 'soon') : esc(r.close) },
+    { opt: true, key: 'own', label: 'Owner' },
+    { key: 'status', label: 'Status', render: r => H.status(r) },
+  ],
+  bulk: ['Extend deadline', 'Message suppliers'],
+  rows: [
+    { id: 'ES-2025-031', t: 'Packaging films, 3-year', type: 'RFP · 2 rounds', cat: 'Packaging', v: 48000000, inv: 6, resp: 2, close: '27 Nov', closeN: 27, own: 'Amit Verma', qa: 3, status: 'open', tags: 'open closing low qa' },
+    { id: 'ES-2025-030', t: 'Cloud cost-management platform', type: 'RFP', cat: 'Software', v: 2400000, inv: 5, resp: 4, close: '29 Nov', closeN: 29, own: 'Rohit Kumar', qa: 1, status: 'open', tags: 'open closing qa' },
+    { id: 'ES-2025-029', t: 'Pan-India freight, FY27', type: 'RFP · lots by lane', cat: 'Logistics', v: 92000000, inv: 9, resp: 7, close: '12 Dec', closeN: 42, own: 'Meera Iyer', qa: 0, status: 'open', tags: 'open' },
+    { id: 'ES-2025-028', t: 'Facility management, 3 plants', type: 'RFP', cat: 'Facility services', v: 36000000, inv: 5, resp: 5, close: '18 Nov', closeN: 18, own: 'Sneha Iyer', qa: 0, status: 'eval', tags: 'eval' },
+    { id: 'ES-2025-027', t: 'HR steel coils, Q1 FY27', type: 'RFP → reverse auction', cat: 'Direct materials', v: 77400000, inv: 6, resp: 6, close: '14 Nov', closeN: 14, own: 'Ananya Rao', qa: 0, status: 'eval', tags: 'eval' },
+    { id: 'ES-2025-026', t: 'ESG data provider', type: 'RFI', cat: 'Professional services', v: 0, inv: 8, resp: 2, close: '20 Nov', closeN: 20, own: 'Neha Gupta', qa: 2, status: 'eval', tags: 'eval low qa' },
+    { id: 'ES-2025-025', t: 'Industrial gases, South', type: 'RFP', cat: 'Direct materials', v: 18000000, inv: 4, resp: 4, close: '30 Oct', closeN: 0, own: 'Ananya Rao', qa: 0, status: 'awarded', tags: 'awarded' },
+    { id: 'ES-2025-032', t: 'Corporate travel management', type: 'RFP', cat: 'Travel', v: 15000000, inv: 0, resp: 0, close: '—', closeN: 99, own: 'Pranav Sharma', qa: 0, status: 'draft', tags: 'draft' },
+  ],
+  preview: {
+    title: r => `${r.id} · ${r.t}`, sub: r => `${r.type} · ${r.cat} · owner ${r.own}`,
+    alert: r => r.tags.includes('low') ? `<div class="ps-alert ps-alert--warning"><span class="ms" aria-hidden="true">person_off</span><div><div class="ps-alert__title">Only ${r.resp} of ${r.inv} invited suppliers have responded</div><div class="ps-alert__text">Policy needs 3 valid responses for events above ₹25 L.</div><div class="ps-alert__actions"><button class="ps-btn ps-btn--secondary ps-btn--sm" data-todo>Remind suppliers</button><button class="ps-btn ps-btn--text ps-btn--sm" data-todo>Invite more</button></div></div></div>` : '',
+    fields: [['Estimated value', r => r.v ? '₹' + inr(r.v) : 'Information only'], ['Closes', r => esc(r.close)], ['Responses', r => `${r.resp} of ${r.inv}`], ['Open questions', r => r.qa]],
+    timelineTitle: 'Stages',
+    timeline: r => { const i = ['draft', 'open', 'eval', 'awarded'].indexOf(r.status); return [[i > 0 ? 'done' : 'now', 'Prepare and publish', ''], [i > 1 ? 'done' : i === 1 ? 'now' : '', 'Supplier responses', i >= 1 ? `${r.resp} received` : ''], [i > 2 ? 'done' : i === 2 ? 'now' : '', 'Evaluation', ''], [i === 3 ? 'done' : '', 'Award', '']]; },
+    primary: r => ({ draft: 'Continue setup', open: r.qa ? 'Answer questions' : 'Monitor', eval: 'Start evaluation', awarded: '' })[r.status],
+  },
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

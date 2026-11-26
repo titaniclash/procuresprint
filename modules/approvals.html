@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Approvals Inbox</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+<style>
+/* Review / decide pattern: list + detail. Kept from the Figma Approver home, the strongest screen in the file. */
+.inbox { display: grid; grid-template-columns: minmax(300px, 400px) minmax(0, 1fr); gap: 16px; align-items: start; }
+.inbox__list { background: var(--ps-surface); border: 1px solid var(--ps-line); border-radius: var(--ps-r-sm); }
+.inbox__list .ps-tabs { padding: 0 8px; }
+.ib { list-style: none; margin: 0; padding: 0; }
+.ib li + li { border-top: 1px solid var(--ps-line); }
+.ib button { width: 100%; display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 4px 10px; padding: 12px 16px; border: 0; background: none; text-align: left; cursor: pointer; color: inherit; font: inherit; }
+.ib button:hover { background: var(--ps-surface-2); }
+.ib button[aria-current="true"] { background: var(--ps-brand-tint); box-shadow: inset 3px 0 0 var(--ps-brand); }
+.ib .ms { color: var(--ps-ink-3); grid-row: span 2; margin-top: 2px; }
+.ib__t { font: var(--ps-label-lg); overflow-wrap: anywhere; }
+.ib__v { font: 600 14px/20px var(--ps-font-num); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.ib__m { font: var(--ps-body-sm); color: var(--ps-ink-3); overflow-wrap: anywhere; }
+.detail { position: sticky; top: 72px; }
+.detail__head { padding: 16px 20px; border-bottom: 1px solid var(--ps-line); display: flex; gap: 12px; align-items: flex-start; flex-wrap: wrap; }
+.detail__body { padding: 20px; display: flex; flex-direction: column; gap: 20px; }
+.detail__amt { font: 600 28px/34px var(--ps-font-num); font-variant-numeric: tabular-nums; }
+.checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.checks li { display: flex; gap: 8px; align-items: flex-start; font: var(--ps-body-md); }
+.checks .ms { font-size: 18px; margin-top: 1px; }
+.decide { border-top: 1px solid var(--ps-line); padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; background: var(--ps-surface-2); border-radius: 0 0 var(--ps-r-sm) var(--ps-r-sm); }
+@media (max-width: 1023px) { .inbox { grid-template-columns: minmax(0, 1fr); } .detail { position: static; } }
+</style>
+</head>
+<!-- Approvals · cross-module review/decide pattern. Every approval in the product lands here as well as in its module. -->
+<body data-shell="buyer" data-root=".." data-group="approvals" data-module="approvals" data-crumbs="Approvals">
+<main id="main">
+  <div class="ps-pagehead">
+    <div class="ps-pagehead__text">
+      <h1 class="t-headline">Approvals</h1>
+      <p class="ps-pagehead__meta" id="meta"></p>
+    </div>
+    <div class="ps-pagehead__actions"><button class="ps-btn ps-btn--secondary" data-todo><span class="ms" aria-hidden="true">swap_horiz</span>Delegate while away</button></div>
+  </div>
+  <div class="inbox">
+    <section class="inbox__list" aria-labelledby="ib-t">
+      <h2 class="sr-only" id="ib-t">Waiting for you</h2>
+      <div class="ps-tabs" role="tablist" aria-label="Approval type" id="types"></div>
+      <ul class="ib" id="list"></ul>
+      <div class="ps-state" id="empty" hidden><div class="ps-state__art ps-state__art--brand"><span class="ms" aria-hidden="true">done_all</span></div><div class="ps-state__title">You're all caught up</div><p class="ps-state__text">New approvals will appear here and in your notifications.</p></div>
+    </section>
+    <section class="ps-card detail" aria-live="polite" id="detail"></section>
+  </div>
+  <p class="t-body-sm ink-3">Sample data.</p>
+</main>
+<script src="/assets/js/ps.js"></script>
+<script>
+{
+  const T = { pr: ['Purchase requests', 'description', 'PRs'], award: ['Awards', 'military_tech', 'Awards'], onb: ['Supplier onboarding', 'person_add', 'Suppliers'], po: ['Purchase orders', 'receipt_long', 'POs'] };
+  let items = [
+    { id: 'PR-2025-00116', type: 'pr', t: 'Design software licences', who: 'Rahul Jain · Finance', v: 1800000, sla: '7 d · past SLA', late: true, why: 'Renewal of 30 seats plus 10 new users for FY26 planning cycle.', checks: [['ok', 'Within Finance software budget (₹22 L left)'], ['warn', 'Covered by contract C-031; this PR quotes list price'], ['ok', 'Requester’s manager approved 17 Nov']], lines: [['Adobe Creative Cloud, annual', '40 users', 1800000]], mod: 'pr.html' },
+    { id: 'PR-2025-00118', type: 'pr', t: 'Bearings and seals', who: 'Vikram S · Maintenance', v: 180000, sla: 'Due today', soon: true, why: 'Line 4 gearbox overhaul planned for 08 Dec.', checks: [['ok', 'Catalogue items, contract C-014 prices'], ['ok', 'Within Maintenance budget']], lines: [['Bearing 6204-2RS, pack of 10', '30 packs', 102600], ['Hydraulic seal kit', '14 kits', 77000]], mod: 'pr.html' },
+    { id: 'PR-2025-00122', type: 'pr', t: 'Ergonomic chairs', who: 'Rohit Kumar · HR', v: 800000, sla: '1 d', why: 'Pune floor 3 fit-out for 90 seats.', checks: [['ok', 'Within HR capex'], ['info', 'Catalogue price ₹8,750; PR priced at ₹8,889 incl. delivery']], lines: [['Ergonomic office chair', '90', 800000]], mod: 'pr.html' },
+    { id: 'AW-2025-041', type: 'award', t: 'Corrugated boxes, West', who: 'Amit Verma · Packaging', v: 9024000, sla: '2 d', why: 'Award ES-2025-022 to Pacific Packaging, L1 with technical score 88.', checks: [['ok', 'Lowest bid and highest technical score'], ['ok', '6.0% below baseline'], ['warn', 'Supplier risk: High (two late deliveries this quarter)']], lines: [['Corrugated boxes, 3 sizes', '2-year rate contract', 9024000]], mod: 'award-decision.html' },
+    { id: 'AW-2025-040', type: 'award', t: 'Forklift rental', who: 'Arun Das · Warehouse', v: 1185000, sla: '3 d', why: 'Award RFQ-2025-638 to Swift Logistics for peak season.', checks: [['ok', '4 quotes compared, L1 selected'], ['ok', '8.8% under PR estimate']], lines: [['Forklift 3 t, with operator', '4 units × 3 months', 1185000]], mod: 'e-awarding.html' },
+    { id: 'PO-2603170', type: 'po', t: 'Gearbox for line 4', who: 'Vikram S · Maintenance', v: 420000, sla: '1 d', why: 'From need DI-2025-0409, contracted item.', checks: [['ok', 'Contract C-014 price'], ['ok', 'Supplier Aster Components has capacity']], lines: [['Gearbox, helical, 15 kW', '1', 420000]], mod: 'pr.html' },
+    { id: 'ON-0231', type: 'onb', t: 'Vertex Engineering', who: 'Vikram S · MRO, Chennai', v: 0, sla: '2 d', why: 'Second source for machined spares; current single source is at capacity.', checks: [['ok', 'GST, PAN and bank account verified'], ['ok', 'No sanctions or adverse media'], ['info', 'MSME registered: 45-day payment rule applies']], lines: [], mod: 'onboarding.html' },
+    { id: 'ON-0230', type: 'onb', t: 'Greenline Packaging', who: 'Amit Verma · Packaging, Pune', v: 0, sla: '4 d', why: 'Invited to ES-2025-031 packaging films event.', checks: [['ok', 'GST, PAN and bank account verified'], ['ok', 'No sanctions or adverse media']], lines: [], mod: 'onboarding.html' },
+  ];
+  let type = '', cur = items[0].id;
+  const $ = id => document.getElementById(id);
+  const inr = n => '₹' + n.toLocaleString('en-IN');
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const lakh = n => n >= 1e7 ? `₹${(n / 1e7).toFixed(2)} Cr` : `₹${(n / 1e5).toFixed(1)} L`;
+  const draw = () => {
+    const tot = items.reduce((a, i) => a + i.v, 0);
+    $('meta').textContent = `${items.length} waiting for you · ${lakh(tot)} in value · ${items.filter(i => i.late).length} past SLA`;
+    $('types').innerHTML = [['', 'All'], ...Object.entries(T).map(([k, v]) => [k, v[2]])].map(([k, l]) => `<button class="ps-tab" role="tab" aria-selected="${k === type}" ${k === type ? '' : 'tabindex="-1"'} data-type="${k}">${l} <span class="ps-count">${items.filter(i => !k || i.type === k).length}</span></button>`).join('');
+    const list = items.filter(i => !type || i.type === type);
+    $('empty').hidden = list.length > 0;
+    $('list').innerHTML = list.map(i => `<li><button type="button" data-id="${i.id}" aria-current="${i.id === cur}"><span class="ms" aria-hidden="true">${T[i.type][1]}</span><span class="ib__t">${esc(i.t)}</span><span class="ib__v">${i.v ? lakh(i.v) : ''}</span><span class="ib__m">${i.id} · ${esc(i.who)}</span><span class="ps-age${i.late ? ' ps-age--late' : i.soon ? ' ps-age--soon' : ''}">${esc(i.sla)}</span></button></li>`).join('');
+    const d = items.find(i => i.id === cur);
+    if (!d) { $('detail').innerHTML = '<div class="ps-state"><div class="ps-state__art ps-state__art--brand"><span class="ms" aria-hidden="true">done_all</span></div><div class="ps-state__title">Nothing selected</div></div>'; return; }
+    const ic = { ok: ['check_circle', 'var(--ps-success-fg)'], warn: ['warning', 'var(--ps-warning-fg)'], info: ['info', 'var(--ps-info-fg)'] };
+    $('detail').innerHTML = `
+      <div class="detail__head"><div style="flex:1;min-width:220px"><p class="t-body-sm ink-3">${T[d.type][0].replace(/s$/, '')} · ${d.id}</p><h2 class="t-title-lg">${esc(d.t)}</h2><p class="t-body-md ink-2">${esc(d.who)}</p></div><div style="text-align:right">${d.v ? `<div class="detail__amt">${inr(d.v)}</div>` : ''}<span class="ps-age${d.late ? ' ps-age--late' : d.soon ? ' ps-age--soon' : ''}">${esc(d.sla)}</span></div></div>
+      <div class="detail__body">
+        <p>${esc(d.why)}</p>
+        <div><h3 class="t-title-sm" style="margin-bottom:8px">Checks <span class="ps-ai-tag" style="margin-left:6px"><span class="ms" aria-hidden="true">auto_awesome</span>prepared by Assistant</span></h3><ul class="checks">${d.checks.map(([k, t]) => `<li><span class="ms" aria-hidden="true" style="color:${ic[k][1]}">${ic[k][0]}</span><span>${esc(t)}</span></li>`).join('')}</ul></div>
+        ${d.lines.length ? `<div class="ps-table-scroll" style="border:1px solid var(--ps-line);border-radius:var(--ps-r-sm)"><table class="ps-table"><thead><tr><th>Item</th><th>Quantity</th><th class="num">Amount (₹)</th></tr></thead><tbody>${d.lines.map(l => `<tr><td>${esc(l[0])}</td><td>${esc(l[1])}</td><td class="num">${l[2].toLocaleString('en-IN')}</td></tr>`).join('')}</tbody></table></div>` : ''}
+        <a href="${d.mod}" class="t-label-lg">Open in module <span class="ms" aria-hidden="true" style="font-size:16px;vertical-align:-3px">arrow_forward</span></a>
+      </div>
+      <form class="decide" id="decide" novalidate>
+        <div class="ps-field"><label class="ps-field__label" for="reason">Comment <span class="ps-field__opt">(required to reject or return)</span></label><textarea class="ps-textarea" id="reason" style="min-height:64px" aria-describedby="reason-err"></textarea><span class="ps-field__error" id="reason-err" hidden><span class="ms" aria-hidden="true">error</span>Add a reason so the requester knows what to change.</span></div>
+        <div class="ps-btngroup" style="justify-content:flex-end"><button type="button" class="ps-btn ps-btn--danger-outline" data-act="reject">Reject</button><button type="button" class="ps-btn ps-btn--secondary" data-act="return">Return for changes</button><button type="button" class="ps-btn ps-btn--primary" data-act="approve"><span class="ms" aria-hidden="true">check</span>Approve</button></div>
+      </form>`;
+  };
+  document.addEventListener('click', e => {
+    const t = e.target.closest('[data-type]'); if (t) { type = t.dataset.type; const f = items.find(i => !type || i.type === type); cur = f ? f.id : ''; draw(); return; }
+    const b = e.target.closest('.ib button'); if (b) { cur = b.dataset.id; draw(); if (innerWidth < 1024) $('detail').scrollIntoView({ behavior: 'smooth' }); return; }
+    const a = e.target.closest('[data-act]'); if (!a) return;
+    const reason = $('reason');
+    if (a.dataset.act !== 'approve' && !reason.value.trim()) { reason.setAttribute('aria-invalid', 'true'); $('reason-err').hidden = false; reason.focus(); return; }
+    const i = items.findIndex(x => x.id === cur), done = items[i];
+    items.splice(i, 1);
+    const rest = items.filter(x => !type || x.type === type);
+    cur = rest.length ? rest[Math.min(i, rest.length - 1)].id : '';
+    draw();
+    const word = { approve: 'approved', reject: 'rejected', return: 'returned to requester' }[a.dataset.act];
+    PS.toast(`${done.id} ${word}`, { action: 'Undo' });
+    document.querySelector('.ib button[aria-current="true"]')?.focus();
+  });
+  draw();
+}
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

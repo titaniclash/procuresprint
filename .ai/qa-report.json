@@ -1,0 +1,240 @@
+{
+  "ranAt": "2026-11-26T09:04:32.285Z",
+  "verdict": "pass-with-findings",
+  "checks": [
+    {
+      "name": "typecheck",
+      "status": "skipped",
+      "summary": "This stack has no type checker; the production build verifies the code.",
+      "findings": [],
+      "durationMs": 0
+    },
+    {
+      "name": "build",
+      "status": "pass",
+      "summary": "Production build succeeded in 0.4s.",
+      "findings": [],
+      "durationMs": 365
+    },
+    {
+      "name": "tests",
+      "status": "pass",
+      "summary": "The product’s tests pass.",
+      "findings": [],
+      "durationMs": 458
+    },
+    {
+      "name": "static",
+      "status": "warn",
+      "summary": "1 finding.",
+      "findings": [
+        {
+          "severity": "minor",
+          "message": "Hard-coded colour in a component; use a token.",
+          "file": "index.html"
+        }
+      ]
+    },
+    {
+      "name": "genericity",
+      "status": "pass",
+      "summary": "The product has its own look; it does not repeat another project.",
+      "findings": []
+    },
+    {
+      "name": "completeness",
+      "status": "warn",
+      "summary": "Features 100% · journeys 100% · screens 100% · 15 gaps",
+      "findings": [
+        {
+          "severity": "minor",
+          "message": "Validation shows a collection but declares no empty state."
+        },
+        {
+          "severity": "minor",
+          "message": "Validation shows a collection but declares no loading state."
+        },
+        {
+          "severity": "minor",
+          "message": "Approvals shows a collection but declares no loading state."
+        },
+        {
+          "severity": "minor",
+          "message": "Catalog Marketplace shows a collection but declares no loading state."
+        },
+        {
+          "severity": "minor",
+          "message": "Vendor Onboarding takes input but declares no error or validation state."
+        },
+        {
+          "severity": "minor",
+          "message": "Supplier Scout shows a collection but declares no empty state."
+        },
+        {
+          "severity": "minor",
+          "message": "Supplier Scout shows a collection but declares no loading state."
+        },
+        {
+          "severity": "minor",
+          "message": "Supplier profile takes input but declares no error or validation state."
+        },
+        {
+          "severity": "minor",
+          "message": "Contract takes input but declares no error or validation state."
+        },
+        {
+          "severity": "minor",
+          "message": "Supplier home shows a collection but declares no empty state."
+        },
+        {
+          "severity": "minor",
+          "message": "Supplier home shows a collection but declares no loading state."
+        },
+        {
+          "severity": "minor",
+          "message": "Item request takes input but declares no error or validation state."
+        },
+        {
+          "severity": "minor",
+          "message": "MDM review shows a collection but declares no loading state."
+        },
+        {
+          "severity": "minor",
+          "message": "Item insights shows a collection but declares no empty state."
+        },
+        {
+          "severity": "minor",
+          "message": "Item insights shows a collection but declares no loading state."
+        }
+      ]
+    },
+    {
+      "name": "browser",
+      "status": "warn",
+      "summary": "24 routes at 375–1440px · 24 findings",
+      "findings": [
+        {
+          "severity": "info",
+          "message": "11 of 19 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/"
+        },
+        {
+          "severity": "info",
+          "message": "68 of 118 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/components.html"
+        },
+        {
+          "severity": "info",
+          "message": "2 of 11 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/templates.html"
+        },
+        {
+          "severity": "info",
+          "message": "11 of 85 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/screens.html"
+        },
+        {
+          "severity": "info",
+          "message": "9 of 14 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/validation.html"
+        },
+        {
+          "severity": "info",
+          "message": "52 of 85 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/templates/workbench.html"
+        },
+        {
+          "severity": "info",
+          "message": "10 of 31 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/templates/event-console.html"
+        },
+        {
+          "severity": "info",
+          "message": "23 of 47 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/templates/insight.html"
+        },
+        {
+          "severity": "info",
+          "message": "15 of 27 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/templates/supplier-portal.html"
+        },
+        {
+          "severity": "info",
+          "message": "18 of 51 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/modules/home.html"
+        },
+        {
+          "severity": "info",
+          "message": "56 of 89 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/modules/pr.html"
+        },
+        {
+          "severity": "info",
+          "message": "15 of 41 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/modules/pr-create.html"
+        },
+        {
+          "severity": "info",
+          "message": "8 of 31 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/modules/pr-detail.html"
+        },
+        {
+          "severity": "info",
+          "message": "8 of 38 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/modules/approvals.html"
+        },
+        {
+          "severity": "info",
+          "message": "55 of 85 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/modules/e-catalogue.html"
+        },
+        {
+          "severity": "info",
+          "message": "36 of 57 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/modules/e-catalogue-marketplace.html"
+        },
+        {
+          "severity": "info",
+          "message": "52 of 83 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/modules/asn.html"
+        },
+        {
+          "severity": "info",
+          "message": "52 of 84 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/modules/grn.html"
+        },
+        {
+          "severity": "info",
+          "message": "22 of 52 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/modules/grn-receive.html"
+        },
+        {
+          "severity": "info",
+          "message": "56 of 86 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/modules/demand-intake.html"
+        },
+        {
+          "severity": "info",
+          "message": "40 of 70 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/modules/onboarding.html"
+        },
+        {
+          "severity": "info",
+          "message": "7 of 24 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/modules/supplier-scout.html"
+        },
+        {
+          "severity": "info",
+          "message": "52 of 79 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/modules/supplier-risk.html"
+        },
+        {
+          "severity": "info",
+          "message": "20 of 43 touch targets are smaller than 40px at 390px (fine for desktop-first web; matters if used on phones).",
+          "route": "/modules/srm.html"
+        }
+      ],
+      "durationMs": 139724
+    }
+  ]
+}

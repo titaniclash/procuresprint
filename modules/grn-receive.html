@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Receive ASN030000021</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+<style>
+/* Dock use: tablet first, large targets, one line at a time is readable at arm's length. */
+.rl { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.rl__item { background: var(--ps-surface); border: 1px solid var(--ps-line); border-radius: var(--ps-r-sm); padding: 16px 20px; display: grid; grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(120px, 1fr)) auto; gap: 16px; align-items: end; }
+.rl__item.is-short { border-left: 4px solid var(--ps-warning-solid); }
+.rl__item.is-ok { border-left: 4px solid var(--ps-success-solid); }
+.rl__name { align-self: center; }
+.rl__name strong { font: var(--ps-title-md); display: block; }
+.stepper-in { display: flex; align-items: stretch; }
+.stepper-in button { width: 44px; border: 1px solid var(--ps-line-strong); background: var(--ps-surface); cursor: pointer; color: var(--ps-ink-2); display: grid; place-items: center; }
+.stepper-in button:first-child { border-radius: var(--ps-r-xs) 0 0 var(--ps-r-xs); border-right: 0; }
+.stepper-in button:last-child { border-radius: 0 var(--ps-r-xs) var(--ps-r-xs) 0; border-left: 0; }
+.stepper-in .ps-input { border-radius: 0; text-align: center; min-height: 44px; font: 600 16px/20px var(--ps-font-num); }
+@media (max-width: 904px) { .rl__item { grid-template-columns: repeat(2, minmax(0, 1fr)); } .rl__name { grid-column: 1 / -1; } }
+</style>
+</head>
+<!-- Detail · Task form (dock receiving). Pre-filled from the ASN; the receiver only corrects what differs. -->
+<body data-shell="buyer" data-root=".." data-group="fulfilment" data-module="grn" data-crumbs="Fulfilment|Goods receipts>modules/grn.html|Receive ASN030000021">
+<main id="main">
+  <div class="ps-rec">
+    <a class="ps-back" href="grn.html"><span class="ms" aria-hidden="true">arrow_back</span>Goods receipts</a>
+    <div class="ps-rec__top">
+      <div class="ps-rec__title"><span class="ps-rec__id">New GRN · from ASN030000021 · PO-2603148</span><h1 class="t-headline">Receive goods from Aster Components</h1><p class="ink-2">Chennai plant · dock 2 · arrived today 11:40 · vehicle TN 09 BX 4471</p></div>
+    </div>
+  </div>
+  <div class="ps-alert" role="status"><span class="ms" aria-hidden="true">tips_and_updates</span><div><div class="ps-alert__title">Quantities are filled in from the shipment notice</div><div class="ps-alert__text">Count what arrived and change only what differs. Rejected units go back to the supplier on a return note.</div></div></div>
+  <section class="rl" aria-label="Lines to receive" id="rl"></section>
+  <section class="ps-section" aria-labelledby="qc-t">
+    <div class="ps-section__head"><h2 class="ps-section__title" id="qc-t">Inspection and evidence</h2></div>
+    <div class="ps-section__body">
+      <div class="ps-formgrid">
+        <fieldset class="ps-fieldset"><legend>Send to quality inspection?</legend><label class="ps-radio"><input type="radio" name="qc" checked>Yes · bearings need hardness check</label><label class="ps-radio"><input type="radio" name="qc">No · post straight to stock</label></fieldset>
+        <div class="ps-field"><label class="ps-field__label" for="dn">Supplier delivery note</label><input class="ps-input" id="dn" value="AC/DN/25/8812"></div>
+        <div class="ps-field"><label class="ps-field__label" for="bin">Storage bin</label><select class="ps-select" id="bin"><option>QC-HOLD-02</option><option>MRO-A-14</option></select></div>
+        <div class="ps-field span-2"><span class="ps-field__label" id="ph-l">Photos <span class="ps-field__opt">(optional)</span></span><div class="ps-drop" aria-labelledby="ph-l"><span class="ms" aria-hidden="true">photo_camera</span><div><strong>Add photos of packaging or damage</strong><div class="ps-field__help">Use the tablet camera or drop files</div></div></div></div>
+      </div>
+    </div>
+  </section>
+  <div class="ps-actionbar">
+    <div class="ps-actionbar__sum"><div><span>Expected</span><b id="t-exp">0</b></div><div><span>Accepted</span><b id="t-acc">0</b></div><div><span>Rejected</span><b id="t-rej">0</b></div></div>
+    <div class="ps-actionbar__btns"><button class="ps-btn ps-btn--text" data-toast="GRN saved as draft">Save draft</button><button class="ps-btn ps-btn--primary" id="post"><span class="ms" aria-hidden="true">inventory</span>Post GRN</button></div>
+  </div>
+</main>
+<script src="/assets/js/ps.js"></script>
+<script>
+{
+  const lines = [
+    { n: 'Bearing 6204-2RS', s: 'MR-6204 · line 10', exp: 200, acc: 200, rej: 0 },
+    { n: 'Bearing 6205-2RS', s: 'MR-6205 · line 20', exp: 150, acc: 150, rej: 0 },
+    { n: 'Oil seal 35×52×7', s: 'MR-0352 · line 30', exp: 50, acc: 46, rej: 4, why: 'Damaged in transit' },
+  ];
+  const $ = id => document.getElementById(id);
+  const draw = () => {
+    $('rl').innerHTML = lines.map((l, i) => { const short = l.acc + l.rej < l.exp; return `<div class="rl__item ${l.rej || short ? 'is-short' : 'is-ok'}">
+      <div class="rl__name"><strong>${l.n}</strong><span class="t-body-sm ink-3">${l.s} · expected ${l.exp} pcs</span></div>
+      <div class="ps-field"><label class="ps-field__label" for="a${i}">Accepted</label><div class="stepper-in"><button type="button" data-d="${i}" data-k="acc" data-v="-1" aria-label="One less accepted"><span class="ms" aria-hidden="true">remove</span></button><input class="ps-input" id="a${i}" inputmode="numeric" data-i="${i}" data-k="acc" value="${l.acc}"><button type="button" data-d="${i}" data-k="acc" data-v="1" aria-label="One more accepted"><span class="ms" aria-hidden="true">add</span></button></div></div>
+      <div class="ps-field"><label class="ps-field__label" for="r${i}">Rejected</label><div class="stepper-in"><button type="button" data-d="${i}" data-k="rej" data-v="-1" aria-label="One less rejected"><span class="ms" aria-hidden="true">remove</span></button><input class="ps-input" id="r${i}" inputmode="numeric" data-i="${i}" data-k="rej" value="${l.rej}"><button type="button" data-d="${i}" data-k="rej" data-v="1" aria-label="One more rejected"><span class="ms" aria-hidden="true">add</span></button></div></div>
+      <div class="ps-field"><label class="ps-field__label" for="w${i}">Reason ${l.rej ? '' : '<span class="ps-field__opt">(if rejected)</span>'}</label><select class="ps-select" id="w${i}" ${l.rej ? '' : 'disabled'}><option>${l.why || 'Choose'}</option><option>Damaged in transit</option><option>Wrong item</option><option>Failed inspection</option></select></div>
+      <div>${short ? `<span class="ps-chip ps-chip--warning">${l.exp - l.acc - l.rej} short</span>` : l.rej ? `<span class="ps-chip ps-chip--warning">${l.rej} rejected</span>` : '<span class="ps-chip ps-chip--success">Matches ASN</span>'}</div></div>`; }).join('');
+    $('t-exp').textContent = lines.reduce((a, l) => a + l.exp, 0); $('t-acc').textContent = lines.reduce((a, l) => a + l.acc, 0); $('t-rej').textContent = lines.reduce((a, l) => a + l.rej, 0);
+  };
+  document.addEventListener('click', e => { const b = e.target.closest('[data-d]'); if (!b) return; const l = lines[+b.dataset.d]; l[b.dataset.k] = Math.max(0, l[b.dataset.k] + +b.dataset.v); draw(); document.querySelector(`[data-d="${b.dataset.d}"][data-k="${b.dataset.k}"][data-v="${b.dataset.v}"]`)?.focus(); });
+  document.addEventListener('change', e => { const i = e.target.dataset.i; if (i == null) return; lines[+i][e.target.dataset.k] = Math.max(0, parseInt(e.target.value, 10) || 0); draw(); });
+  $('post').addEventListener('click', () => { PS.toast('GRN-25-01873 posted · 396 pcs to QC-HOLD-02, return note for 4 seals'); setTimeout(() => { location.href = 'grn.html'; }, 1600); });
+  draw();
+}
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PR Workbench</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_a.py -->
+<body data-shell="buyer" data-root=".." data-group="procurement" data-module="pr" data-crumbs="Procurement|Purchase Request">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+const PR = [
+  ['PR-2025-00123','23-Sep-2025','Pranav Sharma',2250200,'ABC Corp','IT',3,'0 days','IT Hardware',50,'15-Oct-2025','pending','No','-'],
+  ['PR-2025-00122','22-Sep-2025','Rohit Kumar',800000,'ABC Corp','HR',2,'1 day','Office Furniture',100,'30-Sep-2025','approved','No','PO-2025-00876'],
+  ['PR-2025-00121','21-Sep-2025','Sneha Iyer',1200000,'ABC Corp','Facilities',4,'2 days','HVAC',20,'10-Oct-2025','sourcing','Yes','-'],
+  ['PR-2025-00120','20-Sep-2025','Amit Verma',250000,'ABC Corp','Operations',2,'3 days','Safety Equipment',500,'25-Oct-2025','approved','No','PO-2025-00855'],
+  ['PR-2025-00119','19-Sep-2025','Kavya Menon',360000,'ABC Corp','IT',1,'4 days','IT Hardware',30,'05-Oct-2025','rejected','No','-'],
+  ['PR-2025-00118','18-Sep-2025','Vikram S',180000,'ABC Corp','Maintenance',5,'5 days','MRO',200,'28-Sep-2025','approved','No','PO-2025-00840'],
+  ['PR-2025-00117','17-Sep-2025','Neha Gupta',500000,'ABC Corp','Marketing',1,'6 days','Professional Services',1,'20-Nov-2025','pending','Yes','-'],
+  ['PR-2025-00116','16-Sep-2025','Rahul Jain',1800000,'ABC Corp','Finance',2,'7 days','Software',200,'01-Oct-2025','draft','No','-'],
+  ['PR-2025-00115','15-Sep-2025','Pooja Nair',75000,'ABC Corp','Admin',6,'8 days','Office Supplies',300,'25-Sep-2025','approved','No','PO-2025-00822'],
+  ['PR-2025-00114','14-Sep-2025','Siddharth Rao',1000000,'ABC Corp','Projects',1,'9 days','Consulting',1,'31-Oct-2025','sourcing','Yes','-'],
+];
+const TAG = { pending: 'pending', approved: 'approved', sourcing: 'progress', rejected: 'rejected', draft: 'draft' };
+window.PAGE = {
+  title: 'PR Workbench',
+  statuses: { draft: ['', 'Draft'], pending: ['warning', 'Pending Approval'], approved: ['success', 'Approved'], sourcing: ['info', 'Under Sourcing'], rejected: ['danger', 'Rejected'] },
+  kpis: [
+    { label: 'Total PRs', value: '1,248', icon: 'description', tone: 'info' },
+    { label: 'Pending Approval', value: '312', icon: 'pending_actions', tone: 'warning', match: 'pending' },
+    { label: 'Rejected', value: '28', icon: 'cancel', tone: 'danger', match: 'rejected' },
+    { label: 'Converted to PO', value: '426', icon: 'shopping_cart', tone: 'success', match: 'po' },
+    { label: 'Approved TAT', value: '45', unit: 'Days', icon: 'schedule', tone: 'ai' },
+  ],
+  tableTitle: 'Purchase Requisitions', search: 'PR number, item, requester, supplier…', total: 1248, pages: 125,
+  create: [{ label: 'Create PR', icon: 'add', href: 'pr-create.html' }],
+  views: [{ label: 'All', match: '', count: 156 }, { label: 'Drafts', match: 'draft', count: 89 }, { label: 'In Progress', match: 'progress', count: 89 }, { label: 'Approval Pending', match: 'pending', count: 89 }, { label: 'Approved', match: 'approved', count: 89 }, { label: 'Rejected', match: 'rejected', count: 89 }, { label: 'Withdrawn', match: 'withdrawn', count: 89 }, { label: 'Completed', match: 'po', count: 89 }],
+  columns: [
+    { key: 'id', label: 'PR Number', sticky: true, sort: true, render: r => H.id(r.id) },
+    { key: 'date', label: 'PR Date', sort: true, sortVal: r => r.id },
+    { key: 'who', label: 'Requester', sort: true },
+    { key: 'v', label: 'Estimated Value', num: true, sort: true, render: r => '₹ ' + inr(r.v) },
+    { opt: true, key: 'co', label: 'Company / BU', sort: true },
+    { key: 'd', label: 'Department', sort: true },
+    { opt: true, key: 'items', label: 'Total Item Count', num: true },
+    { key: 'age', label: 'PR Ageing', sortVal: r => parseInt(r.age) },
+    { key: 'cat', label: 'Category', sort: true },
+    { opt: true, key: 'qty', label: 'Quantity', num: true },
+    { key: 'by', label: 'Required By' },
+    { key: 'status', label: 'Status', render: r => H.status(r) },
+    { opt: true, key: 'src', label: 'Sourcing Required', render: r => H.yn(r.src) },
+    { key: 'po', label: 'PO Number', render: r => H.dash(r.po) },
+  ],
+  bulk: ['Assign buyer', 'Create RFx', 'Export selected', 'Withdraw'],
+  rows: PR.map(([id, date, who, v, co, d, items, age, cat, qty, by, status, src, po]) => ({ id, date, who, v, co, d, items, age, cat, qty, by, status, src, po, tags: `${TAG[status]}${po !== '-' ? ' po' : ''}` })),
+  rowMenu: r => [
+    { label: 'View details', icon: 'visibility', preview: r.id },
+    r.status === 'draft' ? { label: 'Edit draft', icon: 'edit', href: 'pr-create.html' } : null,
+    r.status === 'approved' && r.po === '-' ? { label: 'Create PO', icon: 'shopping_cart_checkout' } : null,
+    r.src === 'Yes' && r.status !== 'sourcing' ? { label: 'Create RFx', icon: 'request_quote' } : null,
+    r.status === 'pending' ? { label: 'Track approval', icon: 'account_tree' } : null,
+    { label: 'Copy PR', icon: 'content_copy', toast: `Copy of ${r.id} saved as draft` },
+    { label: 'Download PDF', icon: 'download', toast: `${r.id}.pdf downloaded` },
+    ['pending', 'draft'].includes(r.status) ? '-' : null,
+    ['pending', 'draft'].includes(r.status) ? { label: 'Withdraw PR', icon: 'undo', danger: true } : null,
+  ],
+  preview: {
+    title: r => `${r.id} · ${r.cat}`, sub: r => `${r.who} · ${r.d} · ${r.co}`,
+    fields: [['Estimated value', r => '₹ ' + inr(r.v)], ['PR date', r => esc(r.date)], ['Required by', r => esc(r.by)], ['Items · Quantity', r => `${r.items} · ${r.qty}`], ['PR ageing', r => esc(r.age)], ['Sourcing required', r => esc(r.src)], ['PO number', r => H.dash(r.po)]],
+    timelineTitle: 'Progress',
+    timeline: r => [[r.status === 'draft' ? 'now' : 'done', r.status === 'draft' ? 'Draft' : `Submitted by ${r.who}`, r.date], [['approved'].includes(r.status) || r.status === 'sourcing' ? 'done' : r.status === 'pending' ? 'now' : '', 'Approval', r.status === 'rejected' ? 'Rejected' : r.status === 'pending' ? 'Pending Approval' : ''], [r.status === 'sourcing' ? 'now' : r.po !== '-' ? 'done' : '', r.src === 'Yes' ? 'Sourcing' : 'Purchase order', r.po !== '-' ? r.po : r.status === 'sourcing' ? 'Under Sourcing' : 'Not started']],
+    primary: r => r.status === 'approved' && r.po === '-' ? 'Create PO' : r.status === 'draft' ? 'Edit draft' : '',
+    primaryHref: r => r.status === 'draft' ? 'pr-create.html' : '',
+    record: r => r.id === 'PR-2025-00123' ? 'pr-detail.html' : '',
+  },
+  note: 'Content from Figma “PR Workbench”. Card and tab totals are Figma figures for the full dataset; the grid shows page 1 (10 rows).',
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

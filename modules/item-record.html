@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Item record</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Detail · Record page. Item master BRD S06: header with code, ERP code and status; Details, Plants, Tax and finance, Documents, History, Alternates; request a change from here. -->
+<body data-shell="buyer" data-root=".." data-group="items" data-module="item-record" data-crumbs="Item Master|Item master>modules/item-master.html|Item record">
+<main id="main"><p class="t-body-md ink-3" aria-busy="true">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script src="/assets/js/item-master.js"></script>
+<script src="/assets/js/item-ui.js"></script>
+<script>
+{
+  const U = IMUI, main = document.getElementById('main'), code = U.qs.get('code'), it = code && IM.getItem(code);
+  if (!it) {
+    main.innerHTML = `<div class="ps-state"><div class="ps-state__art"><span class="ms" aria-hidden="true">search_off</span></div><div class="ps-state__title">${code ? 'No item has the code ' + U.esc(code) : 'Choose an item first'}</div><p class="ps-state__text">Search the item master by code, description or part number. If it does not exist, request it.</p><div style="display:flex;gap:8px"><a class="ps-btn ps-btn--secondary" href="item-master.html">Open item master</a><a class="ps-btn ps-btn--primary" href="item-request-new.html">New item request</a></div></div>`;
+  } else {
+    const dl = rows => `<dl class="ps-dl">${rows.filter(Boolean).map(([k, v]) => `<div><dt>${U.esc(k)}</dt><dd>${v}</dd></div>`).join('')}</dl>`;
+    const cat = IM.CATS[it.cat] || {}, active = it.status === 'Active', ref = IM.db().reqs.filter(r => r.target === it.code || r.itemCode === it.code);
+    const banner = it.status === 'Blocked' ? '<div class="ps-alert ps-alert--danger" role="status"><span class="ms" aria-hidden="true">block</span><div><div class="ps-alert__title">Blocked</div><div class="ps-alert__text">Not available for new purchase requests, RFx or catalogues, and hidden from the catalogue. Open documents continue and their buyers are informed. Unblock it with a request.</div></div></div>'
+      : it.status === 'Inactive' ? `<div class="ps-alert ps-alert--info" role="status"><span class="ms" aria-hidden="true">do_not_disturb_on</span><div><div class="ps-alert__title">Inactive. Obsolete or discontinued</div><div class="ps-alert__text">It cannot be added to new documents.${it.replacement ? ` Use <a href="item-record.html?code=${U.esc(it.replacement)}">${U.esc(it.replacement)}</a> instead.` : ''}</div></div></div>` : '';
+    const mi = (h, i, t) => `<a role="menuitem" href="${h}"><span class="ms" aria-hidden="true">${i}</span>${t}</a>`;
+    const actions = `${active ? `<a class="ps-btn ps-btn--primary" href="item-request-new.html?type=Update&item=${it.code}">Request update</a>` : `<a class="ps-btn ps-btn--primary" href="item-request-new.html?type=${it.status === 'Blocked' ? 'Unblock' : 'Update'}&item=${it.code}">${it.status === 'Blocked' ? 'Request unblock' : 'Request reactivation'}</a>`}
+      <div class="ps-menuwrap"><button class="ps-iconbtn ps-iconbtn--outlined" type="button" data-menu="rec-more" aria-haspopup="menu" aria-expanded="false" aria-label="More actions for ${U.esc(it.code)}"><span class="ms" aria-hidden="true">more_vert</span></button><div class="ps-menu" id="rec-more" role="menu">
+      ${active ? mi(`item-request-new.html?type=Extend&item=${it.code}`, 'add_location', 'Extend to plant') + mi(`item-request-new.html?type=Block&item=${it.code}`, 'block', 'Block') + mi(`item-request-new.html?type=Inactivate&item=${it.code}`, 'do_not_disturb_on', 'Inactivate') + mi('pr-create.html', 'add_shopping_cart', 'Add to purchase request') : mi(`item-request-new.html?type=Unblock&item=${it.code}`, 'lock_open', 'Unblock')}</div></div>`;
+    const tab = (id, label, n) => `<button class="ps-tab" role="tab" aria-selected="${id === 'det'}" ${id === 'det' ? '' : 'tabindex="-1"'} aria-controls="tp-${id}" id="t-${id}">${label}${n != null ? ` <span class="ps-count">${n}</span>` : ''}</button>`;
+    const panel = (id, body) => `<section id="tp-${id}" role="tabpanel" aria-labelledby="t-${id}" class="ps-section"${id === 'det' ? '' : ' hidden'}><div class="ps-section__body">${body}</div></section>`;
+    const tbl = (head, rows, cap) => `<div class="ps-table-scroll"><table class="ps-table ps-table--stack"><caption class="sr-only">${cap}</caption><thead><tr>${head.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr>${r.map((c, i) => `<td data-l="${head[i]}">${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+    main.innerHTML = `<div class="ps-pagehead"><div class="ps-pagehead__text"><a class="ps-back" href="item-master.html"><span class="ms" aria-hidden="true">arrow_back</span>Item master</a><h1 class="t-headline">${U.esc(it.code)} · ${U.esc(it.desc)}</h1><p class="ps-pagehead__meta">${U.esc(it.type)} · ${U.esc(cat.path || '')}${it.erp ? ' · ERP material ' + U.esc(it.erp) : ''}</p></div><div class="ps-pagehead__actions" style="align-items:center">${U.itemChip(it.status)}${actions}</div></div>
+      ${banner}
+      <div class="ps-tabs" role="tablist" aria-label="Item sections">${tab('det', 'Details')}${tab('plants', 'Plants', it.plants.length)}${tab('tax', 'Tax and finance')}${tab('docs', 'Documents', it.docs.length + ref.length)}${tab('hist', 'History', it.history.length)}${tab('alt', 'Alternates', it.alternates.length + (it.replacement ? 1 : 0))}</div>
+      ${panel('det', dl([['Short description', U.esc(it.desc)], ['Item type', U.esc(it.type)], ['Category', U.esc(cat.path || '')], ['UNSPSC', U.esc(cat.unspsc || '—')], ['Base unit', U.esc(IM.UOM[it.uom] || it.uom)], ['Manufacturer', H_dash(it.mfr)], ['Part number', H_dash(it.mpn)], ['GTIN', H_dash(it.gtin)], ['Country of origin', H_dash(it.country)], ['Hazard class', U.esc(it.hazard)], ['Quality inspection', it.qi ? 'Yes' : 'No'], ['Catalogue eligible', it.catalog ? 'Yes' : 'No, bought through RFx'], ['Lead time', it.lead ? it.lead + ' days' : '—'], ['Created', U.fmtDate(it.created)]]) + (it.long ? `<div><div class="t-label-md ink-3">Specification</div><p>${U.esc(it.long)}</p></div>` : ''))}
+      ${panel('plants', tbl(['Plant', 'Code', 'Storage location', 'Default tax code'], it.plants.map(p => [U.esc(p.name), U.esc(p.code), U.esc(p.storage), U.esc(p.tax)]), 'Plants where the item is extended') + (active ? `<div><a class="ps-btn ps-btn--secondary" href="item-request-new.html?type=Extend&item=${it.code}">Extend to another plant</a></div>` : ''))}
+      ${panel('tax', dl([['HSN, SAC or HS code', U.esc(cat.hs || '—')], ['Account assignment', it.type === 'Asset' ? 'A (asset)' : 'K (cost centre)'], ['Price basis', it.type === 'Service' ? 'Rate or flat amount' : 'Quantity'], ['Default GL account', U.esc(cat.gl || '—')], ['Standard price', U.money(it.price, it.cur)], ['Asset class', it.assetClass ? U.esc(IM.ASSET_CLASSES[it.assetClass][0]) : '—'], ['Useful life', it.life ? it.life + ' months' : '—']]))}
+      ${panel('docs', (it.docs.length ? '<h3 class="t-title-sm">Open documents</h3>' + tbl(['Document', 'Type'], it.docs.map(d => [U.esc(d[0]), U.esc(d[1])]), 'Open documents that use this item') : '<p class="ink-3">No open purchase requests, RFx events or catalogue listings use this item.</p>') + '<h3 class="t-title-sm">Item requests</h3>' + (ref.length ? tbl(['Request', 'Type', 'Status'], ref.map(r => [`<a href="item-request.html?id=${U.esc(r.id)}">${U.esc(r.id)}</a>`, U.esc(r.type), U.statusChip(r.status)]), 'Item requests for this item') : '<p class="ink-3">No request on record.</p>'))}
+      ${panel('hist', U.history(it.history))}
+      ${panel('alt', (it.replacement ? `<p>Replacement item: <a href="item-record.html?code=${U.esc(it.replacement)}">${U.esc(it.replacement)}</a></p>` : '') + (it.alternates.length ? tbl(['Item', 'Description'], it.alternates.map(c => { const a = IM.getItem(c); return [`<a href="item-record.html?code=${U.esc(c)}">${U.esc(c)}</a>`, U.esc(a?.desc || '')]; }), 'Alternate items') : '<p class="ink-3">No alternate or substitute items are mapped.</p>'))}`;
+    document.title = it.code + ' · Item record';
+  }
+  function H_dash(v) { return v ? U.esc(v) : '<span class="ink-3" aria-label="None">—</span>'; }
+}
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

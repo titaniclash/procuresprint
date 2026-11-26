@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Negotiation Kolon Industries</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+<style>
+.lev { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.lev .ps-card__body { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; }
+.lev dt { color: var(--ps-ink-3); font: var(--ps-body-sm); }
+.lev dd { margin: 0; text-align: right; font: 600 14px/20px var(--ps-font-num); font-variant-numeric: tabular-nums; }
+.prio { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 12px; }
+.prio .ps-card__body { display: flex; flex-direction: column; gap: 6px; }
+.prio .n { width: 24px; height: 24px; border-radius: 50%; background: var(--ps-brand); color: var(--ps-on-brand); display: grid; place-items: center; font: 600 12px/1 var(--ps-font); }
+.script li { margin-bottom: 10px; }
+@media (max-width: 904px) { .lev { grid-template-columns: minmax(0, 1fr); } }
+</style>
+</head>
+<!-- Detail · AI workspace (from legacy "Negotiation Workspace"). Four legacy steps become tabs; AI drafts, the buyer edits and sends. -->
+<body data-shell="buyer" data-root=".." data-group="sourcing" data-module="evaluation" data-crumbs="Sourcing|Evaluation>modules/evaluation.html|RFQ-2025-601 negotiation">
+<main id="main">
+  <div class="ps-rec">
+    <a class="ps-back" href="evaluation.html"><span class="ms" aria-hidden="true">arrow_back</span>Evaluation</a>
+    <div class="ps-rec__top">
+      <div class="ps-rec__title"><span class="ps-rec__id">RFQ-2025-601 · HR steel coils, 2 mm · 1,200 t</span><h1 class="t-headline">Negotiate with Kolon Industries <span class="ps-chip ps-chip--ai"><span class="ms ms--fill" aria-hidden="true">auto_awesome</span>AI-assisted · you lead</span></h1><p class="ink-2">Best technical fit, 9% above the lowest bid, financial statement missing</p></div>
+      <div class="ps-pagehead__actions"><button class="ps-btn ps-btn--secondary" data-toast="Strategy saved">Save</button><button class="ps-btn ps-btn--primary" data-todo><span class="ms" aria-hidden="true">check</span>Record outcome</button></div>
+    </div>
+  </div>
+  <div class="ps-tabs" role="tablist" aria-label="Negotiation steps">
+    <button class="ps-tab" role="tab" aria-selected="true" aria-controls="n1" id="tn1">1 · Strategy</button>
+    <button class="ps-tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="n2" id="tn2">2 · Talk track</button>
+    <button class="ps-tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="n3" id="tn3">3 · Email to supplier</button>
+    <button class="ps-tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="n4" id="tn4">4 · Practise pushback</button>
+  </div>
+
+  <section id="n1" role="tabpanel" aria-labelledby="tn1" class="ps-stack">
+    <div class="ps-ai"><div class="ps-ai__head"><span class="ms" aria-hidden="true">auto_awesome</span>Suggested approach</div><p class="ps-ai__text">Trade recognition of Kolon's delivery reliability for movement on price and the missing financial statement. Hold firm on 21-day payment terms; they already meet the requirement.</p><p class="ps-ai__why">From the comparison scores, document gaps and Kolon's last 2 replies.</p></div>
+    <div class="lev">
+      <div class="ps-card"><div class="ps-card__head ps-card__head--plain"><h2 class="ps-card__title">Price</h2></div><dl class="ps-card__body"><dt>Target</dt><dd>−5%</dd><dt>Acceptable</dt><dd>−3%</dd><dt>Walk away above</dt><dd>0%</dd></dl></div>
+      <div class="ps-card"><div class="ps-card__head ps-card__head--plain"><h2 class="ps-card__title">Payment terms</h2></div><dl class="ps-card__body"><dt>Target</dt><dd>21 days</dd><dt>Acceptable</dt><dd>30 days</dd><dt>Walk away beyond</dt><dd>30 days</dd></dl></div>
+      <div class="ps-card"><div class="ps-card__head ps-card__head--plain"><h2 class="ps-card__title">Delivery and documents</h2></div><dl class="ps-card__body"><dt>Delivery</dt><dd>No change</dd><dt>Financial statement</dt><dd>Required</dd><dt>Before award</dt><dd>On file</dd></dl></div>
+    </div>
+    <div class="prio">
+      <div class="ps-card"><div class="ps-card__body"><span class="n">1</span><strong>Get the financial statement</strong><span class="t-body-sm ink-2">Mandatory; blocks the award whatever else is agreed.</span><span class="ps-chip ps-chip--danger" style="align-self:flex-start">Must have</span></div></div>
+      <div class="ps-card"><div class="ps-card__body"><span class="n">2</span><strong>Close the price gap</strong><span class="t-body-sm ink-2">Bring landed cost toward L1 without losing technical fit.</span><span class="ps-chip ps-chip--danger" style="align-self:flex-start">Must have</span></div></div>
+      <div class="ps-card"><div class="ps-card__body"><span class="n">3</span><strong>Volume discount</strong><span class="t-body-sm ink-2">Not offered yet; useful lever if price stalls.</span><span class="ps-chip ps-chip--warning" style="align-self:flex-start">Nice to have</span></div></div>
+      <div class="ps-card"><div class="ps-card__body"><span class="n">4</span><strong>Hold 21-day payment</strong><span class="t-body-sm ink-2">Already met; protect it, don't trade it.</span><span class="ps-chip ps-chip--success" style="align-self:flex-start">Protect</span></div></div>
+    </div>
+  </section>
+
+  <section id="n2" role="tabpanel" aria-labelledby="tn2" class="ps-section" hidden>
+    <div class="ps-section__body"><ol class="script">
+      <li><strong>Open with the positive.</strong> "Your delivery record and technical response were the strongest we received."</li>
+      <li><strong>Name the gap plainly.</strong> "You are 9% above the lowest compliant bid. We need you within 3% to recommend you."</li>
+      <li><strong>Ask for the document.</strong> "We also need your FY25 audited financial statement before we can award."</li>
+      <li><strong>Offer the trade.</strong> "If you move on price, we can commit to quarterly forecasts and recognise your delivery in the award note."</li>
+      <li><strong>If they stall:</strong> ask what volume would unlock a 3–5% reduction above 400 t per quarter.</li>
+    </ol></div>
+  </section>
+
+  <section id="n3" role="tabpanel" aria-labelledby="tn3" class="ps-section" hidden>
+    <div class="ps-section__body">
+      <div class="ps-field"><label class="ps-field__label" for="subj">Subject</label><input class="ps-input" id="subj" value="RFQ-2025-601: pricing and documents before award"></div>
+      <div class="ps-field"><label class="ps-field__label" for="mail">Message</label><textarea class="ps-textarea" id="mail" style="min-height:220px">Dear Mr Park,
+
+Thank you for Kolon's response to RFQ-2025-601. Your technical proposal and delivery record were the strongest we received.
+
+To recommend Kolon for award we need two things by 28 November:
+1. A revised price within 3% of the lowest compliant bid.
+2. Your FY25 audited financial statement.
+
+We can offer quarterly volume forecasts and will note your delivery performance in the award decision.
+
+Regards,
+Ananya Rao
+Category Lead, Direct Materials</textarea></div>
+      <div class="ps-row"><span class="ps-ai-tag"><span class="ms" aria-hidden="true">auto_awesome</span>AI-drafted · review before sending</span><span style="flex:1"></span><button class="ps-btn ps-btn--secondary" id="copy"><span class="ms" aria-hidden="true">content_copy</span>Copy</button><button class="ps-btn ps-btn--primary" data-toast="Sent to Kolon Industries via supplier portal"><span class="ms" aria-hidden="true">send</span>Send via portal</button></div>
+    </div>
+  </section>
+
+  <section id="n4" role="tabpanel" aria-labelledby="tn4" class="ps-section" hidden>
+    <div class="ps-section__body">
+      <div class="ps-chat">
+        <div class="ps-chat__msg ps-chat__msg--ai"><strong>Kolon (simulated):</strong> "Steel prices have risen 4% this month. We cannot go below our bid."</div>
+        <div class="ps-chat__msg ps-chat__msg--me">Our index shows HR coil flat over 30 days. Can you share the input cost you're seeing?</div>
+        <div class="ps-chat__msg ps-chat__msg--ai"><strong>Kolon (simulated):</strong> "We could consider 2% if you commit to 1,500 t."</div>
+      </div>
+      <div class="ps-ai"><div class="ps-ai__head"><span class="ms" aria-hidden="true">auto_awesome</span>Coach</div><p class="ps-ai__text">2% is below your acceptable −3%. Counter with the forecast commitment instead of extra volume: 1,500 t exceeds the approved requirement.</p></div>
+      <div class="ps-row"><label class="sr-only" for="reply">Your reply</label><input class="ps-input" id="reply" style="flex:1" placeholder="Type your reply to practise"><button class="ps-btn ps-btn--primary" data-toast="Simulation continues in the live build">Send</button></div>
+    </div>
+  </section>
+  <p class="t-body-sm ink-3">Sample data. The pushback tab is a rehearsal; nothing is sent to the supplier.</p>
+</main>
+<script src="/assets/js/ps.js"></script>
+<script>
+document.getElementById('copy').addEventListener('click', () => { navigator.clipboard?.writeText(document.getElementById('mail').value).then(() => PS.toast('Email copied'), () => PS.toast('Select the text and copy it', { error: true })); });
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

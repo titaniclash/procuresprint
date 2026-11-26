@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Administration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+<style>
+.adm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 12px; }
+.adm-card { display: flex; align-items: center; gap: 14px; padding: 16px; background: var(--ps-surface); border: 1px solid var(--ps-line); border-radius: var(--ps-r-sm); color: var(--ps-ink); text-decoration: none; }
+.adm-card:hover { border-color: var(--ps-brand); background: var(--ps-surface-2); }
+.adm-card > span:nth-child(2) { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.adm-card__t { font: var(--ps-label-lg); } .adm-card__s { font: var(--ps-body-sm); color: var(--ps-ink-3); }
+.adm-card .ps-kpi__icon { background: var(--ps-brand-tint); color: var(--ps-on-brand-tint); }
+</style>
+</head>
+<!-- Administration hub · generated from build/custom.py -->
+<body data-shell="buyer" data-root=".." data-module="admin" data-crumbs="Administration">
+<main id="main">
+<div class="ps-pagehead"><div class="ps-pagehead__text"><h1 class="t-headline">Administration</h1><p class="ps-pagehead__meta">System configuration for Procuresprint</p></div></div>
+<div class="ps-alert" role="note"><span class="ms" aria-hidden="true">info</span><div><div class="ps-alert__title">No Figma reference</div><div class="ps-alert__text">Administration appears in the Figma navigation without a screen. This hub groups typical S2P settings; confirm the list with the platform owner.</div></div></div>
+<section class="ps-stack" aria-labelledby="adm-0"><h2 class="t-title-lg" id="adm-0">Organisation</h2><div class="adm-grid"><a class="adm-card" href="#" data-todo><span class="ps-kpi__icon" aria-hidden="true"><span class="ms">domain</span></span><span><span class="adm-card__t">Company & entities</span><span class="adm-card__s">3 legal entities · 2 business units</span></span><span class="ms" aria-hidden="true">chevron_right</span></a><a class="adm-card" href="#" data-todo><span class="ps-kpi__icon" aria-hidden="true"><span class="ms">factory</span></span><span><span class="adm-card__t">Plants & locations</span><span class="adm-card__s">14 plants · 6 warehouses</span></span><span class="ms" aria-hidden="true">chevron_right</span></a><a class="adm-card" href="#" data-todo><span class="ps-kpi__icon" aria-hidden="true"><span class="ms">groups_2</span></span><span><span class="adm-card__t">Purchasing groups</span><span class="adm-card__s">PG-01 to PG-06</span></span><span class="ms" aria-hidden="true">chevron_right</span></a></div></section><section class="ps-stack" aria-labelledby="adm-1"><h2 class="t-title-lg" id="adm-1">Policies & workflow</h2><div class="adm-grid"><a class="adm-card" href="#" data-todo><span class="ps-kpi__icon" aria-hidden="true"><span class="ms">account_tree</span></span><span><span class="adm-card__t">Approval workflows</span><span class="adm-card__s">PR, PO, invoice and contract chains</span></span><span class="ms" aria-hidden="true">chevron_right</span></a><a class="adm-card" href="#" data-todo><span class="ps-kpi__icon" aria-hidden="true"><span class="ms">rule</span></span><span><span class="adm-card__t">Approval limits</span><span class="adm-card__s">4 value tiers up to ₹25 L+</span></span><span class="ms" aria-hidden="true">chevron_right</span></a><a class="adm-card" href="#" data-todo><span class="ps-kpi__icon" aria-hidden="true"><span class="ms">alarm</span></span><span><span class="adm-card__t">SLA & reminders</span><span class="adm-card__s">Default approval SLA 5 days</span></span><span class="ms" aria-hidden="true">chevron_right</span></a></div></section><section class="ps-stack" aria-labelledby="adm-2"><h2 class="t-title-lg" id="adm-2">Procurement setup</h2><div class="adm-grid"><a class="adm-card" href="#" data-todo><span class="ps-kpi__icon" aria-hidden="true"><span class="ms">pin</span></span><span><span class="adm-card__t">Document numbering</span><span class="adm-card__s">PR-, PO-, RFX-, ASN-, GRN- series</span></span><span class="ms" aria-hidden="true">chevron_right</span></a><a class="adm-card" href="#" data-todo><span class="ps-kpi__icon" aria-hidden="true"><span class="ms">percent</span></span><span><span class="adm-card__t">Tax codes</span><span class="adm-card__s">GST rates and HSN/SAC mapping</span></span><span class="ms" aria-hidden="true">chevron_right</span></a><a class="adm-card" href="#" data-todo><span class="ps-kpi__icon" aria-hidden="true"><span class="ms">currency_exchange</span></span><span><span class="adm-card__t">Currencies & rates</span><span class="adm-card__s">INR base · 6 currencies</span></span><span class="ms" aria-hidden="true">chevron_right</span></a></div></section><section class="ps-stack" aria-labelledby="adm-3"><h2 class="t-title-lg" id="adm-3">Platform</h2><div class="adm-grid"><a class="adm-card" href="#" data-todo><span class="ps-kpi__icon" aria-hidden="true"><span class="ms">sync_alt</span></span><span><span class="adm-card__t">Integrations</span><span class="adm-card__s">ERP, bank and e-invoicing connectors</span></span><span class="ms" aria-hidden="true">chevron_right</span></a><a class="adm-card" href="#" data-todo><span class="ps-kpi__icon" aria-hidden="true"><span class="ms">notifications</span></span><span><span class="adm-card__t">Notifications</span><span class="adm-card__s">Email and in-app templates</span></span><span class="ms" aria-hidden="true">chevron_right</span></a><a class="adm-card" href="#" data-todo><span class="ps-kpi__icon" aria-hidden="true"><span class="ms">history</span></span><span><span class="adm-card__t">Audit log</span><span class="adm-card__s">All configuration changes</span></span><span class="ms" aria-hidden="true">chevron_right</span></a></div></section>
+</main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

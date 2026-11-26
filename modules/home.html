@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+<style>
+
+.hm-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+.hm-head h1 { font: var(--ps-headline); }
+.hm-persona { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.hm-persona label { font: var(--ps-label-lg); color: var(--ps-ink-2); }
+.hm-persona .ps-select { width: auto; height: 40px; min-width: 200px; }
+.hm-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; padding: 12px 16px; background: var(--ps-surface); border: 1px solid var(--ps-line); border-radius: var(--ps-r-sm); }
+.hm-filters .ps-field { display: flex; flex-direction: column; gap: 4px; }
+.hm-filters label { font: var(--ps-body-sm); color: var(--ps-ink-3); }
+.hm-filters .ps-select { height: 40px; width: auto; min-width: 200px; }
+.hm-filters__act { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+.hm-filters__act .ps-btn { height: 40px; }
+.hm-panel { display: flex; flex-direction: column; gap: 24px; }
+.hm-split { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(300px, 1fr); gap: 16px; align-items: start; }
+.hm-split--even { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.hm-qa { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding: 16px; }
+.hm-qa .ps-btn { justify-content: flex-start; height: 48px; }
+.hm-strip { display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center; padding: 12px 16px; background: var(--ps-surface-2); border: 1px solid var(--ps-line); border-radius: var(--ps-r-sm); font: var(--ps-body-md); }
+.hm-strip strong { font-variant-numeric: tabular-nums; }
+.hm-ex { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 4px 12px; align-items: center; }
+.hm-ex .ps-btn { white-space: nowrap; }
+.hm-chart { height: 240px; }
+.hm-big { font: 600 28px/34px var(--ps-font-num); font-variant-numeric: tabular-nums; }
+.hm-aging { display: flex; flex-direction: column; gap: 10px; }
+.hm-aging__row { display: grid; grid-template-columns: 96px minmax(0, 1fr) 84px 64px; gap: 12px; align-items: center; font: var(--ps-body-md); }
+.hm-aging__bar { height: 12px; border-radius: 6px; background: var(--ps-surface-3); overflow: hidden; }
+.hm-aging__bar i { display: block; height: 100%; background: var(--ps-cat-1, var(--ps-brand)); }
+.hm-aging__row:nth-child(n+3) .hm-aging__bar i { background: var(--ps-warning-solid); }
+.hm-aging__row:nth-child(n+5) .hm-aging__bar i { background: var(--ps-danger-solid); }
+.hm-decision .ps-card__body { display: flex; flex-direction: column; gap: 16px; }
+.hm-inbox tr.is-current td { background: var(--ps-brand-tint); }
+@media (max-width: 1239px) { .hm-split { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 904px) { .hm-split--even { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 599px) { .hm-qa { grid-template-columns: minmax(0, 1fr); } .hm-filters .ps-select, .hm-persona .ps-select { min-width: 0; width: 100%; } .hm-filters .ps-field, .hm-persona { width: 100%; } .hm-filters__act { margin-left: 0; width: 100%; } .hm-aging__row { grid-template-columns: 72px minmax(0, 1fr) 72px; } .hm-aging__row > :last-child { display: none; } .hm-ex { grid-template-columns: minmax(0, 1fr); } }
+
+</style>
+</head>
+<!-- Home · persona dashboards · generated from build/custom.py -->
+<body data-shell="buyer" data-root=".." data-module="home" data-crumbs="Home">
+<main id="main">
+
+<div class="hm-head">
+  <div><h1>Good Day, John Doe</h1><p class="t-body-md ink-2">Here's what's happening across your procurement ecosystem.</p></div>
+  <div class="hm-persona"><label for="hm-role">View as</label><select class="ps-select" id="hm-role">
+    <option value="business">Business User</option><option value="buyer">Buyer</option><option value="approver">Approver</option><option value="cpo">CPO</option><option value="category">Category Lead</option><option value="cfo">CFO</option></select>
+</div>
+</div>
+<div id="hm-body" class="hm-panel" aria-live="polite"></div>
+<p class="t-body-sm ink-3">Content from the Figma Home persona frames. The CPO spend-trend monthly split is derived to match the Figma totals (₹248 Cr current, ₹230 Cr prior).</p>
+
+</main>
+<script src="/assets/js/ps.js"></script>
+<script src="/assets/js/ps-charts.js"></script>
+<script>
+
+const e = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const tone = { High: 'danger', Medium: 'warning', Low: '', Evaluation: 'info', Active: 'success', Pending: 'warning', Blocked: 'danger', Overdue: 'danger', Critical: 'danger', Approval: 'warning', 'High priority': 'danger', Shortlisted: 'info', Onboarding: 'warning', 'High value': 'warning', 'Supplier risk': 'danger', 'Match variance': 'danger', 'Policy review': 'warning', 'Bulk eligible': 'info', 'On track': 'success', Award: 'success', Bidding: 'warning', Draft: '' };
+const chip = t => `<span class="ps-chip${tone[t] !== undefined && tone[t] ? ' ps-chip--' + tone[t] : ''}">${e(t)}</span>`;
+const kpis = list => `<section class="ps-kpis" aria-label="Key figures">${list.map(([l, v, s, i, t, href]) => `<${href ? `a href="${href}"` : 'div'} class="ps-kpi ps-kpi--${t || 'brand'}"${href ? ' style="text-decoration:none"' : ''}><span class="ps-kpi__label"><span class="ps-kpi__icon" aria-hidden="true"><span class="ms">${i}</span></span><span>${e(l)}</span></span><span class="ps-kpi__value">${e(v)}</span>${s ? `<span class="ps-kpi__sub">${e(s)}</span>` : ''}</${href ? 'a' : 'div'}>`).join('')}</section>`;
+let uid = 0;
+const card = (title, sub, body, link, cls = '') => { const id = 'hc' + (++uid); return `<section class="ps-card ${cls}" aria-labelledby="${id}"><div class="ps-card__head"><div><h2 class="t-title-md" id="${id}">${e(title)}</h2>${sub ? `<p class="t-body-sm ink-3">${sub}</p>` : ''}</div>${link ? `<a class="ps-btn ps-btn--text ps-btn--sm" href="${link[1] || '#'}"${link[1] ? '' : ' data-todo'}>${e(link[0])}</a>` : ''}</div>${body}</section>`; };
+const table = (cap, heads, rows, num = []) => `<div class="ps-table-scroll"><table class="ps-table"><caption class="sr-only">${e(cap)}</caption><thead><tr>${heads.map((h, i) => `<th${num.includes(i) ? ' class="num"' : ''}>${e(h)}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr>${r.map((c, i) => `<td${num.includes(i) ? ' class="num"' : ''}>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+const sel = (id, label, opts) => `<div class="ps-field"><label for="${id}">${label}</label><select class="ps-select" id="${id}">${opts.map(o => `<option>${e(o)}</option>`).join('')}</select></div>`;
+const filters = (fields, acts = []) => `<div class="hm-filters" role="group" aria-label="Dashboard filters">${fields.join('')}${acts.length ? `<div class="hm-filters__act">${acts.map(([l, i, href, primary]) => `<a class="ps-btn ps-btn--${primary ? 'primary' : 'secondary'}" href="${href || '#'}"${href ? '' : ' data-todo'}><span class="ms" aria-hidden="true">${i}</span>${e(l)}</a>`).join('')}</div>` : ''}</div>`;
+const tabs = (label, list, panelId) => `<div class="ps-tabs" role="tablist" aria-label="${e(label)}">${list.map(([l, n], i) => `<button class="ps-tab" type="button" role="tab" aria-selected="${i === 0}"${i ? ' tabindex="-1"' : ''}${panelId ? ` aria-controls="${panelId}"` : ''}>${e(l)}${n !== undefined ? ` <span class="ps-count">${e(n)}</span>` : ''}</button>`).join('')}</div>`;
+const TASKS = [['Approve PR-10245', 'Today', 'High', 'Evaluation', 'approvals.html'], ['Evaluate RFX-2041', 'Today', 'High', 'Active', 'evaluation.html'], ['Review PO-8832', 'Tomorrow', 'Medium', 'Pending'], ['Review Invoice INV-9912', '18 Sep 2025', 'Medium', 'Pending', 'invoicing.html'], ['Vendor Approval VND-3345', '19 Sep 2025', 'Low', 'Pending', 'onboarding.html']];
+const tasks = (tabList, extra = []) => card('My Tasks', '', tabs('Task type', tabList) + `<div>${table('My tasks', ['TASK', 'Due Date', 'Priority', 'Status', ''], [...TASKS, ...extra].map(([t, d, p, s, h]) => [`<a class="cell-id" href="${h || '#'}"${h ? '' : ' data-todo'}>${e(t)}</a>`, e(d), H.prio(p.toLowerCase()), chip(s), `<a class="ps-btn ps-btn--text ps-btn--sm" href="${h || '#'}"${h ? '' : ' data-todo'} aria-label="Open ${e(t)}">Open</a>`]))}</div>`, ['View all tasks']);
+const H = { prio: p => ({ high: '<span class="ps-prio ps-prio--high"><span class="ms" aria-hidden="true">keyboard_double_arrow_up</span>High</span>', medium: '<span class="ps-prio ps-prio--medium"><span class="ms" aria-hidden="true">keyboard_arrow_up</span>Medium</span>', low: '<span class="ps-prio ps-prio--low"><span class="ms" aria-hidden="true">remove</span>Low</span>' }[p]) };
+const QA = [['Create Item', 'add_box'], ['Create PR', 'description', 'pr-create.html'], ['Create RFX', 'request_quote', 'rfq.html'], ['Create Contract', 'contract', 'agreement-architect.html'], ['Create Catalogs', 'inventory_2', 'e-catalogue.html'], ['Create PO', 'shopping_cart_checkout'], ['Create GRN', 'inventory', 'grn-receive.html'], ['Onboard Vendor', 'person_add', 'onboarding.html']];
+const quick = () => card('Quick Actions', '', `<div class="hm-qa">${QA.map(([l, i, h]) => `<a class="ps-btn ps-btn--secondary" href="${h || '#'}"${h ? '' : ' data-todo'}><span class="ms" aria-hidden="true">${i}</span>${l}</a>`).join('')}</div>`);
+const list = items => `<ul class="ps-list">${items.join('')}</ul>`;
+const li = (title, meta, right) => `<li><div class="ps-list__main"><span class="ps-list__title">${title}</span><span class="ps-list__meta">${meta}</span></div>${right}</li>`;
+const act = (l, h) => `<a class="ps-btn ps-btn--text ps-btn--sm" href="${h || '#'}"${h ? '' : ' data-todo'}>${e(l)}</a>`;
+
+const V = {};
+V.business = () => kpis([
+  ['PRs to Action', '42', 'Total Documents · ₹45 L Total Value', 'description', 'info', 'pr.html'], ['RFX In Progress', '186', '₹32.8 Cr', 'request_quote', 'ai', 'rfq.html'],
+  ['POs Pending Acknowledgement', '16', 'Total Documents · 3 Overdue', 'mark_email_unread', 'warning'], ['Expiring Contracts', '5', 'Total Documents · 3 Within 30 Days', 'event_busy', 'danger', 'contract-workbench.html'],
+  ['Pending GRNs', '23', '4 Overdue', 'inventory', 'warning', 'grn.html'], ['Invoices', '1,024', '₹31.2 Cr', 'receipt_long', 'success', 'invoicing.html']])
+  + `<div class="hm-split">${tasks([['PRs', 156], ['Sourcing', 89], ['Contracts', 12], ['POs', 24], ['GRN', 12], ['Invoicing', 18], ['Vendor Management', 12]])}${quick()}</div>`;
+
+V.buyer = () => filters([sel('f-pg', 'Purchasing group', ['PG-01 · Corporate buying', 'PG-02 · Plant buying']), sel('f-by', 'Buyer', ['John Doe', 'Rohan Shah'])], [['Create PO', 'shopping_cart_checkout'], ['Create RFx', 'request_quote', 'rfq.html', true]])
+  + tabs('Buyer dashboard sections', [['Primary metrics & actions'], ['Supporting metrics & info']])
+  + kpis([['Approved PR Backlog', '42', '₹8.6 Cr · 26 ready + 16 sourcing', 'inventory', 'info', 'pr.html'], ['Ready for PO', '26', '₹5.5 Cr approved and validated', 'shopping_cart_checkout', 'success'], ['Sourcing Required', '16', '₹3.1 Cr · Launch or link RFX', 'travel_explore', 'warning', 'rfq.html'], ['Active RFX', '8', '3 milestones due this week', 'request_quote', 'ai', 'rfq.html']])
+  + `<div class="hm-split">${tasks([['PRs', 156], ['Sourcing', 89], ['POs', 24], ['Invoicing', 18], ['Vendor Management', 12]], [['Finalize Contract CON-6754', '20 Sep 2025', 'High', 'Active', 'contract-workbench.html']])}`
+  + card('Urgent exceptions', '', list([
+      li('PO-8832 · ERP sync failed: Invalid tax code', '4 days pending', `${chip('Blocked')}${act('Correct Data →')}`),
+      li('Vertex · Onboarding block: Bank validation missing', 'PR-10274', `${chip('Blocked')}${act('Resolve vendor →', 'onboarding.html')}`),
+      li('PO-8840 · Critical delay: Swift Logistics', 'Plant receipt 2 days late', `${chip('Overdue')}${act('Escalate delay →')}`),
+      li('PO-8855 · Payment issue: Invoice discrepancy', '5 days pending', `${chip('Blocked')}${act('Review invoices →', 'invoicing.html')}`),
+      li('Warehouse Inventory · Low stock alert: Reorder needed', 'Item XYZ', `${chip('Critical')}${act('Place order →')}`)]), ['View all exceptions →']) + '</div>' + quick();
+
+const INBOX = [['PR-10245', 'Rohan Shah', '120 laptops · Pune', '₹42 L', 'Today 17:00', 'High value'], ['PO-8832', 'Priya Nair', 'Plant spares · Aster', '₹28 L', '17 Sep Overdue', 'Supplier risk'], ['INV-9956', 'Neha Patel', 'Cloud milestone', '₹18 L', 'Today 14:00', 'Match variance'], ['PR-10262', 'Meera Iyer', 'Security sourcing', '₹32 L', '22 Sep 17:00', 'High value'], ['PO-8860', 'Ananya Rao', 'Scope amendment', '₹26 L', 'Today 16:00', 'Policy review'], ['PR-10271', 'Amit Das', 'Office supplies', '₹2.4 L', '23 Sep 17:00', 'Bulk eligible'], ['PR-10273', 'Sara Khan', 'Peripherals', '₹3.1 L', '23 Sep 17:00', 'Bulk eligible'], ['PR-10280', 'Karan Mehta', 'Software licenses', '₹10 L', '25 Sep 12:00', 'High value'], ['PO-8883', 'Divya Singh', 'Marketing collateral', '₹5 L', '30 Sep 15:00', 'On track']];
+V.approver = () => filters([sel('f-doc', 'Document type', ['All documents', 'PRs', 'POs', 'Invoices']), sel('f-ent', 'Entity', ['All Indian entities', 'Mindsprint Digital · IN01']), sel('f-pri', 'Priority', ['All priorities', 'High', 'Medium', 'Low'])])
+  + tabs('Approver dashboard sections', [['Pending Decisions'], ['Activity & Insights']])
+  + kpis([['Pending Approvals', '24', '₹3.84 Cr pending', 'pending_actions', 'info', 'approvals.html'], ['Overdue', '5', 'Oldest: 12 days', 'schedule', 'danger'], ['Due Today', '7', 'SLA before 17:00 IST', 'today', 'warning'], ['Flagged', '3', 'Policy or risk context', 'flag', 'ai']])
+  + `<div class="hm-strip"><span>PRs · <strong>12</strong> ₹1.24 Cr</span><span>POs · <strong>7</strong> ₹1.60 Cr</span><span>Invoices · <strong>5</strong> ₹1.00 Cr</span><span>High value &gt; ₹25 L: <strong>6</strong> documents</span><span>Oldest pending: <strong>12 days</strong></span></div>`
+  + `<div class="hm-split">${card('Approval inbox', '24 pending', tabs('Inbox filter', [['All'], ['Overdue · 5'], ['Due Today · 7'], ['Flagged · 3'], ['Delegated · 4']]) + `<div class="hm-inbox">${table('Approval inbox', ['Document', 'Requester', 'Description', 'Value', 'SLA', 'Flags'], INBOX.map(([d, r, de, v, s, f], i) => [`<a class="cell-id" href="approvals.html">${d}</a>`, e(r), e(de), `<span class="num">${e(v)}</span>`, s.includes('Overdue') ? `<span class="ps-age ps-age--late">${e(s)}</span>` : e(s), chip(f)]), [3])}</div>`, ['Open approvals', 'approvals.html'], 'hm-inboxcard')}`
+  + card('PR-10245 · Laptop purchase', 'Due today', `<div class="ps-card__body">
+      <p class="t-body-md"><strong>Rohan Shah</strong> · IT Operations · ProcureSprint Services</p>
+      <div><span class="hm-big">₹42 L</span><p class="t-body-sm ink-3">Pending 3 days · SLA: Today 17:00 IST</p></div>
+      <p class="t-body-md">120 laptops for the new Pune delivery centre. Preferred supplier: Orbit Technologies.</p>
+      ${table('Line items', ['Item', 'Qty', 'Unit', 'Total'], [['Laptop · Standard i5', '80', '₹35,000', '₹28 L'], ['Laptop · i5 + dock', '40', '₹35,000', '₹14 L']], [1, 2, 3])}
+      <p class="t-body-sm ink-3">Includes negotiated accessory bundle · GST excluded</p>
+      <div><h3 class="t-title-sm">Attachments · 3</h3><p class="t-body-md"><a href="#" data-todo>Orbit quote.pdf</a> · <a href="#" data-todo>Bid comparison.xlsx</a> · <a href="#" data-todo>Business case.pdf</a></p></div>
+      <div><h3 class="t-title-sm">Changes</h3><p class="t-body-md">Qty 116 → 120 · ₹40.6 L → ₹42 L (+₹1.4 L)</p></div>
+      <div><h3 class="t-title-sm">Approval history</h3><ol class="ps-timeline"><li><span class="ps-timeline__mark ps-timeline__mark--done"><span class="ms" aria-hidden="true">check</span></span><div><div class="ps-timeline__title">Rohan Shah submitted → Reddy approved budget</div><div class="ps-timeline__meta">16 Sep</div></div></li><li><span class="ps-timeline__mark ps-timeline__mark--now"><span class="ms" aria-hidden="true">hourglass_top</span></span><div><div class="ps-timeline__title">Routed to John Doe for final approval</div><div class="ps-timeline__meta">17 Sep</div></div></li></ol></div>
+      <div class="ps-alert" role="note"><span class="ms" aria-hidden="true">info</span><div><div class="ps-alert__text">Within ₹48 L budget · 3 quotes compared · Supplier verified. High-value approval requires individual review.</div></div></div>
+      <p class="t-body-sm ink-3">Reason required for Reject or Return for Clarification.</p></div>
+      <div class="ps-card__foot" style="display:flex;gap:8px;flex-wrap:wrap;padding:12px 16px;border-top:1px solid var(--ps-line)"><button class="ps-btn ps-btn--primary" type="button" data-toast="PR-10245 approved">Approve</button><button class="ps-btn ps-btn--danger" type="button" data-todo>Reject</button><button class="ps-btn ps-btn--secondary" type="button" data-todo>Return for Clarification</button></div>`, null, 'hm-decision') + '</div>';
+
+V.cpo = () => filters([sel('f-bu', 'Enterprise/BU', ['All business units', 'Global Mfg', 'Corporate Services']), sel('f-per', 'Period', ['FY25 YTD · Apr–Sep', 'FY24'])])
+  + kpis([['Total Spend', '₹248 Cr', '+7.8% vs prior period', 'payments', 'info', 'spend.html'], ['Realized Savings', '₹14.8 Cr', '82.2% of ₹18 Cr target', 'savings', 'success'], ['Spend Under Management %', '86%', '₹213.3 Cr managed · +4 pp', 'verified', 'ai'], ['Contract Coverage %', '80%', '₹198.4 Cr covered · +3 pp', 'contract', 'warning']])
+  + `<div class="hm-split">${card('Spend trend', 'Monthly · ₹248 Cr · FY25 YTD · Current vs Prior period ₹230 Cr', `<div class="ps-card__body"><div class="hm-chart" id="hm-trend"></div><p class="t-body-sm ink-3">Spend in ₹ Cr · +7.8% vs prior period · Select a month to investigate</p></div>`, ['Monthly'])}`
+  + card('Strategic actions', '', list([
+      li('Approve enterprise cloud award', 'RFX-2041 · ₹12.8 Cr · Ananya Rao · Due today', act('Review', 'award-decision.html')),
+      li('Resolve Aster continuity escalation', 'Supplier risk · ₹9.6 Cr affected · 2 days overdue', act('Open', 'supplier-profile.html')),
+      li('Decide logistics consolidation', 'Strategy approval · ₹3.4 Cr · 1 day overdue', act('Decide'))]), ['Decision centre →']) + '</div>'
+  + `<div class="hm-split hm-split--even">${card('Supplier risk exposure', '', list([
+      li('Aster Components · ₹9.6 Cr', 'Liquidity risk · Direct Materials', `${chip('Critical')}${act('View Profile', 'supplier-profile.html')}`),
+      li('Nova Cloud Services · ₹7.8 Cr', 'Data security audit overdue · IT', `${chip('Critical')}${act('Escalate →')}`),
+      li('Swift Logistics · ₹3.2 Cr', 'Single-source dependency · Logistics', `${chip('Critical')}${act('Open risk →', 'supplier-risk.html')}`)]), ['8 suppliers →', 'supplier-risk.html'])}`
+  + card('Savings performance', '', `<div class="ps-card__body"><span class="hm-big">₹14.8 Cr</span><p class="t-body-md ink-2">82.2% achieved of ₹18 Cr target</p><div class="ps-progress" style="height:10px;margin-top:12px" role="img" aria-label="82.2% of savings target achieved"><i style="width:82.2%"></i></div></div>`) + '</div>';
+
+V.category = () => filters([sel('f-cat', 'Category', ['IT & Technology', 'Direct Materials', 'Logistics']), sel('f-sub', 'Subcategory', ['All subcategories', 'Hardware', 'Software', 'Services'])], [['Supplier Scout', 'travel_explore', 'supplier-scout.html'], ['Create RFX', 'request_quote', 'rfq.html', true]])
+  + kpis([['Category Spend', '₹88 Cr', 'FY25 YTD · 35.5% of enterprise', 'payments', 'info', 'spend.html'], ['Realized Savings', '₹5.6 Cr', 'Target ₹6.4 Cr · 87.5% achieved', 'savings', 'success'], ['Contract Coverage %', '92%', '₹81 Cr under contract · +5 pp', 'contract', 'ai'], ['Expiring Contracts', '9', 'Next 90 days · 3 within 30 days', 'event_busy', 'danger', 'contract-workbench.html']])
+  + card('Sourcing pipeline', '₹27 Cr active value · Showing 5 of 6 category events', table('Sourcing pipeline', ['Event', 'Stage', 'Value', 'Owner', 'Next milestone'], [
+      ['RFX-2041 · Cloud services', 'Award', '₹12.8 Cr', 'Ananya Rao', 'Award decision · Today'], ['RFX-2057 · Laptops', 'Evaluation', '₹4.2 Cr', 'Rohan Shah', 'Scoring due · 22 Sep'], ['RFX-2063 · ERP support', 'Evaluation', '₹3.6 Cr', 'Meera Iyer', 'Demo review · 23 Sep'], ['RFX-2072 · Cybersecurity', 'Bidding', '₹2.4 Cr', 'John Doe', 'Bids close · 24 Sep'], ['RFX-2078 · Network refresh', 'Draft', '₹1.8 Cr', 'John Doe', 'Publish event · 25 Sep']].map(([ev, st, v, o, n]) => [`<a class="cell-id" href="rfq.html">${e(ev)}</a>`, chip(st), `<span class="num">${v}</span>`, e(o), e(n)]), [2]), ['All 6 events →', 'rfq.html'])
+  + `<div class="hm-split hm-split--even">${card('My Tasks', '', list([
+      li('Evaluate laptop proposals', 'RFX-2057 · 4 bids · Scoring due 22 Sep', `${chip('Evaluation')}${act('Complete evaluation →', 'evaluation-scoring.html')}`),
+      li('Confirm cloud award recommendation', 'RFX-2041 · ₹12.8 Cr · Due today', `${chip('High priority')}${act('Review award →', 'award-decision.html')}`),
+      li('Approve cybersecurity sourcing', 'RFX-2072 · ₹2.4 Cr · Due 24 Sep', `${chip('Approval')}${act('Open approval →', 'approvals.html')}`)]), ['All 8 tasks →'])}`
+  + card('Supplier Scout activity', '', list([
+      li('Skyline Cloud', 'Shortlisted', `${chip('Shortlisted')}${act('Compare supplier', 'supplier-scout.html')}`),
+      li('Vertex Computing', 'Shortlisted', `${chip('Shortlisted')}${act('View profile', 'supplier-scout.html')}`),
+      li('SecureEdge Technologies', 'Onboarding', `${chip('Onboarding')}${act('Review candidate', 'onboarding.html')}`)])) + '</div>'
+  + card('Upcoming renewals', '', table('Upcoming renewals', ['Contract/Supplier', 'Expiry', 'Owner', 'Next action'], [['CTR-1124 · Nova Cloud', '30 Sep 2025', 'Ananya Rao', 'Initiate renewal'], ['CTR-1140 · Orbit Technologies', '10 Oct 2025', 'Rohan Shah', 'Launch RFX'], ['CTR-1183 · Apex Software', '18 Oct 2025', 'Meera Iyer', 'Review scope'], ['CTR-1210 · Shield Infotech', '15 Nov 2025', 'John Doe', 'Initiate renewal']].map(([c, x, o, n]) => [`<a class="cell-id" href="contract-detail.html">${e(c)}</a>`, e(x), e(o), act(n, 'contract-workbench.html')])));
+
+const AGING = [['Not due', 22.8, 182], ['1–30 days', 4.8, 42], ['31–60 days', 2.1, 18], ['61–90 days', 1, 9], ['90+ days', 0.5, 6]];
+V.cfo = () => filters([sel('f-le', 'Legal entity', ['All Indian entities', 'Mindsprint Digital · IN01']), sel('f-per2', 'Period', ['FY25 YTD · Apr–Sep', 'FY24'])])
+  + kpis([['Procurement Spend', '₹248 Cr', 'Posted spend · FY25 YTD', 'payments', 'info', 'spend.html'], ['Open PO Commitments', '₹48.6 Cr', 'Unreceived open PO value only', 'shopping_cart', 'ai'], ['GRNI', '₹9.8 Cr', 'Goods received, not yet invoiced', 'inventory', 'warning', 'grn.html'], ['Outstanding Invoice Liabilities', '₹31.2 Cr', 'Unpaid posted invoices · 257', 'receipt_long', 'danger', 'invoicing.html']])
+  + `<div class="hm-split">${card('Payables aging', '₹31.2 Cr · Outstanding invoices only · <strong>₹8.4 Cr overdue · 75 invoices</strong>', `<div class="ps-card__body"><div class="hm-aging" role="list">${AGING.map(([b, v, n]) => `<div class="hm-aging__row" role="listitem"><span>${b}</span><span class="hm-aging__bar" aria-hidden="true"><i style="width:${(v / 22.8 * 100).toFixed(1)}%"></i></span><span class="num">₹${v} Cr</span><span class="t-body-sm ink-3">${n} inv.</span></div>`).join('')}</div></div>`)}`
+  + card('Upcoming payments', '', `<div class="ps-card__body"><dl class="ps-dl"><div><dt>Next 7 days</dt><dd class="hm-big">₹6.4 Cr</dd></div><div><dt>Next 30 days incl. 7</dt><dd class="hm-big">₹14.2 Cr</dd></div></dl></div>` + list([li('Nova Cloud Services', 'Due 20 Sep · 8 invoices', '<span class="num">₹3.2 Cr</span>'), li('Aster Components', 'Due 23 Sep · 12 invoices', '<span class="num">₹1.8 Cr</span>'), li('Orbit Technologies', 'Due 25 Sep · 6 invoices', '<span class="num">₹1.4 Cr</span>')])) + '</div>'
+  + `<div class="hm-split hm-split--even">${card('Invoice exceptions', '₹3.6 Cr blocked', table('Invoice exceptions', ['Invoice', 'Amount', 'Reason', 'Age', 'Owner'], [['INV-9912', '₹1.2 Cr', '3-way match variance', '12d', 'Priya Nair'], ['INV-9926', '₹0.8 Cr', 'Missing goods receipt', '8d', 'Rohan Shah'], ['INV-9940', '₹0.6 Cr', 'Tax code mismatch', '5d', 'Neha Patel'], ['11 other invoices', '₹1.0 Cr', 'Duplicate / bank checks', '1–6d', 'AP team']].map(([a, b, c, d, f]) => [a.startsWith('INV') ? `<a class="cell-id" href="invoicing.html">${a}</a>` : a, `<span class="num">${b}</span>`, e(c), e(d), e(f)]), [1]), ['All 14 blocks →', 'invoicing.html'])}`
+  + card('Financial actions', '', table('Financial actions', ['Action', 'Amount', 'Type', 'Owner', ''], [['Approve cloud services award', '₹12.8 Cr', 'High-value award', 'John Doe', 'Review approval', 'award-decision.html'], ['Release milestone payment', '₹3.2 Cr', 'Payment approval', 'John Doe', 'Verify & approve'], ['Reconcile unmatched receipts', '₹2.1 Cr', 'GRNI reconciliation', 'Vikram Sen', 'Open receipts', 'grn.html'], ['Resolve INV-9912 variance', '₹1.2 Cr', 'Invoice block', 'Priya Nair', 'Investigate', 'invoicing.html']].map(([a, b, c, d, l, h]) => [e(a), `<span class="num">${b}</span>`, e(c), e(d), act(l, h)]), [1])) + '</div>'
+  + '<p class="t-body-sm ink-3">Amounts belong to separate financial stages; they are not summed as exposure.</p>';
+
+const body = document.getElementById('hm-body'), role = document.getElementById('hm-role');
+const show = () => { body.innerHTML = V[role.value](); if (role.value === 'cpo' && window.PSChart) PSChart.line(document.getElementById('hm-trend'), { labels: ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'], series: [{ name: 'Prior', values: [36, 37, 38, 39, 40, 40], color: 'var(--ps-chart-muted)', dash: true }, { name: 'Current', values: [38, 40, 41, 42, 43, 44], color: 'var(--ps-cat-1)', area: true }], y: { min: 30 }, label: 'Monthly spend FY25 YTD is above the prior period in every month' }); };
+const want = new URLSearchParams(location.search).get('view'); if (want && V[want]) role.value = want;
+role.addEventListener('change', () => { show(); history.replaceState(null, '', '?view=' + role.value); });
+show();
+
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

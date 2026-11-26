@@ -1,0 +1,153 @@
+{
+  "ranAt": "2026-11-25T10:05:00.000Z",
+  "scope": "No external research was run: the connected folder documents its own domain, vocabulary and open questions. Findings below are read from those files and are INFERRED from code unless the README states them.",
+  "findings": [
+    {
+      "topic": "Domain and vocabulary",
+      "status": "INFERRED",
+      "source": "assets/ps.js NAV, module titles",
+      "detail": "Source-to-pay procurement for an Indian enterprise buyer (Mindsprint Digital, INR figures in lakh and crore). Buyer navigation groups: Home, Procurement (Purchase Request, E-Catalog, ASN, GRN, Demand Intake), Supplier Management (Vendor Onboarding, Supplier Scout, Supplier Risk Analysis, Supplier Relationship), Sourcing (RFx, RFx Automation, Evaluation, Awarding, Reverse Auctions, E-Sourcing), Contracts (Agreement Architect, Contract Workbench), Invoicing, Reports & Analytics (Spend Analytics, Reports), User Management (Users, Roles & Permissions), Master Data Management, Administration. Supplier navigation: Home, Invitations, Orders, Shipments."
+    },
+    {
+      "topic": "Page archetypes",
+      "status": "CONFIRMED",
+      "source": "README.md, templates.html",
+      "detail": "Three landing archetypes (Workbench: tiles filter the table, views, bulk bar, preview drawer; Event console: clock strip and ranking board; Insight: KPIs and charts) plus the supplier portal shell skin. 22 module landings are generated from a window.PAGE config rendered by workbench.js."
+    },
+    {
+      "topic": "Personas",
+      "status": "INFERRED",
+      "source": "modules/roles.html, modules/home.html?view=",
+      "detail": "Nine roles: Business User, Buyer, Approver, Category Lead, CPO, CFO office, AP Specialist, Receiving clerk, Auditor (read only). Home has six persona views: business, buyer, approver, category, cpo, cfo."
+    },
+    {
+      "topic": "Open questions the source itself records",
+      "status": "CONFIRMED",
+      "source": "validation.html Open gaps",
+      "detail": "PO and Invoice screens not designed (Q6); Category Lead and CFO homes covered by the CPO pattern only; Gilroy web licence unconfirmed (Q8); six modules built on assumed scope need owner sign-off (Q5); no screen-reader or usability testing yet; sample data only."
+    },
+    {
+      "topic": "Fonts and icons",
+      "status": "CONFIRMED",
+      "source": "README.md",
+      "detail": "Gilroy if installed, otherwise Plus Jakarta Sans from Google Fonts; icons are Material Symbols Rounded ligatures loaded from Google Fonts. Both require network access at preview time."
+    }
+  ],
+  "itemMaster": {
+    "ranAt": "2026-11-26T14:00:00.000Z",
+    "scope": "Item master data governance, run with web search before building the Item Master module. Two searches; conventions only, no competitor layout or copy was used.",
+    "domain": "Item (material) master data governance inside source-to-pay procurement",
+    "vocabulary": {
+      "Item code": "One code for an item across plants (BRD: material code, CPN). Used in the UI as item code.",
+      "Extend": "Use an existing item code in another plant or entity; no new code (BRD BR22, BR43).",
+      "MDM": "Master data management team that validates and cleans item data (BRD persona).",
+      "Data quality score": "Completeness of mandatory and good fields plus format checks, 0 to 100 (BRD BR33).",
+      "UNSPSC": "Four level product taxonomy in 8 digits: segment, family, class, commodity (source below).",
+      "HSN / SAC": "Tax classification for goods and services in India (BRD; not confirmed by search, ASSUMED from the BRD).",
+      "Staging area": "Where a requested item waits, separate from the active master, until approved (SAP Master Data Governance)."
+    },
+    "workflows": [
+      {
+        "name": "New item request",
+        "actor": "Requester, MDM, finance (assets), approver",
+        "steps": [
+          "Requester searches for an existing item",
+          "Request is validated and checked for duplicates",
+          "MDM validates and completes the data",
+          "Finance sets asset class for Asset items",
+          "Approver decides by rule",
+          "System creates the code and syncs the ERP"
+        ],
+        "exceptions": [
+          "Exact duplicate: use the existing item or extend it",
+          "Blocked item match: cannot be created",
+          "Send back with a mandatory comment",
+          "Data quality below 80: MDM cannot approve"
+        ],
+        "label": "CONFIRMED from the BRD pack; shape matches the sources below"
+      }
+    ],
+    "entities": [
+      {
+        "name": "Item request",
+        "states": [
+          "Draft",
+          "In progress",
+          "Completed"
+        ],
+        "statuses": [
+          "Draft",
+          "Withdrawn",
+          "In review",
+          "Pending MDM",
+          "Pending finance review",
+          "Pending approval",
+          "Sent back",
+          "Completed",
+          "Rejected",
+          "Closed \u2013 duplicate",
+          "Cancelled"
+        ],
+        "label": "CONFIRMED from the BRD Stages and Statuses sheet"
+      },
+      {
+        "name": "Item",
+        "states": [
+          "Active",
+          "Blocked",
+          "Inactive"
+        ],
+        "label": "CONFIRMED from the BRD"
+      }
+    ],
+    "patterns": [
+      {
+        "name": "Search before you create; run the duplicate check at the request stage",
+        "why": "Requesters should search for an existing record first; approvers can see potential duplicates later in the steps.",
+        "evidence": "CONFIRMED: SAP Press, performing master data duplicate checks with SAP MDG"
+      },
+      {
+        "name": "Keep requested items in a staging state until approved, then promote",
+        "why": "Only approved, de-duplicated records reach the active master.",
+        "evidence": "CONFIRMED: SAP help, Master Data Governance change request and active area; vendor guide below (lower authority)"
+      },
+      {
+        "name": "Track duplicate rate, request cycle time and first-time-right rate",
+        "why": "The standard measures of a master data process.",
+        "evidence": "CONFIRMED from a glossary article (lower authority); matches BRD KPIs"
+      },
+      {
+        "name": "Define which fields are mandatory globally and which vary by plant or country",
+        "why": "Drives the form: fields change with item type.",
+        "evidence": "INFERRED from the glossary article and BRD BR01, BR12"
+      }
+    ],
+    "sources": [
+      {
+        "title": "SAP Help Portal, Master Data Governance (staging, validity check, active area)",
+        "url": "https://help.sap.com/saphelp_mdg80/helpdata/en/c4/e5d8c1a84c41a39eedde2f9c6e45aa/content.htm",
+        "accessed": "2026-11-26",
+        "used_for": "Staged approval before an item reaches the active master"
+      },
+      {
+        "title": "SAP Press, Performing Master Data Duplicate Checks with SAP MDG",
+        "url": "https://blog.sap-press.com/performing-master-data-duplicate-checks-with-sap-mdg",
+        "accessed": "2026-11-26",
+        "used_for": "Search first; duplicate check at the request stage; approvers see duplicates"
+      },
+      {
+        "title": "Standardize material creation requests to prevent duplicate SKUs and bad master data",
+        "url": "https://us.fitgap.com/stack-guides/standardize-material-creation-requests-to-prevent-duplicate-skus-and-bad-master-data",
+        "accessed": "2026-11-26",
+        "used_for": "Single intake path, confirm or justify on a close match (vendor article, lower authority)"
+      },
+      {
+        "title": "UNSPSC, Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/UNSPSC",
+        "accessed": "2026-11-26",
+        "used_for": "Eight digit code with segment, family, class, commodity levels"
+      }
+    ],
+    "gaps": "HSN and SAC structure for India was not returned by search. UNSPSC, HS and GL values on the sample categories are illustrative and must be confirmed by the MDM team."
+  }
+}

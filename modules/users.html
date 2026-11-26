@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Users</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_d.py -->
+<body data-shell="buyer" data-root=".." data-group="users" data-module="users" data-crumbs="User Management|Users">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+const US = [
+  ['john.doe','John Doe','Procurement Lead','Procurement','All Indian entities','active','Today 09:12'],
+  ['ananya.rao','Ananya Rao','Category Lead · IT','Sourcing','All Indian entities','active','Today 08:40'],
+  ['rohan.shah','Rohan Shah','Buyer','Procurement','Mindsprint Digital · IN01','active','Yesterday'],
+  ['meera.iyer','Meera Iyer','Approver','IT Operations','Mindsprint Digital · IN01','active','Yesterday'],
+  ['priya.nair','Priya Nair','AP Specialist','Finance','All Indian entities','active','22 Sep 2025'],
+  ['vikram.sen','Vikram Sen','Finance Controller · CFO office','Finance','All Indian entities','active','22 Sep 2025'],
+  ['neha.patel','Neha Patel','Business User','Marketing','Corporate Services · IN02','invited','—'],
+  ['amit.das','Amit Das','Business User','Admin','Mindsprint Digital · IN01','locked','10 Sep 2025'],
+  ['sara.khan','Sara Khan','Business User','IT','Mindsprint Digital · IN01','inactive','02 Jun 2025'],
+];
+window.PAGE = {
+  title: 'Users',
+  switch: [{ label: 'Users', current: true }, { label: 'Roles & Permissions', href: 'roles.html' }],
+  banner: '<div class="ps-alert" role="note"><span class="ms" aria-hidden="true">info</span><div><div class="ps-alert__title">No Figma reference</div><div class="ps-alert__text">User Management is expandable in the Figma navigation but has no screens. Layout and actions follow the shared workbench pattern; content is representative sample data to confirm with the module owner.</div></div></div>',
+  statuses: { active: ['success', 'Active'], invited: ['info', 'Invited'], locked: ['danger', 'Locked'], inactive: ['', 'Inactive'] },
+  kpis: [
+    { label: 'Total users', value: '9', sub: '6 active', icon: 'group', tone: 'info' },
+    { label: 'Pending invites', value: '1', sub: 'Expires in 5 days', icon: 'mail', tone: 'brand', match: 'invited' },
+    { label: 'Locked accounts', value: '1', sub: 'Failed sign-ins', icon: 'lock', tone: 'danger', match: 'locked' },
+    { label: 'Roles in use', value: '7', sub: 'Of 9 defined roles', icon: 'badge', tone: 'success' },
+  ],
+  tableTitle: 'All users', search: 'Name, email or role…',
+  create: [{ label: 'Invite user', icon: 'person_add' }],
+  gridActions: [{ label: 'Import users', icon: 'upload_file' }],
+  views: [{ label: 'All', match: '' }, { label: 'Active', match: 'active' }, { label: 'Invited', match: 'invited' }, { label: 'Locked', match: 'locked' }, { label: 'Inactive', match: 'inactive' }],
+  columns: [
+    { key: 'id', label: 'User', sticky: true, sort: true, sortVal: r => r.name, render: r => `<a class="cell-id" href="#" data-preview="${esc(r.id)}">${esc(r.name)}</a><br><small class="t-body-sm ink-3">${esc(r.id)}@mindsprint.example</small>` },
+    { key: 'role', label: 'Role', sort: true },
+    { key: 'dept', label: 'Department', sort: true },
+    { opt: true, key: 'scope', label: 'Data access' },
+    { key: 'status', label: 'Status', render: r => H.status(r) },
+    { opt: true, key: 'last', label: 'Last sign-in' },
+  ],
+  bulk: ['Change role', 'Deactivate', 'Resend invite'],
+  rows: US.map(([id, name, role, dept, scope, status, last]) => ({ id, name, role, dept, scope, status, last, tags: status })),
+  rowMenu: r => [{ label: 'View user', icon: 'visibility', preview: r.id }, { label: 'Edit role & access', icon: 'manage_accounts' }, r.status === 'invited' ? { label: 'Resend invite', icon: 'send', toast: `Invite resent to ${r.name}` } : null, r.status === 'locked' ? { label: 'Unlock account', icon: 'lock_open', toast: `${r.name} unlocked` } : null, { label: 'Reset password', icon: 'key' }, { label: 'View activity log', icon: 'history' }, '-', { label: r.status === 'inactive' ? 'Reactivate' : 'Deactivate', icon: r.status === 'inactive' ? 'person_check' : 'person_off', danger: r.status !== 'inactive' }],
+  preview: { title: r => r.name, sub: r => `${r.role} · ${r.dept}`, fields: [['User ID', r => esc(r.id)], ['Data access', r => esc(r.scope)], ['Last sign-in', r => esc(r.last)]], primary: r => 'Edit role & access' },
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

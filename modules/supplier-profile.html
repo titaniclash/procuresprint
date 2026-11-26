@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aster Components Ltd</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+<style>.drv li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; }</style>
+</head>
+<!-- Detail · Record page (supplier). One place for risk, performance, contracts, orders and documents; every module links here. -->
+<body data-shell="buyer" data-root=".." data-group="suppliers" data-module="supplier-risk" data-crumbs="Suppliers|Supplier risk>modules/supplier-risk.html|Aster Components Ltd">
+<main id="main">
+  <div class="ps-rec">
+    <a class="ps-back" href="supplier-risk.html"><span class="ms" aria-hidden="true">arrow_back</span>Supplier risk</a>
+    <div class="ps-rec__top">
+      <div class="ps-rec__title"><span class="ps-rec__id">SUP-1042 · GSTIN 33AACCA4412K1Z6 · supplier since Mar 2023</span><h1 class="t-headline">Aster Components Ltd <span class="ps-chip ps-chip--danger">Critical risk</span><span class="ps-chip ps-chip--plain">Strategic</span></h1><p class="ink-2">Direct materials and MRO · Chennai · relationship owner Ananya Rao</p></div>
+      <div class="ps-pagehead__actions">
+        <div class="ps-menuwrap"><button class="ps-btn ps-btn--secondary" data-menu="sp-more" aria-haspopup="menu" aria-expanded="false">More <span class="ms" aria-hidden="true">expand_more</span></button>
+          <div class="ps-menu" id="sp-more" role="menu" aria-label="More actions"><button role="menuitem" data-todo><span class="ms" aria-hidden="true">mail</span>Message supplier</button><button role="menuitem" data-todo><span class="ms" aria-hidden="true">pause_circle</span>Put on watch</button><hr><button role="menuitem" class="is-danger" data-open="block"><span class="ms" aria-hidden="true">block</span>Block for new orders</button></div></div>
+        <button class="ps-btn ps-btn--primary" data-open="review"><span class="ms" aria-hidden="true">assignment</span>Start risk review</button>
+      </div>
+    </div>
+    <dl class="ps-rec__facts">
+      <div><dt>Spend FY26</dt><dd class="big">₹9.6 Cr</dd></div>
+      <div><dt>Risk score</dt><dd><span class="ps-risk ps-risk--critical"><span class="num">92</span><span class="ps-risk__bar"><i style="width:92%"></i></span>Critical</span></dd></div>
+      <div><dt>Scorecard</dt><dd>74 · below 75 target</dd></div>
+      <div><dt>On time · quality</dt><dd>94% · 97.4%</dd></div>
+      <div><dt>Open POs</dt><dd>5 · ₹46.6 L</dd></div>
+    </dl>
+  </div>
+  <div class="ps-tabs" role="tablist" aria-label="Supplier sections">
+    <button class="ps-tab" role="tab" aria-selected="true" aria-controls="sp1" id="ts1">Overview</button>
+    <button class="ps-tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="sp2" id="ts2">Contracts <span class="ps-count">1</span></button>
+    <button class="ps-tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="sp3" id="ts3">Orders and shipments</button>
+    <button class="ps-tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="sp4" id="ts4">Documents <span class="ps-count ps-count--danger">1</span></button>
+  </div>
+
+  <section id="sp1" role="tabpanel" aria-labelledby="ts1" class="ps-grid ps-grid--2">
+    <section class="ps-card" aria-labelledby="rk-t">
+      <div class="ps-card__head"><h2 class="ps-card__title" id="rk-t"><span class="ms" aria-hidden="true">shield</span>Why it's critical</h2><span class="t-body-sm ink-3">Updated 24 Nov, 06:00</span></div>
+      <ul class="ps-list drv">
+        <li><div class="ps-list__main"><span class="ps-list__title">Liquidity: current ratio 0.7</span><span class="ps-list__meta">FY25 filing · was 1.1 a year ago · source: MCA</span></div><span class="ps-chip ps-chip--danger">Financial</span></li>
+        <li><div class="ps-list__main"><span class="ps-list__title">Payment delays to its own suppliers</span><span class="ps-list__meta">2 trade-credit alerts in October · source: credit bureau</span></div><span class="ps-chip ps-chip--danger">Financial</span></li>
+        <li><div class="ps-list__main"><span class="ps-list__title">GST certificate expires 12 Dec 2025</span><span class="ps-list__meta">Renewal not yet uploaded</span></div><span class="ps-chip ps-chip--warning">Compliance</span></li>
+        <li><div class="ps-list__main"><span class="ps-list__title">Single source for 38 MRO items</span><span class="ps-list__meta">Contract C-014 · no approved alternative</span></div><span class="ps-chip ps-chip--warning">Operational</span></li>
+      </ul>
+    </section>
+    <section class="ps-card" aria-labelledby="ex-t">
+      <div class="ps-card__head"><h2 class="ps-card__title" id="ex-t"><span class="ms" aria-hidden="true">account_balance_wallet</span>What's exposed</h2></div>
+      <div class="ps-card__body ps-stack" style="gap:12px">
+        <div class="ps-hbar"><span>Open POs</span><span class="ps-hbar__track"><i style="width:32%;--c:var(--ps-danger-fg)"></i></span><span class="ps-hbar__val">₹46.6 L</span></div>
+        <div class="ps-hbar"><span>Contract C-014 left</span><span class="ps-hbar__track"><i style="width:100%;--c:var(--ps-chart-muted)"></i></span><span class="ps-hbar__val">₹1.46 Cr</span></div>
+        <div class="ps-hbar"><span>Live events</span><span class="ps-hbar__track"><i style="width:19%;--c:var(--ps-chart-muted)"></i></span><span class="ps-hbar__val">2 events</span></div>
+        <div class="ps-ai"><div class="ps-ai__head"><span class="ms" aria-hidden="true">auto_awesome</span>Suggested next steps</div><p class="ps-ai__text">Ask for audited FY25 accounts and a bank reference; qualify Vertex Engineering (ON-0231, awaiting your approval) as a second source for the 38 MRO items.</p><div class="ps-ai__actions"><a class="ps-btn ps-btn--secondary ps-btn--sm" href="approvals.html">Review ON-0231</a></div></div>
+      </div>
+    </section>
+  </section>
+
+  <section id="sp2" role="tabpanel" aria-labelledby="ts2" class="ps-tablecard" hidden>
+    <div class="ps-table-scroll"><table class="ps-table ps-table--stack"><thead><tr><th>Contract</th><th>Title</th><th class="num">Value (₹)</th><th>Consumed</th><th>Ends</th><th>Status</th></tr></thead>
+      <tbody><tr><td data-l="Contract"><a class="cell-id" href="contract-workbench.html">C-014</a></td><td data-l="Title">MRO spares · rate contract</td><td class="num" data-l="Value">2,80,00,000</td><td data-l="Consumed">48%</td><td data-l="Ends">31 Mar 2026</td><td data-l="Status"><span class="ps-chip ps-chip--success">Active</span></td></tr></tbody></table></div>
+  </section>
+
+  <section id="sp3" role="tabpanel" aria-labelledby="ts3" class="ps-tablecard" hidden>
+    <div class="ps-table-scroll"><table class="ps-table ps-table--stack"><thead><tr><th>PO</th><th>Items</th><th class="num">Value (₹)</th><th>Deliver by</th><th>Shipment</th></tr></thead>
+      <tbody>
+        <tr><td data-l="PO">PO-2603160</td><td data-l="Items">Bearing 6204-2RS · 200 pcs</td><td class="num" data-l="Value">6,84,000</td><td data-l="Deliver by">12 Dec</td><td data-l="Shipment"><span class="ps-chip ps-chip--warning">Not acknowledged</span></td></tr>
+        <tr><td data-l="PO">PO-2603148</td><td data-l="Items">Bearing set · 400 pcs</td><td class="num" data-l="Value">13,68,000</td><td data-l="Deliver by">28 Nov</td><td data-l="Shipment"><span class="ps-chip ps-chip--info">Arrived today · receiving</span></td></tr>
+        <tr><td data-l="PO">PO-2603102</td><td data-l="Items">Industrial safety gloves · 2,000 packs</td><td class="num" data-l="Value">9,60,000</td><td data-l="Deliver by">05 Dec</td><td data-l="Shipment"><span class="ps-chip">Not shipped</span></td></tr>
+        <tr><td data-l="PO">PO-2603077</td><td data-l="Items">Hydraulic seals kit · 150 kits</td><td class="num" data-l="Value">8,25,000</td><td data-l="Deliver by">10 Dec</td><td data-l="Shipment"><span class="ps-chip">Not shipped</span></td></tr>
+        <tr><td data-l="PO">PO-2602155</td><td data-l="Items">Gearbox spares · 160 of 400 left</td><td class="num" data-l="Value">8,20,000</td><td data-l="Deliver by">30 Nov</td><td data-l="Shipment"><span class="ps-chip ps-chip--info">Partly received</span></td></tr>
+      </tbody></table></div>
+  </section>
+
+  <section id="sp4" role="tabpanel" aria-labelledby="ts4" class="ps-section" hidden>
+    <div class="ps-section__body">
+      <div class="ps-file"><span class="ms" aria-hidden="true" style="color:var(--ps-danger-fg)">assignment_late</span><span style="flex:1">GST registration certificate<br><span class="t-body-sm" style="color:var(--ps-danger-fg)">Expires 12 Dec 2025 · 18 days</span></span><button class="ps-btn ps-btn--secondary ps-btn--sm" data-toast="Renewal request sent to Aster Components">Request renewal</button></div>
+      <div class="ps-file"><span class="ms" aria-hidden="true">verified</span><span style="flex:1">ISO 9001:2015<br><span class="t-body-sm ink-3">Valid to Aug 2027</span></span></div>
+      <div class="ps-file"><span class="ms" aria-hidden="true">account_balance</span><span style="flex:1">Cancelled cheque · HDFC ****4471<br><span class="t-body-sm ink-3">Verified Mar 2023</span></span></div>
+    </div>
+  </section>
+  <p class="t-body-sm ink-3">Sample data.</p>
+</main>
+<dialog class="ps-dialog" id="review" aria-labelledby="rv-t">
+  <div class="ps-dialog__head"><h2 class="ps-dialog__title" id="rv-t">Start a risk review for Aster Components</h2></div>
+  <div class="ps-dialog__body">
+    <div class="ps-field"><label class="ps-field__label" for="rv-o">Owner</label><select class="ps-select" id="rv-o"><option>Ananya Rao</option><option>Compliance team</option></select></div>
+    <div class="ps-field"><label class="ps-field__label" for="rv-d">Decide by</label><input class="ps-input" id="rv-d" type="date" value="2025-12-05"></div>
+    <label class="ps-check"><input type="checkbox" checked>Ask the supplier for FY25 audited accounts</label>
+  </div>
+  <div class="ps-dialog__foot"><button class="ps-btn ps-btn--text" data-close>Cancel</button><button class="ps-btn ps-btn--primary" data-close data-toast="Risk review RR-2025-017 started">Start review</button></div>
+</dialog>
+<dialog class="ps-dialog" id="block" aria-labelledby="bk-t">
+  <div class="ps-dialog__head"><span class="ps-dialog__icon ps-dialog__icon--danger"><span class="ms" aria-hidden="true">block</span></span><h2 class="ps-dialog__title" id="bk-t">Block Aster Components for new orders?</h2></div>
+  <div class="ps-dialog__body"><p>5 open POs and 2 live events continue. New PRs that would go to Aster are routed to sourcing instead. Needs CPO approval.</p><div class="ps-field"><label class="ps-field__label" for="bk-r">Reason</label><textarea class="ps-textarea" id="bk-r"></textarea></div></div>
+  <div class="ps-dialog__foot"><button class="ps-btn ps-btn--text" data-close>Cancel</button><button class="ps-btn ps-btn--danger" data-close data-toast="Block request sent to CPO">Request block</button></div>
+</dialog>
+<script src="/assets/js/ps.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

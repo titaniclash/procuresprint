@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contract Workbench</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_c.py -->
+<body data-shell="buyer" data-root=".." data-group="contracts" data-module="contract-workbench" data-crumbs="Contracts|Contract Workbench">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+window.PAGE = {
+  title: 'Contracts',
+  meta: rows => `${rows.filter(r => r.status === 'active' || r.status === 'expiring').length} active agreements shown · 80% of FY26 spend is on contract`,
+  banner: "<div class=\"ps-alert\" role=\"note\"><span class=\"ms\" aria-hidden=\"true\">info</span><div><div class=\"ps-alert__title\">Scope assumed</div><div class=\"ps-alert__text\">Contract Workbench is shown as the register of agreements after award, with renewal and consumption tracking. There is no Figma reference for this module; fields and statuses follow common S2P practice. Confirm with the module owner (open question Q5).</div></div></div>",
+  actions: [{ label: 'Upload signed contract', icon: 'upload' }, { label: 'New contract', icon: 'add', kind: 'primary', href: 'agreement-architect.html' }],
+  statuses: { drafting: ['', 'Drafting'], review: ['info', 'In legal review'], signature: ['warning', 'Out for signature'], active: ['success', 'Active'], expiring: ['warning', 'Expiring'], expired: ['', 'Expired'] },
+  tiles: [
+    { label: 'Expiring in 90 days', icon: 'event_busy', tone: 'danger', match: 'expiring', meta: m => `${lakh(sum(m, 'v'))} · ${m.filter(r => !r.renew).length} without a renewal plan` },
+    { label: 'Out for signature', icon: 'draw', tone: 'warning', match: 'signature', meta: m => `oldest ${Math.max(...m.map(r => r.days))} days` },
+    { label: 'Low utilisation', icon: 'trending_down', tone: 'info', match: 'lowuse', meta: () => 'under 30% consumed, past mid-term' },
+    { label: 'Over 90% consumed', icon: 'data_usage', tone: 'warning', match: 'highuse', meta: () => 'value ceiling close' },
+    { label: 'Contract coverage', icon: 'verified', static: { value: '80', unit: '%', meta: '<span class="ps-tile__delta ps-tile__delta--good"><span class="ms" aria-hidden="true">north</span>3 pts</span> of spend on contract' } },
+  ],
+  views: [{ label: 'All', match: '' }, { label: 'Active', match: 'active' }, { label: 'Expiring', match: 'expiring' }, { label: 'In progress', match: 'inprogress' }, { label: 'Expired', match: 'expired' }],
+  tableTitle: 'Contract register', search: 'Contract, supplier, category', total: 214,
+  columns: [
+    { key: 'id', label: 'Contract', sticky: true, sort: true, render: r => H.id(r.id) },
+    { key: 't', label: 'Title · Type', wrap: true, render: r => H.two(r.t, r.type) },
+    { opt: true, key: 'sup', label: 'Supplier' },
+    { key: 'v', label: 'Value (₹)', num: true, sort: true, render: r => inr(r.v) },
+    { key: 'use', label: 'Consumed', render: r => r.use == null ? '—' : H.progress(r.use) },
+    { key: 'end', label: 'Ends', sort: true, sortVal: r => r.endN, render: r => r.tags.includes('expiring') ? H.age(r.end, 'late') : esc(r.end) },
+    { opt: true, key: 'own', label: 'Owner' },
+    { key: 'status', label: 'Status', render: r => H.status(r) },
+  ],
+  bulk: ['Start renewal', 'Assign owner'],
+  rows: [
+    { id: 'C-001', t: 'IT hardware supply', type: 'Rate contract', sup: 'ABC Technologies', v: 32000000, use: 74, end: '15 Dec 2025', endN: 1, own: 'Rohit Kumar', renew: true, status: 'expiring', tags: 'active expiring' },
+    { id: 'C-022', t: 'Office supplies, West', type: 'Rate contract', sup: 'Metro Print House', v: 4800000, use: 62, end: '20 Dec 2025', endN: 2, own: 'Pooja Nair', renew: false, status: 'expiring', tags: 'active expiring' },
+    { id: 'C-009', t: 'Pan-India freight', type: 'Master services', sup: 'Swift Logistics', v: 86000000, use: 93, end: '31 Jan 2026', endN: 3, own: 'Meera Iyer', renew: true, status: 'expiring', tags: 'active expiring highuse' },
+    { id: 'C-014', t: 'MRO spares', type: 'Rate contract', sup: 'Aster Components Ltd', v: 28000000, use: 48, end: '31 Mar 2026', endN: 5, own: 'Ananya Rao', status: 'active', tags: 'active' },
+    { id: 'C-031', t: 'Software subscriptions', type: 'Enterprise agreement', sup: 'Orbit Technologies', v: 18500000, use: 22, end: '30 Jun 2026', endN: 8, own: 'Rohit Kumar', status: 'active', tags: 'active lowuse' },
+    { id: 'C-055', t: 'Housekeeping, 3 plants', type: 'Services', sup: 'Kiran Facility Mgmt', v: 7400000, use: 58, end: '31 Aug 2026', endN: 10, own: 'Sneha Iyer', status: 'active', tags: 'active' },
+    { id: 'C-061', t: 'Industrial gases, South', type: 'Supply agreement', sup: 'Linde India', v: 10400000, use: null, end: '—', endN: 99, own: 'Ananya Rao', days: 6, status: 'signature', tags: 'signature inprogress' },
+    { id: 'C-062', t: 'Safety PPE, 2-year', type: 'Rate contract', sup: 'Shree Safety Co', v: 7200000, use: null, end: '—', endN: 99, own: 'Amit Verma', days: 2, status: 'signature', tags: 'signature inprogress' },
+    { id: 'C-063', t: 'Cloud backup service', type: 'SaaS agreement', sup: 'Nova Cloud Services', v: 2800000, use: null, end: '—', endN: 99, own: 'Rohit Kumar', status: 'review', tags: 'inprogress' },
+  ],
+  preview: {
+    title: r => `${r.id} · ${r.t}`, sub: r => `${r.sup} · ${r.type} · owner ${r.own}`,
+    alert: r => r.tags.includes('expiring') && !r.renew ? `<div class="ps-alert ps-alert--danger"><span class="ms" aria-hidden="true">event_busy</span><div><div class="ps-alert__title">Ends ${esc(r.end)} with no renewal plan</div><div class="ps-alert__text">42 catalogue items stop being orderable when it ends.</div></div></div>` : r.tags.includes('highuse') ? `<div class="ps-alert ps-alert--warning"><span class="ms" aria-hidden="true">data_usage</span><div><div class="ps-alert__title">${r.use}% of value consumed</div><div class="ps-alert__text">At current run-rate the ceiling is reached in about 5 weeks.</div></div></div>` : '',
+    fields: [['Value', r => '₹' + inr(r.v)], ['Consumed', r => r.use == null ? '—' : r.use + '%'], ['Ends', r => esc(r.end)], ['Owner', r => esc(r.own)]],
+    primary: r => r.tags.includes('expiring') ? 'Plan renewal' : r.status === 'signature' ? 'Send reminder' : '',
+    primaryHref: r => r.id === 'C-022' ? 'contract-detail.html' : '',
+    record: r => r.id === 'C-022' ? 'contract-detail.html' : '',
+  },
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

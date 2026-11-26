@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agreement Architect</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_c.py -->
+<body data-shell="buyer" data-root=".." data-group="contracts" data-module="agreement-architect" data-crumbs="Contracts|Agreement Architect">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+window.PAGE = {
+  title: 'Agreement Architect',
+  meta: rows => `${rows.filter(r => r.status !== 'sent').length} agreements being drafted from approved templates and clauses`,
+  banner: "<div class=\"ps-alert\" role=\"note\"><span class=\"ms\" aria-hidden=\"true\">info</span><div><div class=\"ps-alert__title\">Scope assumed</div><div class=\"ps-alert__text\">Agreement Architect is shown as AI-assisted drafting: start from an award, assemble from templates and the clause library, compare supplier redlines. There is no Figma reference for this module; fields and statuses follow common S2P practice. Confirm with the module owner (open question Q5).</div></div></div>",
+  actions: [{ label: 'Clause library', icon: 'library_books' }, { label: 'Draft from award', icon: 'auto_awesome', kind: 'primary' }],
+  statuses: { drafting: ['', 'Drafting'], myreview: ['warning', 'Your review'], redline: ['info', 'Supplier redlines'], legal: ['info', 'Legal review'], sent: ['success', 'Sent to Contract Workbench'] },
+  tiles: [
+    { label: 'Waiting for my review', icon: 'rate_review', tone: 'warning', match: 'myreview', meta: () => 'drafts assigned to you' },
+    { label: 'Non-standard clauses', icon: 'flag', tone: 'danger', match: 'deviation', meta: m => `${sum(m, 'dev')} clauses differ from the library` },
+    { label: 'Supplier redlines back', icon: 'difference', tone: 'info', match: 'redline', meta: m => `${sum(m, 'changes')} changes to accept or reject` },
+    { label: 'Draft time', icon: 'timer', static: { value: '3.5', unit: 'days', meta: 'award → signature-ready, median' } },
+  ],
+  views: [{ label: 'All drafts', match: '' }, { label: 'Drafting', match: 'drafting' }, { label: 'Review', match: 'myreview' }, { label: 'Redlines', match: 'redline' }, { label: 'Legal', match: 'legal' }, { label: 'Sent', match: 'sent' }],
+  tableTitle: 'Drafts', search: 'Agreement, supplier, template', total: 12,
+  columns: [
+    { key: 'id', label: 'Draft', sticky: true, render: r => H.id(r.id) },
+    { key: 't', label: 'Agreement', wrap: true, render: r => H.two(r.t, r.sup) },
+    { opt: true, key: 'tpl', label: 'Template' },
+    { key: 'dev', label: 'Non-standard', num: true, render: r => r.dev ? `<span class="ps-chip ps-chip--danger ps-chip--plain">${r.dev} clauses</span>` : '<span class="ink-3">None</span>' },
+    { key: 'from', label: 'Source', render: r => esc(r.from) },
+    { opt: true, key: 'upd', label: 'Updated' },
+    { key: 'status', label: 'Stage', render: r => H.status(r) },
+  ],
+  rows: [
+    { id: 'AD-118', t: 'Supply agreement, industrial gases', sup: 'Linde India', tpl: 'Supply · India v4', dev: 2, changes: 0, from: 'AW-2025-039', upd: 'Today', status: 'myreview', tags: 'myreview deviation' },
+    { id: 'AD-117', t: 'SaaS agreement, cloud backup', sup: 'Nova Cloud Services', tpl: 'SaaS · data residency v2', dev: 3, changes: 11, from: 'AW-2025-038', upd: 'Yesterday', status: 'redline', tags: 'redline deviation' },
+    { id: 'AD-116', t: 'Rate contract, lab consumables', sup: 'Orbit Scientific', tpl: 'Rate contract v6', dev: 0, changes: 4, from: 'AW-2025-037', upd: '21 Nov', status: 'redline', tags: 'redline' },
+    { id: 'AD-115', t: 'Services, corrugated boxes West', sup: 'Pacific Packaging', tpl: 'Rate contract v6', dev: 0, changes: 0, from: 'AW-2025-041 (pending)', upd: '20 Nov', status: 'drafting', tags: 'drafting' },
+    { id: 'AD-114', t: 'Master services, freight FY27', sup: 'Swift Logistics', tpl: 'MSA · logistics v3', dev: 1, changes: 0, from: 'Renewal of C-009', upd: '19 Nov', status: 'legal', tags: 'legal deviation' },
+    { id: 'AD-112', t: 'Rate contract, safety PPE', sup: 'Shree Safety Co', tpl: 'Rate contract v6', dev: 0, changes: 0, from: 'AW-2025-036', upd: '14 Nov', status: 'sent', tags: 'sent' },
+  ],
+  below: `<section class="ps-card" aria-labelledby="tpl-t"><div class="ps-card__head"><h2 class="ps-card__title" id="tpl-t"><span class="ms" aria-hidden="true">library_books</span>Templates</h2><span class="t-body-sm ink-3">8 approved</span></div><ul class="ps-list">
+    <li><div class="ps-list__main"><span class="ps-list__title">Rate contract v6</span><span class="ps-list__meta">Used 41 times · updated Sep 2025</span></div></li>
+    <li><div class="ps-list__main"><span class="ps-list__title">Supply · India v4</span><span class="ps-list__meta">Used 18 times</span></div></li>
+    <li><div class="ps-list__main"><span class="ps-list__title">SaaS · data residency v2</span><span class="ps-list__meta">Used 9 times · needs IT security sign-off</span></div></li>
+    <li><div class="ps-list__main"><span class="ps-list__title">MSA · logistics v3</span><span class="ps-list__meta">Used 6 times</span></div></li></ul>
+    <div class="ps-card__foot"><button class="ps-btn ps-btn--text ps-btn--sm" data-todo>All templates</button></div></section>`,
+  preview: {
+    title: r => `${r.id} · ${r.t}`, sub: r => `${r.sup} · from ${r.from}`,
+    alert: r => r.dev ? `<div class="ps-alert ps-alert--warning"><span class="ms" aria-hidden="true">flag</span><div><div class="ps-alert__title">${r.dev} clauses differ from the library</div><div class="ps-alert__text">Limitation of liability and termination notice period. Legal sign-off needed.</div></div></div>` : '',
+    fields: [['Template', r => esc(r.tpl)], ['Supplier changes', r => r.changes], ['Updated', r => esc(r.upd)]],
+    primary: r => ({ myreview: 'Review draft', redline: 'Compare redlines', drafting: 'Continue drafting', legal: 'Send reminder' })[r.status] || '',
+  },
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

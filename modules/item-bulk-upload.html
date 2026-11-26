@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bulk upload</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Detail · Form pattern. Item master BRD S09 bulk upload for MDM: template, upload, row validation, error file, submit valid rows. -->
+<body data-shell="buyer" data-root=".." data-group="items" data-module="item-bulk-upload" data-crumbs="Item Master|Bulk upload">
+<main id="main">
+  <div class="ps-pagehead"><div class="ps-pagehead__text"><a class="ps-back" href="item-requests.html"><span class="ms" aria-hidden="true">arrow_back</span>Item requests</a><h1 class="t-headline">Bulk upload</h1><p class="ps-pagehead__meta">Load many new items at once. Every row follows the same workflow as a portal request.</p></div></div>
+  <div id="errs" class="ps-alert ps-alert--danger ps-errsum" role="alert" tabindex="-1" hidden></div>
+  <section class="ps-section" aria-labelledby="u1">
+    <div class="ps-section__head"><div><h2 class="ps-section__title" id="u1">1. Get the template and fill it in</h2><p class="ps-section__sub">One row per item. Category, base unit and plant use the codes listed in the template notes.</p></div><button type="button" class="ps-btn ps-btn--secondary" id="dl-tpl"><span class="ms" aria-hidden="true">download</span>Download template</button></div>
+    <div class="ps-section__body"><div class="ps-table-scroll"><table class="ps-table"><caption class="sr-only">Template columns</caption><thead><tr><th>Column</th><th>What to enter</th></tr></thead><tbody id="cols"></tbody></table></div></div>
+  </section>
+  <section class="ps-section" aria-labelledby="u2">
+    <div class="ps-section__head"><div><h2 class="ps-section__title" id="u2">2. Upload the file</h2><p class="ps-section__sub">CSV file. Each row is checked for mandatory fields, codes and duplicates.</p></div></div>
+    <div class="ps-section__body"><div class="ps-drop"><span class="ms" aria-hidden="true">upload_file</span><div><label for="file" style="cursor:pointer"><strong>Choose a CSV file</strong></label> <input type="file" id="file" class="sr-only" accept=".csv,text/csv"><div class="ps-field__help">Or <button type="button" class="ps-btn ps-btn--text ps-btn--sm" id="sample">try the sample file</button> with three good rows, one duplicate and one error.</div></div></div></div>
+  </section>
+  <section class="ps-section" aria-labelledby="u3" id="result" hidden>
+    <div class="ps-section__head"><div><h2 class="ps-section__title" id="u3">3. Check the rows</h2><p class="ps-section__sub" id="sum"></p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="ps-btn ps-btn--secondary" id="dl-err"><span class="ms" aria-hidden="true">download</span>Download error file</button></div></div>
+    <div class="ps-section__body"><div class="ps-table-scroll"><table class="ps-table ps-table--stack"><caption class="sr-only">Row results</caption><thead><tr><th>Row</th><th>Short description</th><th>Item type</th><th>Plant</th><th>Result</th></tr></thead><tbody id="rows"></tbody></table></div></div>
+  </section>
+  <div class="ps-actionbar"><div class="ps-actionbar__sum"><div><span>Rows</span><b id="n-all">0</b></div><div><span>Ready</span><b id="n-ok">0</b></div><div><span>Need fixing</span><b id="n-bad">0</b></div></div><div class="ps-actionbar__btns"><button type="button" class="ps-btn ps-btn--primary" id="submit" disabled aria-describedby="why">Submit valid rows</button></div><span class="sr-only" id="why">Upload a file with at least one valid row first.</span></div>
+</main>
+<script src="/assets/js/ps.js"></script>
+<script src="/assets/js/item-master.js"></script>
+<script src="/assets/js/item-ui.js"></script>
+<script>
+{
+  const U = IMUI, $ = id => document.getElementById(id), ME = 'Karthik Subramanian';
+  const COLS = [['item_type', 'Goods, Service or Asset'], ['short_description', 'Up to 40 characters, upper case'], ['long_description', 'Full specification'], ['category', 'Lowest category code, for example it-lap or ppe-glv'], ['base_unit', 'Unit code: ' + Object.keys(IM.UOM).join(', ')], ['hs_code', 'HSN, SAC or HS code'], ['manufacturer', 'Optional'], ['part_number', 'Optional, used for the duplicate check'], ['plant', 'Plant code: ' + Object.keys(IM.PLANTS).join(', ')], ['justification', 'Why the item is needed']];
+  $('cols').innerHTML = COLS.map(c => `<tr><td data-l="Column"><code>${c[0]}</code></td><td data-l="What to enter">${U.esc(c[1])}</td></tr>`).join('');
+  const SAMPLE = `${COLS.map(c => c[0]).join(',')}\nGoods,"GLOVES, LEATHER, DRIVER, PAIR","Leather driver gloves, cow split leather, pair",ppe-glv,PR,4203.21,Karam,KG-LD1,CHN1,Replenish workshop stock\nGoods,"HELMET, SAFETY, WHITE","Industrial safety helmet, white, ABS shell",ppe-hlm,EA,6506.10,Karam,PN-501,CHN1,Second plant\nGoods,"CABLE, USB-C, 1 M","USB-C to USB-C cable, 1 m",,EA,8544.42,Belkin,CAB-1,BLR1,New joiner kits\nService,"SERVICE, CHILLER AMC, ANNUAL","Annual maintenance contract for chillers",svc-it,YR,998719,,,CHN1,Plant cooling uptime\nGoods,"BEARING, BALL, 6205-2RS","Sealed deep groove ball bearing 25 x 52 x 15 mm",mro-brg,EA,8482.10,SKF,6205-2RSH,PNQ1,Pune line spares`;
+  const parse = text => { const out = []; let row = [], cur = '', q = false;
+    for (let i = 0; i < text.length; i++) { const c = text[i];
+      if (q) { if (c === '"' && text[i + 1] === '"') { cur += '"'; i++; } else if (c === '"') q = false; else cur += c; }
+      else if (c === '"') q = true; else if (c === ',') { row.push(cur); cur = ''; } else if (c === '\n' || c === '\r') { if (c === '\r' && text[i + 1] === '\n') i++; row.push(cur); out.push(row); row = []; cur = ''; } else cur += c; }
+    if (cur || row.length) { row.push(cur); out.push(row); } return out.filter(r => r.some(x => x.trim())); };
+  const csvLine = a => a.map(v => /[",\n]/.test(v) ? '"' + String(v).replace(/"/g, '""') + '"' : v).join(',');
+  const download = (name, text) => { const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(new Blob([text], { type: 'text/csv' })), download: name }); document.body.append(a); a.click(); a.remove(); };
+  let results = [];
+
+  const check = (rec, n) => { const f = { ...rec }, errs = [], warn = [];
+    const type = ['Goods', 'Service', 'Asset'].find(t => t.toLowerCase() === (f.item_type || '').trim().toLowerCase());
+    const desc = (f.short_description || '').trim().toUpperCase(), plant = (f.plant || '').trim().toUpperCase();
+    if (!type) errs.push('Item type must be Goods, Service or Asset');
+    if (!desc) errs.push('Short description is empty'); else if (desc.length > 40) errs.push('Short description is longer than 40 characters');
+    if (!(f.long_description || '').trim()) errs.push('Long description is empty');
+    if (!IM.CATS[(f.category || '').trim()]) errs.push('Category code is missing or unknown');
+    if (!IM.UOM[(f.base_unit || '').trim().toUpperCase()]) errs.push('Base unit code is unknown');
+    if (!IM.PLANTS[plant]) errs.push('Plant code is unknown');
+    if (!(f.justification || '').trim()) errs.push('Justification is empty');
+    let dup = [];
+    if (!errs.length) { dup = IM.dupCheck({ desc, mfr: f.manufacturer, mpn: f.part_number, cat: f.category.trim(), uom: f.base_unit.trim().toUpperCase() }, type, [plant]);
+      const hard = dup.find(m => ['exact', 'blocked'].includes(m.kind)); if (hard) errs.push(`${hard.kind === 'blocked' ? 'Blocked item' : 'Duplicate of'} ${hard.code}`);
+      else if (dup.some(m => ['similar', 'pending', 'diffType'].includes(m.kind))) warn.push('Similar to ' + dup.filter(m => ['similar', 'pending', 'diffType'].includes(m.kind)).map(m => m.code).join(', ') + '. MDM will check'); }
+    return { n, rec: f, type, desc, plant, errs, warn }; };
+
+  const load = text => { const rows = parse(text), head = rows.shift()?.map(h => h.trim().toLowerCase()) || [];
+    const miss = COLS.map(c => c[0]).filter(c => !head.includes(c));
+    if (miss.length) { U.errsum($('errs'), [{ id: 'u2', msg: 'The file is missing the columns ' + miss.join(', ') + '. Download the template and use its header row.' }]); return; }
+    $('errs').hidden = true; if (!rows.length) { U.errsum($('errs'), [{ id: 'u2', msg: 'The file has a header row but no items.' }]); return; }
+    results = rows.map((r, i) => check(Object.fromEntries(head.map((h, k) => [h, r[k] || ''])), i + 2));
+    const ok = results.filter(x => !x.errs.length).length;
+    $('result').hidden = false; $('n-all').textContent = results.length; $('n-ok').textContent = ok; $('n-bad').textContent = results.length - ok;
+    $('sum').textContent = `${ok} of ${results.length} rows are ready. Fix the others in the file and upload it again, or submit the valid rows now.`;
+    $('rows').innerHTML = results.map(x => `<tr><td data-l="Row">${x.n}</td><td data-l="Short description">${U.esc(x.desc || x.rec.short_description)}</td><td data-l="Item type">${U.esc(x.type || x.rec.item_type)}</td><td data-l="Plant">${U.esc(x.plant)}</td><td data-l="Result">${x.errs.length ? U.chip('danger', 'Error', 'error') + `<div class="t-body-sm" style="margin-top:4px">${U.esc(x.errs.join('. '))}</div>` : U.chip(x.warn.length ? 'warning' : 'success', x.warn.length ? 'Flagged' : 'Ready', x.warn.length ? 'warning' : 'check') + (x.warn.length ? `<div class="t-body-sm" style="margin-top:4px">${U.esc(x.warn[0])}</div>` : '')}</td></tr>`).join('');
+    $('submit').disabled = !ok; $('dl-err').disabled = ok === results.length; $('submit').textContent = ok ? `Submit ${ok} valid ${ok === 1 ? 'row' : 'rows'}` : 'Submit valid rows'; $('why').textContent = ok ? 'Creates one item request per valid row.' : 'No valid rows to submit.'; };
+
+  $('dl-tpl').addEventListener('click', () => { download('item-upload-template.csv', COLS.map(c => c[0]).join(',') + '\n'); PS.toast('Template downloaded'); });
+  $('sample').addEventListener('click', () => load(SAMPLE));
+  $('file').addEventListener('change', e => { const f = e.target.files[0]; if (!f) return; if (!/\.csv$/i.test(f.name)) { U.errsum($('errs'), [{ id: 'u2', msg: 'Choose a CSV file. Save the sheet as CSV first.' }]); return; } const rd = new FileReader(); rd.onload = () => load(String(rd.result)); rd.readAsText(f); });
+  $('dl-err').addEventListener('click', () => { const bad = results.filter(x => x.errs.length); download('item-upload-errors.csv', csvLine([...COLS.map(c => c[0]), 'error']) + '\n' + bad.map(x => csvLine([...COLS.map(c => x.rec[c[0]] || ''), x.errs.join('; ')])).join('\n')); PS.toast(`${bad.length} rows written to the error file`); });
+  $('submit').addEventListener('click', () => { const ok = results.filter(x => !x.errs.length); let made = 0;
+    ok.forEach(x => { const r = IM.blank('New', x.type, ME); r.channel = 'Portal bulk upload'; const c = IM.CATS[x.rec.category.trim()];
+      Object.assign(r.f, { desc: x.desc, long: x.rec.long_description.trim(), cat: x.rec.category.trim(), uom: x.rec.base_unit.trim().toUpperCase(), hs: x.rec.hs_code || c.hs, mfr: x.rec.manufacturer, mpn: x.rec.part_number, gl: c.gl, plants: [x.plant], tax: x.type === 'Service' ? 'GST 18% (SAC)' : 'GST 18%', justification: x.rec.justification.trim(), needBy: '' });
+      r.dup = { checked: true, matches: x.warn.length ? ['flagged'] : [], decision: x.warn.length ? 'Not a duplicate' : '', reason: x.warn.length ? 'Bulk upload row ' + x.n + ': MDM to confirm' : '' }; IM.saveRequest(r); if (IM.act(r.id, 'submit', { who: ME }).ok) made++; });
+    PS.toast(`${made} item requests created from the upload`); setTimeout(() => { location.href = 'item-requests.html?view=mdm'; }, 1000); });
+}
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PR-2025-00123 Business laptops</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Detail · Record page pattern: back link → title + status → key facts strip → tabs (main) + aside (approval, related) -->
+<body data-shell="buyer" data-root=".." data-group="requisition" data-module="pr" data-crumbs="Requisition|Purchase requests>modules/pr.html|PR-2025-00123">
+<main id="main">
+  <div class="ps-rec">
+    <a class="ps-back" href="pr.html"><span class="ms" aria-hidden="true">arrow_back</span>Purchase requests</a>
+    <div class="ps-rec__top">
+      <div class="ps-rec__title">
+        <span class="ps-rec__id">PR-2025-00123 · Material · raised 23 Nov 2025</span>
+        <h1 class="t-headline">Business laptops for IT <span class="ps-chip ps-chip--warning">Pending approval</span></h1>
+        <p class="ink-2">Pranav Sharma · IT · ABC Corporation, Technology BU</p>
+      </div>
+      <div class="ps-pagehead__actions">
+        <div class="ps-menuwrap"><button class="ps-btn ps-btn--secondary" data-menu="pr-more" aria-haspopup="menu" aria-expanded="false">More <span class="ms" aria-hidden="true">expand_more</span></button>
+          <div class="ps-menu" id="pr-more" role="menu" aria-label="More actions"><button role="menuitem" data-toast="Copied as new draft PR-2025-00125"><span class="ms" aria-hidden="true">content_copy</span>Duplicate</button><button role="menuitem" data-todo><span class="ms" aria-hidden="true">print</span>Print / PDF</button><hr><button role="menuitem" class="is-danger" data-open="withdraw"><span class="ms" aria-hidden="true">cancel</span>Withdraw</button></div></div>
+        <button class="ps-btn ps-btn--secondary" data-toast="Reminder sent to John Doe"><span class="ms" aria-hidden="true">notifications_active</span>Remind approver</button>
+      </div>
+    </div>
+    <dl class="ps-rec__facts">
+      <div><dt>Estimated value</dt><dd class="big">₹22,50,000</dd></div>
+      <div><dt>GST (18%)</dt><dd class="num">₹4,05,000</dd></div>
+      <div><dt>Required by</dt><dd>15 Dec 2025</dd></div>
+      <div><dt>Deliver to</dt><dd>Chennai office</dd></div>
+      <div><dt>Preferred supplier</dt><dd>ABC Technologies · C-001</dd></div>
+    </dl>
+  </div>
+
+  <div class="ps-split">
+    <div class="ps-stack">
+      <div class="ps-tabs" role="tablist" aria-label="PR sections">
+        <button class="ps-tab" role="tab" aria-selected="true" aria-controls="tp-items" id="t-items">Line items <span class="ps-count">2</span></button>
+        <button class="ps-tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="tp-details" id="t-details">Details</button>
+        <button class="ps-tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="tp-docs" id="t-docs">Documents <span class="ps-count">2</span></button>
+        <button class="ps-tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="tp-act" id="t-act">Activity</button>
+      </div>
+
+      <section id="tp-items" role="tabpanel" aria-labelledby="t-items" class="ps-section">
+        <div class="ps-table-scroll">
+          <table class="ps-lines">
+            <thead><tr><th>#</th><th>Item</th><th class="num">Qty</th><th>UOM</th><th class="num">Unit price (₹)</th><th class="num">Amount (₹)</th><th>Source</th></tr></thead>
+            <tbody>
+              <tr><td data-l="#">10</td><td data-l="Item"><strong>Business laptop, 14"</strong><br><span class="t-body-sm ink-3">LT-001 · Core i7, 16 GB, 512 GB SSD, Windows 11 Pro</span></td><td class="num" data-l="Qty">20</td><td data-l="UOM">Each</td><td class="num" data-l="Unit price">98,500</td><td class="num" data-l="Amount">19,70,000</td><td data-l="Source"><span class="ps-chip ps-chip--success ps-chip--plain">Contract C-001</span></td></tr>
+              <tr><td data-l="#">20</td><td data-l="Item"><strong>Docking station, USB-C</strong><br><span class="t-body-sm ink-3">Free text · no catalogue match</span></td><td class="num" data-l="Qty">20</td><td data-l="UOM">Each</td><td class="num" data-l="Unit price">14,000</td><td class="num" data-l="Amount">2,80,000</td><td data-l="Source"><span class="ps-chip ps-chip--plain">Needs quotes</span></td></tr>
+            </tbody>
+            <tfoot><tr><td colspan="5" style="text-align:right;font-weight:600">Total excl. GST</td><td class="num" style="font-weight:700">22,50,000</td><td></td></tr></tfoot>
+          </table>
+        </div>
+        <div class="ps-section__body" style="padding-top:12px">
+          <div class="ps-alert"><span class="ms" aria-hidden="true">info</span><div><div class="ps-alert__title">Line 20 will go to RFQ after approval</div><div class="ps-alert__text">Line 10 converts straight to a PO on contract C-001.</div></div></div>
+        </div>
+      </section>
+
+      <section id="tp-details" role="tabpanel" aria-labelledby="t-details" class="ps-section" hidden>
+        <div class="ps-section__body">
+          <div><h2 class="t-title-sm" style="margin-bottom:8px">Why it's needed</h2><p>Procurement of 20 business laptops for the Chennai IT team to support new joiners in Q4 and replace devices older than four years.</p><p class="ps-ai-tag" style="margin-top:6px"><span class="ms" aria-hidden="true">auto_awesome</span>AI-drafted · edited by Pranav Sharma</p></div>
+          <hr class="ps-divider">
+          <dl class="ps-dl">
+            <div><dt>Company</dt><dd>ABC Corporation</dd></div><div><dt>Business unit</dt><dd>Technology</dd></div><div><dt>Plant / location</dt><dd>Chennai · IN01-CH</dd></div>
+            <div><dt>Procurement org</dt><dd>Procurement Org 1</dd></div><div><dt>Purchasing group</dt><dd>PG-IT</dd></div><div><dt>Currency</dt><dd>INR</dd></div>
+            <div><dt>Cost centre</dt><dd>IT-CH-01</dd></div><div><dt>GL account</dt><dd>520100 · IT equipment</dd></div><div><dt>Project</dt><dd>—</dd></div>
+            <div><dt>Priority</dt><dd>Normal</dd></div><div><dt>Category</dt><dd>IT Hardware · CAT-001</dd></div><div><dt>Payment terms</dt><dd>Net 30 (from contract)</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section id="tp-docs" role="tabpanel" aria-labelledby="t-docs" class="ps-section" hidden>
+        <div class="ps-section__body">
+          <div class="ps-file"><span class="ms" aria-hidden="true">picture_as_pdf</span><span style="flex:1">laptop-spec-v2.pdf<br><span class="t-body-sm ink-3">412 KB · Pranav Sharma · 23 Nov</span></span><button class="ps-iconbtn ps-iconbtn--sm" aria-label="Download laptop-spec-v2.pdf" data-todo><span class="ms" aria-hidden="true">download</span></button></div>
+          <div class="ps-file"><span class="ms" aria-hidden="true">table_view</span><span style="flex:1">dock-station-quotes.xlsx<br><span class="t-body-sm ink-3">38 KB · Pranav Sharma · 23 Nov</span></span><button class="ps-iconbtn ps-iconbtn--sm" aria-label="Download dock-station-quotes.xlsx" data-todo><span class="ms" aria-hidden="true">download</span></button></div>
+        </div>
+      </section>
+
+      <section id="tp-act" role="tabpanel" aria-labelledby="t-act" class="ps-section" hidden>
+        <div class="ps-section__body">
+          <ol class="ps-timeline">
+            <li><span class="ps-timeline__mark"><span class="ms" aria-hidden="true">chat</span></span><div><div class="ps-timeline__title">Rohan Reddy commented</div><div class="ps-timeline__meta">23 Nov, 16:42 · "Within IT capex. OK from budget side."</div></div></li>
+            <li><span class="ps-timeline__mark ps-timeline__mark--done"><span class="ms" aria-hidden="true">check</span></span><div><div class="ps-timeline__title">Budget check passed</div><div class="ps-timeline__meta">23 Nov, 10:15 · ₹38.2 L left in IT-CH-01</div></div></li>
+            <li><span class="ps-timeline__mark ps-timeline__mark--done"><span class="ms" aria-hidden="true">send</span></span><div><div class="ps-timeline__title">Submitted by Pranav Sharma</div><div class="ps-timeline__meta">23 Nov, 10:14</div></div></li>
+            <li><span class="ps-timeline__mark"><span class="ms" aria-hidden="true">edit</span></span><div><div class="ps-timeline__title">Draft created</div><div class="ps-timeline__meta">23 Nov, 09:40</div></div></li>
+          </ol>
+        </div>
+      </section>
+    </div>
+
+    <aside class="ps-split__aside">
+      <section class="ps-card" aria-labelledby="ap-t">
+        <div class="ps-card__head"><h2 class="ps-card__title" id="ap-t"><span class="ms" aria-hidden="true">approval</span>Approval</h2><span class="t-body-sm ink-3">Step 2 of 3</span></div>
+        <div class="ps-card__body">
+          <ol class="ps-timeline">
+            <li><span class="ps-timeline__mark ps-timeline__mark--done"><span class="ms" aria-hidden="true">check</span></span><div><div class="ps-timeline__title">Budget owner · Rohan Reddy</div><div class="ps-timeline__meta">Approved 23 Nov, 16:42</div></div></li>
+            <li><span class="ps-timeline__mark ps-timeline__mark--now"><span class="ms" aria-hidden="true">hourglass_top</span></span><div><div class="ps-timeline__title">Head of IT · John Doe</div><div class="ps-timeline__meta">Since 23 Nov · SLA 28 Nov, 17:00</div></div></li>
+            <li><span class="ps-timeline__mark"><span class="ms" aria-hidden="true">more_horiz</span></span><div><div class="ps-timeline__title">Procurement · Buyer pool</div><div class="ps-timeline__meta">Above ₹20 L needs procurement review</div></div></li>
+          </ol>
+        </div>
+      </section>
+      <section class="ps-card" aria-labelledby="nx-t">
+        <div class="ps-card__head"><h2 class="ps-card__title" id="nx-t"><span class="ms" aria-hidden="true">alt_route</span>After approval</h2></div>
+        <ul class="ps-list">
+          <li><span class="ms" aria-hidden="true">receipt_long</span><div class="ps-list__main"><span class="ps-list__title">PO for line 10</span><span class="ps-list__meta">ABC Technologies · contract price</span></div></li>
+          <li><span class="ms" aria-hidden="true">request_quote</span><div class="ps-list__main"><span class="ps-list__title">RFQ for line 20</span><span class="ps-list__meta">3 IT resellers · automation rule "IT peripherals"</span></div></li>
+        </ul>
+      </section>
+    </aside>
+  </div>
+  <p class="t-body-sm ink-3">Sample data.</p>
+</main>
+<dialog class="ps-dialog" id="withdraw" aria-labelledby="wd-t">
+  <div class="ps-dialog__head"><span class="ps-dialog__icon ps-dialog__icon--danger"><span class="ms" aria-hidden="true">cancel</span></span><h2 class="ps-dialog__title" id="wd-t">Withdraw PR-2025-00123?</h2></div>
+  <div class="ps-dialog__body"><p>Approvers are notified and the PR returns to draft. You can resubmit it later.</p></div>
+  <div class="ps-dialog__foot"><button class="ps-btn ps-btn--text" data-close>Keep PR</button><button class="ps-btn ps-btn--danger" data-close data-toast="PR-2025-00123 withdrawn" data-toast-action="Undo">Withdraw</button></div>
+</dialog>
+<script src="/assets/js/ps.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

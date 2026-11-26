@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compare quotes RFQ-2025-636</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Detail · Comparison matrix: suppliers as columns, criteria as rows, best value per row marked, recommendation beside it. -->
+<body data-shell="buyer" data-root=".." data-group="sourcing" data-module="rfq" data-crumbs="Sourcing|RFQ>modules/rfq.html|RFQ-2025-636">
+<main id="main">
+  <div class="ps-rec">
+    <a class="ps-back" href="rfq.html"><span class="ms" aria-hidden="true">arrow_back</span>RFQs</a>
+    <div class="ps-rec__top">
+      <div class="ps-rec__title"><span class="ps-rec__id">RFQ-2025-636 · from PR-2025-00110 · closed 20 Nov</span><h1 class="t-headline">HVAC servicing, Q4 <span class="ps-chip ps-chip--warning">Ready to compare</span></h1><p class="ink-2">3 plants · quarterly preventive maintenance plus breakdown call-outs · buyer Meera Iyer</p></div>
+      <div class="ps-pagehead__actions"><button class="ps-btn ps-btn--secondary" data-toast="Comparison exported to Excel"><span class="ms" aria-hidden="true">download</span>Export</button></div>
+    </div>
+    <dl class="ps-rec__facts">
+      <div><dt>PR estimate</dt><dd class="big">₹12,00,000</dd></div>
+      <div><dt>Lowest quote</dt><dd class="big" style="color:var(--ps-success-fg)">₹10,90,000</dd></div>
+      <div><dt>Quotes</dt><dd>3 of 3 invited</dd></div>
+      <div><dt>Open clarifications</dt><dd>1 · Frostline Engineering</dd></div>
+    </dl>
+  </div>
+
+  <div class="ps-split">
+    <section class="ps-section" aria-labelledby="mx-t">
+      <div class="ps-section__head"><div><h2 class="ps-section__title" id="mx-t">CoolAir is lowest on price and response time</h2><p class="ps-section__sub">Best value in each row is marked. Totals exclude GST.</p></div>
+        <label class="ps-switch"><input type="checkbox" role="switch" id="diff">Show differences only</label></div>
+      <div class="ps-table-scroll">
+        <table class="ps-matrix" id="mx">
+          <thead><tr><th scope="col">Criterion</th><th scope="col" class="is-best">CoolAir Services<small>Rank 1 · new supplier</small></th><th scope="col">Kiran Facility Mgmt<small>Rank 2 · incumbent</small></th><th scope="col">Frostline Engineering<small>Rank 3</small></th></tr></thead>
+          <tbody>
+            <tr class="group"><td colspan="4">Commercial</td></tr>
+            <tr><td>Preventive maintenance, 3 plants (₹)</td><td class="is-best good">8,40,000</td><td>8,70,000</td><td>9,15,000</td></tr>
+            <tr><td>Breakdown call-outs, est. 25 (₹)</td><td class="is-best good">2,50,000</td><td>2,70,000 <small class="ink-3">incl. parts 5% off</small></td><td>2,60,000</td></tr>
+            <tr class="is-row-total"><td>Total (₹)</td><td class="is-best good">10,90,000</td><td>11,40,000</td><td>11,75,000</td></tr>
+            <tr><td>vs PR estimate</td><td class="is-best good">−9.2%</td><td>−5.0%</td><td>−2.1%</td></tr>
+            <tr><td>Payment terms</td><td class="is-best">30 days</td><td class="good">45 days</td><td>30 days</td></tr>
+            <tr class="group"><td colspan="4">Service</td></tr>
+            <tr><td>Breakdown response time</td><td class="is-best good">4 hours</td><td>6 hours</td><td>8 hours</td></tr>
+            <tr><td>Warranty on repairs</td><td class="is-best">90 days</td><td>90 days</td><td class="good">180 days</td></tr>
+            <tr class="group"><td colspan="4">Compliance and risk</td></tr>
+            <tr><td>Technical compliance</td><td class="is-best">All 14 items</td><td>All 14 items</td><td class="bad">13 of 14 · clarification</td></tr>
+            <tr><td>Supplier risk</td><td class="is-best"><span class="ps-risk ps-risk--low"><span class="num">22</span><span class="ps-risk__bar"><i style="width:22%"></i></span>Low</span></td><td><span class="ps-risk ps-risk--critical"><span class="num">81</span><span class="ps-risk__bar"><i style="width:81%"></i></span>Critical</span></td><td><span class="ps-risk ps-risk--low"><span class="num">30</span><span class="ps-risk__bar"><i style="width:30%"></i></span>Low</span></td></tr>
+            <tr><td>Onboarding status</td><td class="is-best"><span class="ps-chip ps-chip--success">Approved</span></td><td><span class="ps-chip ps-chip--success">Approved</span></td><td><span class="ps-chip ps-chip--success">Approved</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <aside class="ps-split__aside">
+      <section class="ps-card" aria-labelledby="rec-t">
+        <div class="ps-card__head"><h2 class="ps-card__title" id="rec-t"><span class="ms" aria-hidden="true">military_tech</span>Recommendation</h2></div>
+        <div class="ps-card__body ps-stack" style="gap:12px">
+          <div class="ps-ai">
+            <div class="ps-ai__head"><span class="ms" aria-hidden="true">auto_awesome</span>Award to CoolAir Services</div>
+            <p class="ps-ai__text">Lowest total and fastest response, fully compliant, low risk. The incumbent, Kiran Facility Mgmt, has a pending labour-law notice (critical risk).</p>
+            <p class="ps-ai__why">From 3 quotes, the compliance checklist and Supplier Risk. You decide.</p>
+          </div>
+          <fieldset class="ps-fieldset"><legend>Award to</legend>
+            <label class="ps-radio"><input type="radio" name="aw" value="CoolAir Services" checked>CoolAir Services · ₹10,90,000</label>
+            <label class="ps-radio"><input type="radio" name="aw" value="Kiran Facility Mgmt">Kiran Facility Mgmt · ₹11,40,000</label>
+            <label class="ps-radio"><input type="radio" name="aw" value="Frostline Engineering">Frostline Engineering · ₹11,75,000</label>
+          </fieldset>
+          <div class="ps-field" id="just-wrap" hidden><label class="ps-field__label" for="just">Why not the lowest quote?</label><textarea class="ps-textarea" id="just" aria-describedby="just-e"></textarea><span class="ps-field__error" id="just-e" hidden><span class="ms" aria-hidden="true">error</span>Policy needs a reason when the lowest quote is not chosen.</span></div>
+          <p class="t-body-sm ink-3">Goes to Category Lead approval (under ₹25 L). Suppliers are told only after approval.</p>
+        </div>
+        <div class="ps-card__foot"><button class="ps-btn ps-btn--primary" id="send">Send for award approval</button></div>
+      </section>
+      <section class="ps-card" aria-labelledby="q-t">
+        <div class="ps-card__head"><h2 class="ps-card__title" id="q-t"><span class="ms" aria-hidden="true">forum</span>Clarification</h2><span class="ps-chip ps-chip--warning ps-chip--plain">Open</span></div>
+        <div class="ps-card__body ps-stack" style="gap:8px"><p class="t-body-sm ink-3">Frostline Engineering · 19 Nov</p><p>"Item 9, refrigerant recovery: can we subcontract to a licensed partner?"</p><button class="ps-btn ps-btn--secondary ps-btn--sm" style="align-self:flex-start" data-todo>Answer</button></div>
+      </section>
+    </aside>
+  </div>
+  <p class="t-body-sm ink-3">Sample data.</p>
+</main>
+<script src="/assets/js/ps.js"></script>
+<script>
+{
+  const $ = id => document.getElementById(id);
+  document.addEventListener('change', e => {
+    if (e.target.name === 'aw') { const l1 = e.target.value === 'CoolAir Services'; $('just-wrap').hidden = l1; $('send').textContent = `Send ${e.target.value} for award approval`; }
+    if (e.target.id === 'diff') document.querySelectorAll('#mx tbody tr:not(.group)').forEach(r => { const v = [...r.cells].slice(1).map(c => c.textContent.trim()); r.hidden = e.target.checked && new Set(v).size === 1; });
+  });
+  $('send').addEventListener('click', () => {
+    const v = document.querySelector('[name="aw"]:checked').value;
+    if (v !== 'CoolAir Services' && !$('just').value.trim()) { $('just').setAttribute('aria-invalid', 'true'); $('just-e').hidden = false; $('just').focus(); return; }
+    PS.toast(`AW-2025-042 created: ${v}, sent to Category Lead`);
+  });
+}
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>E-Awarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_b.py -->
+<body data-shell="buyer" data-root=".." data-group="sourcing" data-module="e-awarding" data-crumbs="Sourcing|E-Awarding">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+window.PAGE = {
+  title: 'Awards',
+  meta: rows => `${lakh(sum(rows.filter(r => r.status === 'approval'), 'v'))} of awards waiting for approval`,
+  actions: [{ label: 'Award policy', icon: 'policy' }],
+  statuses: { draft: ['', 'Draft'], approval: ['warning', 'In approval'], approved: ['info', 'Approved'], notified: ['success', 'Suppliers notified'], contracted: ['success', 'Contract / PO issued'] },
+  tiles: [
+    { label: 'Awaiting my approval', icon: 'how_to_reg', tone: 'warning', match: 'mine', meta: m => lakh(sum(m, 'v')) },
+    { label: 'Not awarded to L1', icon: 'rule', tone: 'danger', match: 'notl1', meta: () => 'justification required by policy' },
+    { label: 'Approved, suppliers not told', icon: 'campaign', tone: 'info', match: 'approved', meta: () => 'send award and regret letters' },
+    { label: 'Split awards', icon: 'call_split', match: 'split', meta: () => 'more than one supplier' },
+    { label: 'Awarded FY26 YTD', icon: 'military_tech', static: { value: '₹86.4', unit: 'Cr', meta: 'average saving 7.1% vs baseline' } },
+  ],
+  views: [{ label: 'All', match: '' }, { label: 'Drafts', match: 'draft' }, { label: 'In approval', match: 'approval' }, { label: 'Approved', match: 'approved' }, { label: 'Notified', match: 'notified' }, { label: 'Contract / PO issued', match: 'contracted' }],
+  tableTitle: 'Award recommendations', search: 'Award, event, supplier', total: 14,
+  columns: [
+    { key: 'id', label: 'Award', sticky: true, render: r => H.id(r.id) },
+    { key: 'ev', label: 'Event', wrap: true, render: r => H.two(r.t, r.ev) },
+    { key: 'sup', label: 'Recommended', render: r => H.two(r.sup, r.tags.includes('notl1') ? 'Not L1 · justified' : r.tags.includes('split') ? 'Split award' : 'L1') },
+    { key: 'v', label: 'Award value (₹)', num: true, sort: true, render: r => inr(r.v) },
+    { key: 'sav', label: 'Saving', num: true, sort: true, render: r => `<span style="color:var(--ps-success-fg);font-weight:600">${r.sav}%</span>` },
+    { opt: true, key: 'step', label: 'Approval step' },
+    { key: 'status', label: 'Status', render: r => H.status(r) },
+  ],
+  bulk: ['Notify suppliers'],
+  rows: [
+    { id: 'AW-2025-041', t: 'Corrugated boxes, West', ev: 'ES-2025-022', sup: 'Pacific Packaging', v: 9024000, sav: 6.0, step: 'You · Category Lead', status: 'approval', tags: 'approval mine' },
+    { id: 'AW-2025-040', t: 'Forklift rental', ev: 'RFQ-2025-638', sup: 'Swift Logistics', v: 1185000, sav: 8.8, step: 'You · Category Lead', status: 'approval', tags: 'approval mine' },
+    { id: 'AW-2025-039', t: 'Industrial gases, South', ev: 'ES-2025-025', sup: 'Linde India + Inox Air', v: 16900000, sav: 6.1, step: 'CFO', status: 'approval', tags: 'approval split' },
+    { id: 'AW-2025-038', t: 'Cloud backup service', ev: 'RFQ-2025-612', sup: 'Nova Cloud Services', v: 2800000, sav: 3.4, step: 'CPO · not L1', status: 'approval', tags: 'approval notl1' },
+    { id: 'AW-2025-037', t: 'Lab consumables, annual', ev: 'RFQ-2025-607', sup: 'Orbit Scientific', v: 1460000, sav: 9.2, step: 'Done', status: 'approved', tags: 'approved' },
+    { id: 'AW-2025-036', t: 'Safety PPE, 2-year', ev: 'ES-2025-019', sup: 'Shree Safety Co', v: 7200000, sav: 11.5, step: 'Done', status: 'contracted', tags: 'contracted' },
+  ],
+  preview: {
+    title: r => `${r.id} · ${r.t}`, sub: r => `${r.ev} · ${r.sup}`,
+    alert: r => r.tags.includes('notl1') ? `<div class="ps-alert ps-alert--warning"><span class="ms" aria-hidden="true">rule</span><div><div class="ps-alert__title">Recommended supplier is not the lowest bidder</div><div class="ps-alert__text">L1 failed the data-residency requirement. Needs CPO approval.</div></div></div>` : '',
+    fields: [['Award value', r => '₹' + inr(r.v)], ['Saving vs baseline', r => r.sav + '%'], ['Current step', r => esc(r.step)]],
+    timelineTitle: 'Approval',
+    timeline: r => [['done', 'Recommended by buyer', ''], [r.status === 'approval' && r.step.startsWith('You') ? 'now' : 'done', 'Category Lead', ''], [r.status === 'approval' && !r.step.startsWith('You') ? 'now' : r.status === 'approval' ? '' : 'done', r.v > 1e7 || r.tags.includes('notl1') ? 'CFO / CPO' : 'Finance', ''], [['notified', 'contracted'].includes(r.status) ? 'done' : '', 'Suppliers notified', '']],
+    primary: r => r.tags.includes('mine') ? 'Review award' : r.status === 'approved' ? 'Notify suppliers' : '',
+    primaryHref: r => r.id === 'AW-2025-041' ? 'award-decision.html' : '',
+    record: r => r.id === 'AW-2025-041' ? 'award-decision.html' : '',
+  },
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

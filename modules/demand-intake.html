@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demand Intake</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_a.py -->
+<body data-shell="buyer" data-root=".." data-group="procurement" data-module="demand-intake" data-crumbs="Procurement|Demand Intake">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+const DM = [
+  ['PR-2025-00123','Pranav Sharma',2250200,'pending'], ['PR-2025-00122','Rohit Kumar',800000,'approved'], ['PR-2025-00121','Sneha Iyer',1200000,'sourcing'],
+  ['PR-2025-00120','Amit Verma',250000,'approved'], ['PR-2025-00119','Kavya Menon',360000,'rejected'], ['PR-2025-00118','Vikram S',180000,'approved'],
+  ['PR-2025-00117','Neha Gupta',500000,'pending'], ['PR-2025-00116','Rahul Jain',1800000,'draft'], ['PR-2025-00115','Pooja Nair',75000,'approved'], ['PR-2025-00114','Siddharth Rao',1000000,'sourcing'],
+];
+window.PAGE = {
+  title: 'Demand Intake',
+  statuses: { draft: ['', 'Draft'], pending: ['warning', 'Pending Approval'], approved: ['success', 'Approved'], sourcing: ['info', 'Under Sourcing'], rejected: ['danger', 'Rejected'] },
+  kpis: [
+    { label: 'Open Demands', value: '1,248', icon: 'inbox', tone: 'info' },
+    { label: 'Needs Attention', value: '312', icon: 'priority_high', tone: 'danger', match: 'attention' },
+    { label: 'Pending Aproval', value: '28', icon: 'pending_actions', tone: 'warning', match: 'pending' },
+    { label: 'Ready for Handoff', value: '426', icon: 'outbox', tone: 'success', match: 'ready' },
+  ],
+  tableTitle: 'Demands', search: 'Demand number, item, requester, supplier…', total: 156,
+  create: [{ label: 'Create Demand', icon: 'add' }],
+  gridActions: [{ label: 'Review Bundles', icon: 'inventory_2' }],
+  views: [{ label: 'All Demands', match: '', count: 156 }, { label: 'My Demands', match: 'mine', count: 89 }, { label: 'Needs Attention', match: 'attention', count: 89 }, { label: 'Pending Approval', match: 'pending', count: 89 }],
+  columns: [
+    { key: 'id', label: 'Demand', sticky: true, sort: true, render: r => H.id(r.id) },
+    { key: 'who', label: 'Requester', sort: true },
+    { key: 'co', label: 'Company / BU', sort: true },
+    { key: 'v', label: 'Estimated Value', num: true, sort: true, render: r => '₹ ' + inr(r.v) },
+    { key: 'created', label: 'Created', sort: true },
+    { key: 'status', label: 'Status', sort: true, render: r => H.status(r) },
+  ],
+  bulk: ['Bundle selected', 'Assign to me', 'Export selected'],
+  rows: DM.map(([id, who, v, status], i) => ({ id, who, v, status, co: 'ABC Corp', created: '00 Oct 2026', tags: [status, i % 2 ? '' : 'mine', ['pending', 'rejected'].includes(status) ? 'attention' : '', status === 'approved' ? 'ready' : ''].join(' ') })),
+  rowMenu: r => [
+    { label: 'View demand', icon: 'visibility', preview: r.id },
+    r.status === 'approved' ? { label: 'Hand off to PR', icon: 'outbox' } : null,
+    { label: 'Add to bundle', icon: 'inventory_2' },
+    { label: 'Assign to me', icon: 'person_add' },
+    '-', { label: 'Cancel demand', icon: 'block', danger: true },
+  ],
+  preview: {
+    title: r => r.id, sub: r => `${r.who} · ${r.co}`,
+    fields: [['Estimated value', r => '₹ ' + inr(r.v)], ['Created', r => esc(r.created)], ['Company / BU', r => esc(r.co)]],
+    primary: r => r.status === 'approved' ? 'Hand off to PR' : '',
+  },
+  note: 'Content from Figma “Demand Intake”, including its placeholders: every Created date reads “00 Oct 2026” and the card label “Pending Aproval” is spelled as in Figma.',
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

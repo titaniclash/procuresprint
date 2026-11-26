@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create Purchase Request</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+<style>
+.step-panel { width: 100%; }
+.rv { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px; }
+.rv h3 { display: flex; justify-content: space-between; align-items: center; font: var(--ps-title-sm); margin-bottom: 8px; }
+</style>
+</head>
+<!-- Detail · Create/edit pattern. Replaces the 2,320 px single page (9 sections, 3 sets of actions) with 4 steps that each fit about one screen.
+     Fields kept from Figma "pr-create-header-details / line-items / review-submit"; defaults fill from profile, catalogue and contract. -->
+<body data-shell="buyer" data-root=".." data-group="requisition" data-module="pr" data-crumbs="Requisition|Purchase requests>modules/pr.html|New request">
+<main id="main">
+  <div class="ps-pagehead">
+    <div class="ps-pagehead__text">
+      <a class="ps-back" href="pr.html"><span class="ms" aria-hidden="true">arrow_back</span>Purchase requests</a>
+      <h1 class="t-headline">New purchase request</h1>
+      <p class="ps-pagehead__meta">Draft PR-2025-00124 · saved 2 min ago</p>
+    </div>
+  </div>
+  <div class="ps-section" style="padding:16px 20px"><ol class="ps-stepper" id="stepper" aria-label="Progress"></ol></div>
+  <div id="errs" class="ps-alert ps-alert--danger ps-errsum" role="alert" tabindex="-1" hidden></div>
+
+  <!-- STEP 1 -->
+  <section class="ps-section step-panel" data-step="1" aria-labelledby="s1">
+    <div class="ps-section__head"><div><h2 class="ps-section__title" id="s1">What do you need, and why?</h2><p class="ps-section__sub">Company, BU, plant and purchasing group come from your profile. <a href="#" id="edit-org">Change</a></p></div></div>
+    <div class="ps-section__body">
+      <div class="ps-formgrid">
+        <div class="ps-field span-2"><label class="ps-field__label" for="title">Title</label><input class="ps-input" id="title" value="Business laptops and docks for IT, Chennai" aria-describedby="title-e"><span class="ps-field__error" id="title-e" hidden><span class="ms" aria-hidden="true">error</span>Give the request a short title.</span></div>
+        <div class="ps-field"><label class="ps-field__label" for="ptype">Type</label><select class="ps-select" id="ptype"><option>Material</option><option>Service</option><option>Capex</option></select></div>
+        <div class="ps-field"><label class="ps-field__label" for="prio">Priority</label><select class="ps-select" id="prio"><option>Normal</option><option>Urgent · needs reason</option></select></div>
+        <div class="ps-field"><label class="ps-field__label" for="cc">Cost centre</label><select class="ps-select" id="cc" aria-describedby="cc-h cc-e"><option value="">Choose a cost centre</option><option selected>IT-CH-01 · IT Chennai</option><option>IT-PN-01 · IT Pune</option></select><span class="ps-field__help" id="cc-h">₹38.2 L left this year</span><span class="ps-field__error" id="cc-e" hidden><span class="ms" aria-hidden="true">error</span>Choose the cost centre that pays for this.</span></div>
+        <div class="ps-field"><label class="ps-field__label" for="proj">Project <span class="ps-field__opt">(optional)</span></label><input class="ps-input" id="proj" placeholder="e.g. PRJ-2025-014"></div>
+        <div class="ps-field span-2"><label class="ps-field__label" for="just">Justification</label><textarea class="ps-textarea" id="just" aria-describedby="just-e" placeholder="Who needs it, what for, and what happens without it"></textarea><span class="ps-field__error" id="just-e" hidden><span class="ms" aria-hidden="true">error</span>Approvers need a reason. Write one or use the suggestion.</span></div>
+      </div>
+      <div class="ps-ai" id="ai">
+        <div class="ps-ai__head"><span class="ms" aria-hidden="true">auto_awesome</span>Suggested justification</div>
+        <p class="ps-ai__text" id="ai-text">20 business laptops and docking stations for the Chennai IT team: 12 for Q4 new joiners and 8 to replace devices older than four years. Laptops are on contract C-001; docks need quotes.</p>
+        <p class="ps-ai__why">Based on your title, cost centre and 3 similar approved PRs. Check it before you use it.</p>
+        <div class="ps-ai__actions"><button type="button" class="ps-btn ps-btn--primary ps-btn--sm" id="ai-use">Use this</button><button type="button" class="ps-btn ps-btn--text ps-btn--sm" id="ai-hide">Dismiss</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="ps-section step-panel" data-step="2" aria-labelledby="s2" hidden>
+    <div class="ps-section__head"><div><h2 class="ps-section__title" id="s2">Items</h2><p class="ps-section__sub">Catalogue items use contract prices and skip sourcing.</p></div></div>
+    <div class="ps-section__body">
+      <div class="ps-combo" style="max-width:min(100%, 640px)">
+        <label class="ps-field__label" for="find">Add from catalogue</label>
+        <div class="ps-inputwrap" style="margin-top:6px"><span class="ms" aria-hidden="true">search</span><input class="ps-input" id="find" role="combobox" aria-expanded="false" aria-controls="find-l" aria-autocomplete="list" placeholder="Search items or type a description"></div>
+        <ul class="ps-combo__list" id="find-l" role="listbox" hidden></ul>
+      </div>
+      <div class="ps-table-scroll">
+        <table class="ps-lines" aria-label="Line items">
+          <thead><tr><th>Item</th><th class="num">Qty</th><th>UOM</th><th class="num">Unit price (₹)</th><th class="num">Amount (₹)</th><th>Source</th><th><span class="sr-only">Remove</span></th></tr></thead>
+          <tbody id="lines"></tbody>
+        </table>
+      </div>
+      <span class="ps-field__error" id="lines-e" hidden><span class="ms" aria-hidden="true">error</span>Add at least one item with a quantity and price.</span>
+      <button type="button" class="ps-btn ps-btn--text" id="add-free" style="align-self:flex-start"><span class="ms" aria-hidden="true">add</span>Add a free-text item</button>
+    </div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="ps-section step-panel" data-step="3" aria-labelledby="s3" hidden>
+    <div class="ps-section__head"><div><h2 class="ps-section__title" id="s3">Delivery and supplier</h2></div></div>
+    <div class="ps-section__body">
+      <div class="ps-formgrid">
+        <div class="ps-field"><label class="ps-field__label" for="loc">Deliver to</label><select class="ps-select" id="loc"><option>Chennai office · IN01-CH</option><option>Pune plant · IN01-PN</option></select></div>
+        <div class="ps-field"><label class="ps-field__label" for="by">Required by</label><input class="ps-input" id="by" type="date" value="2025-12-15" min="2025-11-25" aria-describedby="by-h by-e"><span class="ps-field__help" id="by-h">Contract lead time for laptops is 5 days</span><span class="ps-field__error" id="by-e" hidden><span class="ms" aria-hidden="true">error</span>Choose a date after today.</span></div>
+        <div class="ps-field"><label class="ps-field__label" for="sup">Preferred supplier <span class="ps-field__opt">(optional)</span></label><input class="ps-input" id="sup" value="ABC Technologies"><span class="ps-field__help">Free-text items still go to RFQ with at least 3 suppliers</span></div>
+        <div class="ps-field"><label class="ps-field__label" for="gl">GL account</label><select class="ps-select" id="gl"><option>520100 · IT equipment</option></select></div>
+        <div class="ps-field span-2"><label class="ps-field__label" for="note">Note for the buyer <span class="ps-field__opt">(optional)</span></label><textarea class="ps-textarea" id="note" style="min-height:64px"></textarea></div>
+        <div class="ps-field span-2"><span class="ps-field__label" id="att-l">Attachments <span class="ps-field__opt">(optional)</span></span><div class="ps-drop" aria-labelledby="att-l"><span class="ms" aria-hidden="true">upload_file</span><div><strong>Drop files or <a href="#" data-todo>browse</a></strong><div class="ps-field__help">Specs, quotes. PDF, DOCX, XLSX up to 10 MB</div></div></div><div class="ps-file"><span class="ms" aria-hidden="true">picture_as_pdf</span><span style="flex:1">laptop-spec-v2.pdf<br><span class="t-body-sm ink-3">412 KB</span></span><button type="button" class="ps-iconbtn ps-iconbtn--sm" aria-label="Remove laptop-spec-v2.pdf"><span class="ms" aria-hidden="true">close</span></button></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 4 -->
+  <section class="ps-section step-panel" data-step="4" aria-labelledby="s4" hidden>
+    <div class="ps-section__head"><div><h2 class="ps-section__title" id="s4">Review and submit</h2><p class="ps-section__sub">Check the summary. You can still edit any step.</p></div></div>
+    <div class="ps-section__body">
+      <div class="rv" id="review"></div>
+      <div><h3 class="t-title-sm" style="margin-bottom:8px">Who will approve</h3>
+        <ol class="ps-timeline"><li><span class="ps-timeline__mark"><span class="ms" aria-hidden="true">person</span></span><div><div class="ps-timeline__title">Budget owner · Rohan Reddy</div><div class="ps-timeline__meta">IT-CH-01</div></div></li><li><span class="ps-timeline__mark"><span class="ms" aria-hidden="true">person</span></span><div><div class="ps-timeline__title">Head of IT · John Doe</div><div class="ps-timeline__meta">Value above ₹5 L</div></div></li><li><span class="ps-timeline__mark"><span class="ms" aria-hidden="true">groups</span></span><div><div class="ps-timeline__title">Procurement review</div><div class="ps-timeline__meta">Value above ₹20 L</div></div></li></ol>
+        <p class="t-body-sm ink-3">Expected decision by 28 Nov based on current SLAs.</p></div>
+    </div>
+  </section>
+
+  <div class="ps-actionbar">
+    <div class="ps-actionbar__sum"><div><span>Items</span><b id="sum-n">0</b></div><div><span>Total excl. GST</span><b id="sum-v">₹0</b></div><div><span>GST 18%</span><b id="sum-g">₹0</b></div></div>
+    <div class="ps-actionbar__btns">
+      <button type="button" class="ps-btn ps-btn--text" data-toast="Draft saved">Save draft</button>
+      <button type="button" class="ps-btn ps-btn--secondary" id="back">Back</button>
+      <button type="button" class="ps-btn ps-btn--primary" id="next">Continue</button>
+    </div>
+  </div>
+</main>
+<script src="/assets/js/ps.js"></script>
+<script>
+{
+  const cat = [
+    { id: 'LT-001', n: 'Business laptop, 14"', s: 'Core i7, 16 GB, 512 GB SSD', p: 98500, u: 'Each', ct: 'C-001' },
+    { id: 'MN-024', n: '24" monitor, QHD', s: 'IPS, USB-C', p: 18400, u: 'Each', ct: 'C-001' },
+    { id: 'KB-110', n: 'Keyboard and mouse set', s: 'Wireless, Indian layout', p: 2350, u: 'Set', ct: 'C-001' },
+    { id: 'SW-001', n: 'Microsoft 365 Business', s: 'Annual, per user', p: 12400, u: 'User/yr', ct: 'C-031' },
+  ];
+  let lines = [{ id: 'LT-001', n: 'Business laptop, 14"', s: 'LT-001', q: 20, u: 'Each', p: 98500, src: 'Contract C-001' }, { id: 'free1', n: 'Docking station, USB-C', s: 'Free text', q: 20, u: 'Each', p: 14000, src: 'Needs quotes', free: true }];
+  let step = 1; const done = new Set();
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const inr = n => '₹' + Math.round(n).toLocaleString('en-IN');
+  const names = ['What and why', 'Items', 'Delivery and supplier', 'Review and submit'];
+  const total = () => lines.reduce((a, l) => a + (l.q || 0) * (l.p || 0), 0);
+
+  const drawStepper = () => { $('stepper').innerHTML = names.map((n, i) => { const k = i + 1, st = k === step ? 'current' : done.has(k) ? 'done' : ''; return `<li class="ps-step${st ? ' ps-step--' + st : ''}"${k === step ? ' aria-current="step"' : ''}><button type="button" class="ps-step__btn" data-go="${k}" ${k > step && !done.has(k - 1) ? 'disabled' : ''}><span class="ps-step__mark">${st === 'done' ? '<span class="ms" aria-hidden="true">check</span>' : k}</span><span class="ps-step__text">${n}</span></button></li>`; }).join(''); };
+  const drawLines = () => {
+    $('lines').innerHTML = lines.map((l, i) => `<tr><td data-l="Item">${l.free ? `<label class="sr-only" for="ln${i}">Description</label><input class="ps-input" id="ln${i}" data-i="${i}" data-k="n" value="${esc(l.n)}">` : `<strong>${esc(l.n)}</strong><br><span class="t-body-sm ink-3">${esc(l.s)}</span>`}</td>
+      <td class="num" data-l="Qty"><label class="sr-only" for="q${i}">Quantity</label><input class="ps-input ps-score" id="q${i}" inputmode="numeric" data-i="${i}" data-k="q" value="${l.q}"></td><td data-l="UOM">${esc(l.u)}</td>
+      <td class="num" data-l="Unit price">${l.free ? `<label class="sr-only" for="p${i}">Estimated unit price</label><input class="ps-input" style="width:110px;text-align:right" id="p${i}" inputmode="decimal" data-i="${i}" data-k="p" value="${l.p}">` : l.p.toLocaleString('en-IN')}</td>
+      <td class="num" data-l="Amount">${((l.q || 0) * (l.p || 0)).toLocaleString('en-IN')}</td>
+      <td data-l="Source"><span class="ps-chip ${l.free ? '' : 'ps-chip--success'} ps-chip--plain">${esc(l.src)}</span></td>
+      <td data-l=""><button type="button" class="ps-iconbtn ps-iconbtn--sm" data-del="${i}" aria-label="Remove ${esc(l.n)}"><span class="ms" aria-hidden="true">delete</span></button></td></tr>`).join('') || '<tr><td colspan="7" class="ink-3" style="padding:20px">No items yet. Search the catalogue above.</td></tr>';
+    sums();
+  };
+  const sums = () => { $('sum-n').textContent = lines.length; $('sum-v').textContent = inr(total()); $('sum-g').textContent = inr(total() * .18); };
+  const drawReview = () => {
+    $('review').innerHTML = `
+      <div class="ps-card"><div class="ps-card__body"><h3>What and why <button type="button" class="ps-btn ps-btn--text ps-btn--sm" data-go="1">Edit</button></h3><p><strong>${esc($('title').value)}</strong></p><p class="ink-2 t-body-sm">${esc($('just').value)}</p><p class="t-body-sm ink-3">${esc($('cc').value)} · ${esc($('ptype').value)}</p></div></div>
+      <div class="ps-card"><div class="ps-card__body"><h3>Items <button type="button" class="ps-btn ps-btn--text ps-btn--sm" data-go="2">Edit</button></h3>${lines.map(l => `<p class="t-body-sm">${l.q} × ${esc(l.n)} · ${inr(l.q * l.p)}</p>`).join('')}<p style="margin-top:6px"><strong>${inr(total())}</strong> <span class="t-body-sm ink-3">excl. GST</span></p></div></div>
+      <div class="ps-card"><div class="ps-card__body"><h3>Delivery <button type="button" class="ps-btn ps-btn--text ps-btn--sm" data-go="3">Edit</button></h3><p>${esc($('loc').value)}</p><p class="t-body-sm ink-3">Required by ${new Date($('by').value).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })} · ${esc($('sup').value || 'No preferred supplier')}</p></div></div>`;
+  };
+  const show = k => {
+    step = k; document.querySelectorAll('[data-step]').forEach(p => p.hidden = +p.dataset.step !== k);
+    $('back').disabled = k === 1; $('next').textContent = k === 4 ? 'Submit for approval' : 'Continue';
+    if (k === 4) drawReview();
+    drawStepper(); $('errs').hidden = true; window.scrollTo({ top: 0 });
+  };
+  const fieldErr = (id, bad) => { $(id).setAttribute('aria-invalid', String(bad)); $(id + '-e').hidden = !bad; return bad ? [id, $(id + '-e').textContent.trim()] : null; };
+  const validate = k => {
+    let e = [];
+    if (k === 1) e = [fieldErr('title', !$('title').value.trim()), fieldErr('cc', !$('cc').value), fieldErr('just', $('just').value.trim().length < 10)];
+    if (k === 2) { const bad = !lines.length || lines.some(l => !(l.q > 0) || !(l.p > 0) || !String(l.n).trim()); $('lines-e').hidden = !bad; e = [bad ? ['find', 'Add at least one item with a quantity and price.'] : null]; }
+    if (k === 3) e = [fieldErr('by', !$('by').value || $('by').value < '2025-11-25')];
+    e = e.filter(Boolean);
+    if (e.length) { $('errs').innerHTML = `<span class="ms" aria-hidden="true">error</span><div><div class="ps-alert__title">${e.length} ${e.length === 1 ? 'thing needs' : 'things need'} attention</div><ul>${e.map(([id, m]) => `<li><a href="#${id}">${esc(m)}</a></li>`).join('')}</ul></div>`; $('errs').hidden = false; $('errs').focus(); }
+    return !e.length;
+  };
+  $('next').addEventListener('click', () => {
+    if (!validate(step)) return;
+    done.add(step);
+    if (step < 4) show(step + 1);
+    else { const b = $('next'); b.classList.add('is-loading'); setTimeout(() => { b.classList.remove('is-loading'); PS.toast('PR-2025-00124 submitted to Rohan Reddy for approval'); setTimeout(() => { location.href = 'pr.html'; }, 1600); }, 700); }
+  });
+  $('back').addEventListener('click', () => show(Math.max(1, step - 1)));
+  document.addEventListener('click', e => {
+    const g = e.target.closest('[data-go]'); if (g && !g.disabled) { show(+g.dataset.go); return; }
+    const d = e.target.closest('[data-del]'); if (d) { const [l] = lines.splice(+d.dataset.del, 1); drawLines(); PS.toast(`Removed ${l.n}`); return; }
+    const o = e.target.closest('[data-pick]'); if (o) { const c = cat.find(x => x.id === o.dataset.pick); lines.push({ id: c.id, n: c.n, s: c.id, q: 1, u: c.u, p: c.p, src: 'Contract ' + c.ct }); $('find').value = ''; $('find-l').hidden = true; $('find').setAttribute('aria-expanded', 'false'); drawLines(); return; }
+    if (e.target.id === 'ai-use') { $('just').value = $('ai-text').textContent; $('ai').hidden = true; fieldErr('just', false); PS.toast('Suggestion added. Edit it if needed.'); }
+    if (e.target.id === 'ai-hide') $('ai').hidden = true;
+    if (e.target.id === 'add-free') { lines.push({ id: 'free' + Date.now(), n: '', s: 'Free text', q: 1, u: 'Each', p: 0, src: 'Needs quotes', free: true }); drawLines(); $('ln' + (lines.length - 1)).focus(); }
+    if (e.target.id === 'edit-org') { e.preventDefault(); PS.toast('Organisation fields open in Phase 5 detail.'); }
+  });
+  document.addEventListener('change', e => { const i = e.target.dataset.i; if (i == null) return; const k = e.target.dataset.k; lines[+i][k] = k === 'n' ? e.target.value : Number(String(e.target.value).replace(/,/g, '')); drawLines(); });
+  $('find').addEventListener('input', e => {
+    const q = e.target.value.trim().toLowerCase(), l = $('find-l');
+    const m = q ? cat.filter(c => (c.n + c.s + c.id).toLowerCase().includes(q)) : [];
+    l.innerHTML = m.map(c => `<li class="ps-combo__opt" role="option" aria-selected="false" data-pick="${c.id}"><span>${esc(c.n)}</span><span class="ps-combo__sub">${c.id} · ₹${c.p.toLocaleString('en-IN')} · ${c.ct}</span></li>`).join('') || (q ? '<li class="ps-combo__opt" role="option" aria-selected="false" aria-disabled="true">No catalogue match. Use "Add a free-text item".</li>' : '');
+    l.hidden = !q; e.target.setAttribute('aria-expanded', String(!!q));
+  });
+  drawLines(); show(1);
+}
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

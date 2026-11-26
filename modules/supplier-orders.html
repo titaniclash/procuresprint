@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_c.py -->
+<body data-shell="supplier" data-root=".." data-group="orders" data-module="supplier-orders" data-crumbs="Orders">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+window.PAGE = {
+  title: 'Purchase orders',
+  meta: rows => `${lakh(sum(rows.filter(r => r.status !== 'closed'), 'v'))} of open orders from Mindsprint Digital`,
+  actions: [{ label: 'Create shipment notice', icon: 'local_shipping', kind: 'primary', href: 'supplier-asn-create.html' }],
+  statuses: { new: ['warning', 'To acknowledge'], ack: ['info', 'Acknowledged'], partial: ['info', 'Partly shipped'], shipped: ['success', 'Shipped'], closed: ['', 'Closed'] },
+  tiles: [
+    { label: 'To acknowledge', icon: 'mark_email_unread', tone: 'warning', match: 'new', meta: () => 'confirm price and date' },
+    { label: 'Due in 7 days', icon: 'event', tone: 'danger', match: 'due', meta: m => lakh(sum(m, 'v')) },
+    { label: 'Partly shipped', icon: 'pie_chart', tone: 'info', match: 'partial', meta: () => 'balance still to ship' },
+    { label: 'On-time delivery', icon: 'verified', static: { value: '94', unit: '%', meta: 'last 90 days' } },
+  ],
+  views: [{ label: 'All', match: '' }, { label: 'Open', match: 'open' }, { label: 'To acknowledge', match: 'new' }, { label: 'Shipped', match: 'shipped' }],
+  tableTitle: 'Orders', search: 'PO, item', total: 31,
+  columns: [
+    { key: 'id', label: 'PO', sticky: true, render: r => H.id(r.id) },
+    { key: 't', label: 'Items', wrap: true, render: r => H.two(r.t, r.q) },
+    { key: 'v', label: 'Value (₹)', num: true, render: r => inr(r.v) },
+    { key: 'by', label: 'Deliver by', render: r => r.tags.includes('due') ? H.age(r.by, 'soon') : esc(r.by) },
+    { key: 'to', label: 'Ship to' },
+    { key: 'status', label: 'Status', render: r => H.status(r) },
+  ],
+  rowAction: r => r.id === 'PO-2603102' ? '<a class="ps-btn ps-btn--primary ps-btn--sm" href="supplier-asn-create.html">Create ASN</a>' : r.status === 'new' ? '<button class="ps-btn ps-btn--secondary ps-btn--sm" data-todo>Acknowledge</button>' : ['ack', 'partial'].includes(r.status) ? '<button class="ps-btn ps-btn--secondary ps-btn--sm" data-todo>Create ASN</button>' : '',
+  rows: [
+    { id: 'PO-2603160', t: 'Bearing 6204-2RS', q: '200 pcs', v: 684000, by: '12 Dec', to: 'Pune plant', status: 'new', tags: 'open new' },
+    { id: 'PO-2603148', t: 'Bearing set 6204-2RS', q: '400 pcs', v: 1368000, by: '28 Nov', to: 'Chennai plant', status: 'ack', tags: 'open due' },
+    { id: 'PO-2603102', t: 'Industrial safety gloves', q: '2,000 packs', v: 960000, by: '05 Dec', to: 'Pune plant', status: 'ack', tags: 'open' },
+    { id: 'PO-2603077', t: 'Hydraulic seals kit', q: '150 kits', v: 825000, by: '10 Dec', to: 'Chennai plant', status: 'ack', tags: 'open' },
+    { id: 'PO-2602155', t: 'Gearbox spares', q: '160 of 400 pcs left', v: 820000, by: '30 Nov', to: 'Pune plant', status: 'partial', tags: 'open partial due' },
+    { id: 'PO-2603020', t: 'Mixed MRO spares', q: '5 lines', v: 1710000, by: '19 Nov', to: 'Pune plant', status: 'shipped', tags: 'shipped' },
+  ],
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

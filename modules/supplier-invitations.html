@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invitations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_c.py -->
+<body data-shell="supplier" data-root=".." data-group="rfx" data-module="supplier-invitations" data-crumbs="Invitations">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+window.PAGE = {
+  title: 'Invitations',
+  meta: rows => `Requests to quote, bid or answer from Mindsprint Digital · ${rows.filter(r => r.status === 'new' || r.status === 'draft').length} need your response`,
+  actions: [],
+  statuses: { new: ['warning', 'Not started'], draft: ['info', 'Response in draft'], submitted: ['success', 'Submitted'], won: ['success', 'Awarded to you', 'emoji_events'], lost: ['', 'Not selected'], declined: ['', 'Declined'] },
+  tiles: [
+    { label: 'Closing in 3 days', icon: 'alarm', tone: 'danger', match: 'soon', meta: m => m.map(r => r.id).join(', ') },
+    { label: 'Not started', icon: 'mark_email_unread', tone: 'warning', match: 'new', meta: () => 'accept or decline' },
+    { label: 'Drafts', icon: 'edit_note', tone: 'info', match: 'draft', meta: () => 'saved, not submitted' },
+    { label: 'Win rate', icon: 'emoji_events', static: { value: '38', unit: '%', meta: 'last 12 months · 8 of 21' } },
+  ],
+  views: [{ label: 'All', match: '' }, { label: 'To respond', match: 'open' }, { label: 'Submitted', match: 'submitted' }, { label: 'Results', match: 'result' }],
+  tableTitle: 'Invitations', search: 'RFQ, RFP, auction', total: 9,
+  columns: [
+    { key: 'id', label: 'Reference', sticky: true, render: r => H.id(r.id) },
+    { key: 't', label: 'Title · Type', wrap: true, render: r => H.two(r.t, r.type) },
+    { key: 'lines', label: 'Lines', num: true },
+    { key: 'close', label: 'Closes', render: r => r.tags.includes('soon') ? H.age(r.close, 'late') : esc(r.close) },
+    { key: 'status', label: 'Status', render: r => H.status(r) },
+  ],
+  rowAction: r => r.id === 'RFQ-2025-644' ? '<a class="ps-btn ps-btn--primary ps-btn--sm" href="supplier-rfq-response.html">Continue</a>' : ['new', 'draft'].includes(r.status) ? `<button class="ps-btn ps-btn--secondary ps-btn--sm" data-todo>${r.status === 'new' ? 'Respond' : 'Continue'}</button>` : '',
+  rows: [
+    { id: 'RFQ-2025-644', t: 'Conveyor rollers', type: 'Request for quotation', lines: 4, close: '26 Nov, 17:00 · 2 days', status: 'draft', tags: 'open draft soon' },
+    { id: 'RA-2025-021', t: 'Bearings, annual rate contract', type: 'Reverse auction · practice round open', lines: 38, close: 'Auction 02 Dec, 11:00', status: 'new', tags: 'open new' },
+    { id: 'RFI-2025-112', t: 'Supplier capability', type: 'Request for information', lines: 22, close: '10 Dec', status: 'new', tags: 'open new' },
+    { id: 'RFQ-2025-640', t: 'Bearings and seals', type: 'Request for quotation', lines: 2, close: '26 Nov', status: 'submitted', tags: 'submitted' },
+    { id: 'RA-2025-018', t: 'HR steel coils, 2 mm', type: 'Reverse auction', lines: 1, close: 'Live now', status: 'submitted', tags: 'submitted' },
+    { id: 'RFQ-2025-598', t: 'Hydraulic seal kits', type: 'Request for quotation', lines: 3, close: '02 Nov', status: 'won', tags: 'result' },
+    { id: 'RFQ-2025-571', t: 'V-belts, assorted', type: 'Request for quotation', lines: 6, close: '18 Oct', status: 'lost', tags: 'result' },
+  ],
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

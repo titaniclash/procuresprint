@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roles & Permissions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_d.py -->
+<body data-shell="buyer" data-root=".." data-group="users" data-module="roles" data-crumbs="User Management|Roles & Permissions">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+const RL = [
+  ['ROLE-01','Business User','Raise demands and PRs, shop catalogs, confirm receipts',412,'system'],
+  ['ROLE-02','Buyer','Convert PRs to POs, run RFx, manage catalogs',38,'system'],
+  ['ROLE-03','Approver','Approve PRs, POs and invoices within limits',64,'system'],
+  ['ROLE-04','Category Lead','Own category strategy, sourcing events and renewals',9,'system'],
+  ['ROLE-05','CPO','Enterprise view of spend, savings and risk',1,'system'],
+  ['ROLE-06','CFO office','Commitments, liabilities and payment approvals',4,'system'],
+  ['ROLE-07','AP Specialist','Match, resolve and schedule invoices',12,'custom'],
+  ['ROLE-08','Receiving clerk','Record goods receipts against ASNs',27,'custom'],
+  ['ROLE-09','Auditor (read only)','Read access to all documents and logs',2,'custom'],
+];
+window.PAGE = {
+  title: 'Roles & Permissions',
+  switch: [{ label: 'Users', href: 'users.html' }, { label: 'Roles & Permissions', current: true }],
+  banner: '<div class="ps-alert" role="note"><span class="ms" aria-hidden="true">info</span><div><div class="ps-alert__title">No Figma reference</div><div class="ps-alert__text">Roles mirror the six personas designed on the Figma Home screens, plus three operational roles. Layout and actions follow the shared workbench pattern; content is representative sample data to confirm with the module owner.</div></div></div>',
+  statuses: { system: ['info', 'Standard'], custom: ['', 'Custom'] },
+  kpis: [
+    { label: 'Roles', value: '9', sub: '6 standard · 3 custom', icon: 'badge', tone: 'info' },
+    { label: 'Users assigned', value: '569', sub: 'Across all entities', icon: 'group', tone: 'success' },
+    { label: 'Approval limits', value: '4', sub: 'Value tiers up to ₹25 L+', icon: 'rule', tone: 'warning' },
+    { label: 'Pending changes', value: '0', sub: 'No role edits awaiting review', icon: 'pending', tone: 'brand' },
+  ],
+  tableTitle: 'Roles', search: 'Search role…',
+  create: [{ label: 'Create role', icon: 'add' }],
+  views: [{ label: 'All', match: '' }, { label: 'Standard', match: 'system' }, { label: 'Custom', match: 'custom' }],
+  columns: [
+    { key: 'id', label: 'Role', sticky: true, sort: true, sortVal: r => r.name, render: r => `<a class="cell-id" href="#" data-preview="${esc(r.id)}">${esc(r.name)}</a><br><small class="t-body-sm ink-3">${esc(r.id)}</small>` },
+    { key: 'desc', label: 'What it can do', wrap: true },
+    { key: 'n', label: 'Users', num: true, sort: true },
+    { key: 'status', label: 'Type', render: r => H.status(r) },
+  ],
+  rows: RL.map(([id, name, desc, n, status]) => ({ id, name, desc, n, status, tags: status })),
+  rowMenu: r => [{ label: 'View permissions', icon: 'visibility', preview: r.id }, { label: 'Edit permissions', icon: 'edit' }, { label: 'Duplicate role', icon: 'content_copy', toast: `Copy of ${r.name} created` }, { label: 'View users', icon: 'group', href: 'users.html' }, r.status === 'custom' ? '-' : null, r.status === 'custom' ? { label: 'Delete role', icon: 'delete', danger: true } : null],
+  preview: { title: r => r.name, sub: r => r.id, fields: [['Users', r => esc(r.n)], ['Type', r => r.status === 'system' ? 'Standard' : 'Custom']], extra: r => `<p class="t-body-md">${esc(r.desc)}</p>`, primary: r => 'Edit permissions' },
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

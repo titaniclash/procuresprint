@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Supplier Relationships</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+<style>.ins-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; } .ins-filters .ps-field { min-width: 170px; }</style>
+</head>
+<!-- Module landing · SRM · archetype: Insight overview. Scope assumed (no Figma reference). -->
+<body data-shell="buyer" data-root=".." data-group="suppliers" data-module="srm" data-crumbs="Suppliers|Supplier relationships">
+<main id="main">
+  <div class="ps-pagehead">
+    <div class="ps-pagehead__text">
+      <h1 class="t-headline">Supplier relationships</h1>
+      <p class="ps-pagehead__meta">42 strategic and preferred suppliers carry 71% of FY26 spend · 3 are below their scorecard target</p>
+    </div>
+    <div class="ins-filters">
+      <div class="ps-field"><label class="ps-field__label" for="seg">Segment</label><select class="ps-select" id="seg"><option>Strategic + preferred</option><option>All segments</option></select></div>
+      <div class="ps-field"><label class="ps-field__label" for="per">Period</label><select class="ps-select" id="per"><option>Q3 FY26 (Oct–Dec)</option><option>FY26 YTD</option></select></div>
+    </div>
+  </div>
+  <div class="ps-alert" role="note"><span class="ms" aria-hidden="true">info</span><div><div class="ps-alert__title">Scope assumed</div><div class="ps-alert__text">SRM is shown as segmentation, quarterly scorecards, business reviews and improvement plans. There is no Figma reference; confirm with the module owner (open question Q5).</div></div></div>
+
+  <section class="ps-tiles" aria-label="Relationship actions">
+    <button class="ps-tile ps-tile--danger" aria-pressed="false" data-target="srm-table" data-match="below"><span class="ps-tile__label"><span class="ms" aria-hidden="true">trending_down</span>Below scorecard target</span><span class="ps-tile__value">3</span><span class="ps-tile__meta">target 75 · ₹20.6 Cr spend</span></button>
+    <button class="ps-tile ps-tile--warning" aria-pressed="false" data-target="srm-table" data-match="plan"><span class="ps-tile__label"><span class="ms" aria-hidden="true">assignment_late</span>Improvement plan overdue</span><span class="ps-tile__value">2</span><span class="ps-tile__meta">actions past due date</span></button>
+    <button class="ps-tile ps-tile--info" aria-pressed="false" data-target="srm-table" data-match="qbr"><span class="ps-tile__label"><span class="ms" aria-hidden="true">event</span>Business reviews in 30 days</span><span class="ps-tile__value">3</span><span class="ps-tile__meta">prepare scorecards first</span></button>
+    <button class="ps-tile" aria-pressed="false" data-target="srm-table" data-match="due"><span class="ps-tile__label"><span class="ms" aria-hidden="true">edit_note</span>Scorecards to complete</span><span class="ps-tile__value">2</span><span class="ps-tile__meta">Q3 stakeholder ratings missing</span></button>
+    <div class="ps-tile ps-tile--brand ps-tile--static"><span class="ps-tile__label"><span class="ms" aria-hidden="true">star_half</span>Average score</span><span class="ps-tile__value">78</span><span class="ps-tile__meta"><span class="ps-tile__delta ps-tile__delta--good"><span class="ms" aria-hidden="true">north</span>2</span>vs last quarter</span></div>
+  </section>
+
+  <div class="ps-grid ps-grid--2">
+    <section class="ps-card" aria-labelledby="otif-t">
+      <div class="ps-card__head ps-card__head--plain"><div><h2 class="ps-card__title" id="otif-t">Tactical suppliers deliver on time 15 points less often</h2><div class="ps-card__sub">On-time in-full delivery by segment, Q3 FY26</div></div></div>
+      <div class="ps-card__body ps-stack" style="gap:14px">
+        <div class="ps-hbar"><span>Strategic · 12</span><span class="ps-hbar__track"><i style="width:96%"></i></span><span class="ps-hbar__val">96%</span></div>
+        <div class="ps-hbar"><span>Preferred · 30</span><span class="ps-hbar__track"><i style="width:93%;--c:var(--ps-chart-muted)"></i></span><span class="ps-hbar__val">93%</span></div>
+        <div class="ps-hbar"><span>Approved · 148</span><span class="ps-hbar__track"><i style="width:88%;--c:var(--ps-chart-muted)"></i></span><span class="ps-hbar__val">88%</span></div>
+        <div class="ps-hbar"><span>Tactical · 122</span><span class="ps-hbar__track"><i style="width:81%;--c:var(--ps-warning-solid)"></i></span><span class="ps-hbar__val">81%</span></div>
+        <p class="t-body-sm ink-3">Target 95% for strategic and preferred.</p>
+      </div>
+    </section>
+    <section class="ps-card" aria-labelledby="sc-t">
+      <div class="ps-card__head ps-card__head--plain"><div><h2 class="ps-card__title" id="sc-t">Scores have risen three quarters running</h2><div class="ps-card__sub">Average scorecard, strategic + preferred</div></div></div>
+      <div class="ps-card__body"><div class="ps-fig" id="sc" style="height:220px"></div></div>
+    </section>
+  </div>
+
+  <section class="ps-tablecard" aria-labelledby="sup-t">
+    <div class="ps-toolbar"><h2 class="ps-toolbar__title" id="sup-t">Strategic and preferred suppliers</h2><span class="t-body-sm ink-3">Showing <span data-count-for="srm-table">8</span> of 42</span><div class="ps-toolbar__spacer"></div><button class="ps-btn ps-btn--secondary ps-btn--sm" data-toast="Scorecards sent to stakeholders"><span class="ms" aria-hidden="true">send</span>Request Q3 ratings</button></div>
+    <div class="ps-table-scroll">
+      <table class="ps-table ps-table--stack" id="srm-table">
+        <thead><tr><th class="col-sticky2">Supplier</th><th>Segment</th><th class="num"><button class="ps-sort">Spend FY26 (₹ Cr) <span class="ms" aria-hidden="true">swap_vert</span></button></th><th class="num"><button class="ps-sort">Score <span class="ms" aria-hidden="true">swap_vert</span></button></th><th class="num">On time</th><th class="num">Quality</th><th>Next review</th><th>Owner</th><th class="col-actions"><span class="sr-only">Action</span></th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="ps-state" data-empty-for="srm-table" hidden><div class="ps-state__title">No suppliers in this group</div></div>
+    </div>
+  </section>
+  <p class="t-body-sm ink-3">Sample data.</p>
+</main>
+<script src="/assets/js/ps.js"></script>
+<script src="/assets/js/ps-charts.js"></script>
+<script>
+{
+  PSChart.columns(document.getElementById('sc'), { labels: ['Q4 FY25', 'Q1 FY26', 'Q2 FY26', 'Q3 FY26'], values: [72, 74, 76, 78], color: 'var(--ps-cat-1)', highlight: 3, label: 'Average scorecard rose from 72 to 78 over four quarters' });
+  const rows = [
+    { n: 'Swift Logistics', seg: 'Strategic', s: 9.4, sc: 71, d: -4, otif: 86, q: 99.1, rev: '04 Dec', own: 'Meera Iyer', tags: 'below plan qbr', act: 'Open plan' },
+    { n: 'Aster Components Ltd', seg: 'Strategic', s: 9.6, sc: 74, d: -3, otif: 94, q: 97.4, rev: '11 Dec', own: 'Ananya Rao', tags: 'below qbr due', act: 'Prepare review' },
+    { n: 'ABC Technologies', seg: 'Strategic', s: 6.2, sc: 86, d: 2, otif: 98, q: 99.6, rev: '15 Jan', own: 'Rohit Kumar', tags: 'ok', act: '' },
+    { n: 'Orbit Technologies', seg: 'Preferred', s: 2.4, sc: 79, d: 1, otif: 95, q: 99.0, rev: '18 Dec', own: 'Rohit Kumar', tags: 'qbr', act: 'Prepare review' },
+    { n: 'Pacific Packaging', seg: 'Preferred', s: 1.6, sc: 73, d: -1, otif: 89, q: 98.2, rev: '22 Jan', own: 'Amit Verma', tags: 'below plan', act: 'Open plan' },
+    { n: 'JSW Steel Distributors', seg: 'Strategic', s: 8.8, sc: 82, d: 3, otif: 97, q: 99.3, rev: '20 Jan', own: 'Ananya Rao', tags: 'due', act: 'Complete scorecard' },
+    { n: 'Kiran Facility Mgmt', seg: 'Preferred', s: 0.9, sc: 77, d: 0, otif: 96, q: 98.8, rev: '05 Feb', own: 'Sneha Iyer', tags: 'ok', act: '' },
+    { n: 'Linde India', seg: 'Preferred', s: 3.1, sc: 84, d: 2, otif: 99, q: 100, rev: '10 Feb', own: 'Ananya Rao', tags: 'ok', act: '' },
+  ];
+  document.querySelector('#srm-table tbody').innerHTML = rows.map(r => `<tr data-tags="${r.tags}">
+    <td class="col-sticky2" data-l="Supplier"><a class="cell-id" href="${r.n.startsWith('Aster') ? 'supplier-profile.html' : '#'}" ${r.n.startsWith('Aster') ? '' : 'data-todo'}>${r.n}</a></td><td data-l="Segment">${r.seg}</td>
+    <td class="num" data-l="Spend (₹ Cr)" data-sort="${r.s}">${r.s.toFixed(1)}</td>
+    <td class="num" data-l="Score" data-sort="${r.sc}"><strong style="color:${r.sc < 75 ? 'var(--ps-danger-fg)' : 'inherit'}">${r.sc}</strong> <span class="ps-tile__delta ${r.d > 0 ? 'ps-tile__delta--good' : r.d < 0 ? 'ps-tile__delta--bad' : ''}">${r.d > 0 ? '+' + r.d : r.d < 0 ? '−' + -r.d : '±0'}</span></td>
+    <td class="num" data-l="On time">${r.otif}%</td><td class="num" data-l="Quality">${r.q}%</td><td data-l="Next review">${r.rev}</td><td data-l="Owner">${r.own}</td>
+    <td class="col-actions">${r.act ? `<button class="ps-btn ps-btn--secondary ps-btn--sm" data-todo>${r.act}</button>` : ''}</td></tr>`).join('');
+}
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,107 @@
+{
+  "generatedAt": "2026-11-26T08:37:39.999Z",
+  "sources": [
+    {
+      "label": "Uploaded files",
+      "connector": "uploads",
+      "status": "ready",
+      "items": 6,
+      "notes": null
+    }
+  ],
+  "documents": {
+    "DESIGN": [
+      {
+        "title": "https://www.figma.com/design/g9O0LbminMBkBKn9PW454a/Procuresprint-2.0-design?node-id=376-475&t=oXJ6VbeDflAuBSes-1",
+        "summary": "URL: https://www. figma."
+      },
+      {
+        "title": "https://www.figma.com/design/g9O0LbminMBkBKn9PW454a/Procuresprint-2.0-design?node-id=376-475&t=oXJ6VbeDflAuBSes-1",
+        "summary": "URL: https://www. figma."
+      },
+      {
+        "title": "https://www.figma.com/design/g9O0LbminMBkBKn9PW454a/Procuresprint-2.0-design?node-id=376-475&t=oXJ6VbeDflAuBSes-1",
+        "summary": "URL: https://www. figma."
+      }
+    ],
+    "DATA": [
+      {
+        "title": "Procuresprint_Item_Master_BRD_Pack_v5_26Nov 1.xlsx",
+        "summary": "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 63 581 64 59 62 90 91 55 89 583 2 54 97 33 98 73 36 23 71 87 594 34 43 573 95 108 109 96 599 "
+      }
+    ]
+  },
+  "images": {
+    "analyzed": 0,
+    "pending": 0,
+    "screens": [],
+    "diagrams": [],
+    "brand": [],
+    "assets": []
+  },
+  "fonts": [],
+  "palette": [],
+  "code": {
+    "stack": null,
+    "files": 2,
+    "config": []
+  },
+  "extracted": {
+    "users": [
+      "U-01 Buyer/procurement staff and administrators who run sourcing, receive goods and administer the system",
+      "U-02 Supplier who responds to RFQs, fulfils orders and ships"
+    ],
+    "journeys": [
+      "J-04 Follow an award through to a renewal action",
+      "J-05 Receive goods against a shipment: open ASN, GRN, Receive ASN, record quantities per line, confirm, see toast",
+      "J-06 Supplier responds to an RFQ, accepts terms, fixes errors, submits, creates a shipment notice and sees it in Shipments",
+      "J-07 Administer users, roles, master data and reports: Administration hub, Users filter and preview, Roles & Permissions, Master Data, Spend Analytics and Reports",
+      "J-01 to J-03 Other sourcing and order journeys exist in the uploaded project and are kept as-is",
+      "Run the zip with Vite and show the preview"
+    ],
+    "features": [
+      "Multi-page static HTML/CSS/JS served by Vite",
+      "Original folder layout kept (root pages, modules/, templates/)",
+      "Asset path rewrites only where Vite needs them",
+      "vite.config.js build input extended for modules/",
+      "Design tokens plus CSS custom design system, light theme",
+      "Vitest for scripts",
+      "Google Fonts and icons loaded from network",
+      "Supplier home with invitations, orders and shipments to act on",
+      "Users list with status filter and row preview",
+      "Roles and permissions",
+      "Master data management",
+      "Spend analytics and reports",
+      "ASN, GRN and Receive ASN with toast confirmation",
+      "RFQ response form with error summary and terms acceptance"
+    ],
+    "screens": [
+      "Supplier home [knowledge J-06]",
+      "Invitations / RFQ response [J-06]",
+      "Orders with Create shipment notice [J-06]",
+      "Shipments [J-06]",
+      "ASN [J-05]",
+      "GRN [J-05]",
+      "Receive ASN [J-05]",
+      "Administration hub [J-07]",
+      "Users with row preview [J-07]",
+      "Roles & Permissions [J-07]",
+      "Master Data Management [J-07]",
+      "Spend Analytics [J-07]",
+      "Reports [J-07]",
+      "Award and renewal action [J-04]"
+    ],
+    "businessRules": [],
+    "data": [
+      "User: name, email, role, status",
+      "Role: id, name, description, usersAssigned, kind",
+      "Report: id, name, area, schedule, status",
+      "Catalogue item: name, supplier, price, category"
+    ],
+    "constraints": [
+      "Do not modify mirrored knowledge files or their sources",
+      "Preview as-is now; enhancements come next",
+      "Fonts and icons need network access"
+    ]
+  }
+}

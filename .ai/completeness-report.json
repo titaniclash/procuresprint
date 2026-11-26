@@ -1,0 +1,85 @@
+{
+  "ranAt": "2026-11-26T09:02:12.553Z",
+  "coverage": {
+    "features": 100,
+    "journeys": 100,
+    "screens": 100
+  },
+  "gaps": [
+    {
+      "kind": "no-empty-state",
+      "message": "Validation shows a collection but declares no empty state.",
+      "ref": "S-05"
+    },
+    {
+      "kind": "no-loading-state",
+      "message": "Validation shows a collection but declares no loading state.",
+      "ref": "S-05"
+    },
+    {
+      "kind": "no-loading-state",
+      "message": "Approvals shows a collection but declares no loading state.",
+      "ref": "S-14"
+    },
+    {
+      "kind": "no-loading-state",
+      "message": "Catalog Marketplace shows a collection but declares no loading state.",
+      "ref": "S-16"
+    },
+    {
+      "kind": "no-error-state",
+      "message": "Vendor Onboarding takes input but declares no error or validation state.",
+      "ref": "S-21"
+    },
+    {
+      "kind": "no-empty-state",
+      "message": "Supplier Scout shows a collection but declares no empty state.",
+      "ref": "S-22"
+    },
+    {
+      "kind": "no-loading-state",
+      "message": "Supplier Scout shows a collection but declares no loading state.",
+      "ref": "S-22"
+    },
+    {
+      "kind": "no-error-state",
+      "message": "Supplier profile takes input but declares no error or validation state.",
+      "ref": "S-25"
+    },
+    {
+      "kind": "no-error-state",
+      "message": "Contract takes input but declares no error or validation state.",
+      "ref": "S-38"
+    },
+    {
+      "kind": "no-empty-state",
+      "message": "Supplier home shows a collection but declares no empty state.",
+      "ref": "S-46"
+    },
+    {
+      "kind": "no-loading-state",
+      "message": "Supplier home shows a collection but declares no loading state.",
+      "ref": "S-46"
+    },
+    {
+      "kind": "no-error-state",
+      "message": "Item request takes input but declares no error or validation state.",
+      "ref": "S-55"
+    },
+    {
+      "kind": "no-loading-state",
+      "message": "MDM review shows a collection but declares no loading state.",
+      "ref": "S-56"
+    },
+    {
+      "kind": "no-empty-state",
+      "message": "Item insights shows a collection but declares no empty state.",
+      "ref": "S-64"
+    },
+    {
+      "kind": "no-loading-state",
+      "message": "Item insights shows a collection but declares no loading state.",
+      "ref": "S-64"
+    }
+  ]
+}

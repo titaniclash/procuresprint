@@ -1,0 +1,21 @@
+{
+  "source": "Supplied design system: Procuresprint 2.0 assets/tokens.css, assets/ps.css, assets/docs.css, assets/img/logo.svg and logo-on-light.svg",
+  "status": "law",
+  "logo": { "onDark": "/assets/brand/logo.svg", "onLight": "/assets/brand/logo-on-light.svg", "size": "181x32", "inShell": "Inline SVG in ps.js sidebar head and docs header; the same mark" },
+  "color": {
+    "primitives": { "teal": ["#E3EEEF", "#C2D9DC", "#5A98A1", "#0A6E79", "#0B5A66", "#06424C", "#04343C", "#04282E", "#021A1E"], "grey": ["#FFFFFF", "#F8FAFA", "#F4F6F6", "#EDF0F1", "#DCE2E3", "#8A9699", "#5F6B6F", "#4A5659", "#172124"] },
+    "semanticLight": { "bg": "#F4F6F6", "surface": "#FFFFFF", "surface2": "#F8FAFA", "surface3": "#EDF0F1", "ink": "#172124", "ink2": "#4A5659", "ink3": "#5F6B6F", "line": "#DCE2E3", "lineStrong": "#8A9699", "brand": "#06424C", "brandHover": "#04343C", "brandPress": "#04282E", "onBrand": "#FFFFFF", "brandTint": "#E3EEEF", "onBrandTint": "#06424C", "link": "#0A6E79", "focus": "#0A6E79", "railBg": "#04282E", "railInk": "#C9DCDE", "railActive": "#0B5A66", "railSupplier": "#23233F" },
+    "status": { "success": { "fg": "#1E6B3C", "bg": "#E6F3EA", "solid": "#2F8A52" }, "warning": { "fg": "#8A4500", "bg": "#FFF1DC", "solid": "#B85F00" }, "danger": { "fg": "#B3261E", "bg": "#FCEBE9", "solid": "#C9302C" }, "info": { "fg": "#0B5CAD", "bg": "#E7F0FB", "solid": "#1C6DD0" }, "neutral": { "fg": "#4A5659", "bg": "#EDF0F1", "solid": "#8A9699" }, "ai": { "fg": "#5236C9", "bg": "#EEEAFD", "solid": "#6B5BD2" } },
+    "dataViz": ["#0F6E7A", "#D9701A", "#6B5BD2", "#2F8A52", "#C2417A", "#8C8C1E"],
+    "dark": "Opt-in only via data-ps-theme=\"dark\" on html; defined with light-dark() in the same tokens"
+  },
+  "typography": { "family": "\"Gilroy\", \"Plus Jakarta Sans\", system-ui, -apple-system, \"Segoe UI\", sans-serif", "numerals": "\"Plus Jakarta Sans\" with tabular-nums", "roles": { "display": "600 32px/40px", "headline": "600 24px/32px", "titleLg": "600 20px/28px", "titleMd": "600 16px/24px", "titleSm": "600 14px/20px", "bodyLg": "400 16px/24px", "bodyMd": "400 14px/20px", "bodySm": "400 12px/16px", "labelLg": "600 14px/20px", "labelMd": "500 12px/16px" }, "loading": "Google Fonts link in each page head (Plus Jakarta Sans 400 to 700 and Material Symbols Rounded)" },
+  "icons": "Material Symbols Rounded ligatures in <span class=\"ms\">, 20 px default, 24 px variant, FILL variant",
+  "space": { "base": "4px", "scale": { "s1": "4px", "s2": "8px", "s3": "12px", "s4": "16px", "s5": "20px", "s6": "24px", "s8": "32px", "s10": "40px", "s12": "48px", "s16": "64px" }, "gutter": "clamp(16px, 2.2vw, 32px)" },
+  "radius": { "xs": "4px (inputs, buttons, chips)", "sm": "6px (cards, menus)", "md": "8px (dialogs, drawers)", "full": "999px (avatars, count badges)" },
+  "elevation": { "rule": "borders first, shadow only for overlays", "e1": "sticky bars", "e2": "menus, popovers", "e3": "dialogs, drawers" },
+  "layout": { "sidebar": "280px expanded, 64px collapsed, sticky full height", "topbar": "56px", "contentMax": "none (100% fluid)", "rowHeight": "48px comfortable, 36px compact", "breakpoints": { "sm": 600, "md": 905, "lg": 1240, "xl": 1440 } },
+  "motion": { "ease": "cubic-bezier(.2, 0, 0, 1)", "durations": ["120ms", "200ms", "280ms"], "reducedMotion": "durations become 0ms" },
+  "componentConventions": "Prefix ps-, BEM-ish block__el--mod; text roles t-display to t-label-md; ink-2 and ink-3 for muted text; one primary button per view; destructive actions confirm in a dialog; docs chrome uses ds- classes and is not product UI",
+  "accessibility": "WCAG 2.2 AA pairs checked in tokens.css; skip link; focus ring 2px in --ps-focus; forced-colors support; scroll padding for sticky bars"
+}

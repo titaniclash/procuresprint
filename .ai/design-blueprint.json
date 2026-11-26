@@ -1,0 +1,162 @@
+{
+  "direction": {
+    "name": "Procuresprint ledger (supplied design system; Data-Dense Professional posture)",
+    "rationale": "Who: procurement professionals and a supplier admin at a laptop for whole working days, plus the design-system owner reviewing. Primary object: a record in a workbench (purchase request, RFx event, contract, invoice); primary task: find the rows that need attention, open one, act. Density: balanced to dense (48 px rows, 36 px compact). Tone: precise, institutional, the brand's ledger: teal ink, ruled rows, tabular figures (index.html VOICE comment). The setup suggested Premium Storefront; it is ruled out because nothing here is browsed like a shop, a serif hero over photography would contradict the supplied system, and the design brief makes a supplied design system law. Runner-up Data-Dense Workbench from the library matches the posture and is what the supplied system already is, so the supplied system is used verbatim.",
+    "signature": "Deep teal rail (#04282E) carrying the white wordmark, against white ruled surfaces where every figure is tabular and every status is a labelled chip. Tiles that filter the table are the one interaction every workbench shares. Every buyer and supplier page opens with one teal page banner: breadcrumbs only on record pages, the page title in Gilroy medium, then approvals, notifications, an outlined Ask Me pill (buyer) and Refresh.",
+    "runnerUp": "Data-Dense Workbench (library) - identical posture, but would have invented tokens the supplied system already fixes",
+    "templateOverride": "ec-premium-storefront replaced by the supplied Procuresprint 2.0 system; recorded in product-blueprint.assumptions"
+  },
+  "typography": {
+    "display": "Gilroy (brand face), self-hosted from public/assets/fonts at 400, 500, 600, 700; fallback Plus Jakarta Sans",
+    "text": "Gilroy 400/500/600, fallback Plus Jakarta Sans",
+    "mono": "none; figures use Plus Jakarta Sans with tabular-nums (.num)",
+    "scale": "12/16, 14/20, 16/24, 20/28, 24/32, 32/40",
+    "weights": "400 body, 500 labels, 600 titles and buttons",
+    "numerals": "tabular",
+    "loading": "Gilroy files are served from public/assets/fonts through @font-face in tokens.css (licensed, supplied by the owner); Plus Jakarta Sans and Material Symbols Rounded load from Google Fonts per page"
+  },
+  "color": {
+    "ground": "#F4F6F6 canvas (grey-50)",
+    "surfaces": [
+      "#FFFFFF surface",
+      "#F8FAFA table head and footers",
+      "#EDF0F1 hover and sunken"
+    ],
+    "text": "#172124 (15.1:1 on canvas)",
+    "muted": "#4A5659 ink-2 (7.0:1), #5F6B6F ink-3 (5.1:1)",
+    "primary": "#06424C brand teal (11.1:1 on white), from the Procuresprint logo",
+    "accent": "#56B1A8 logo mint, used only in the wordmark and rail accent",
+    "status": {
+      "success": "#1E6B3C on #E6F3EA",
+      "warning": "#8A4500 on #FFF1DC",
+      "danger": "#B3261E on #FCEBE9",
+      "info": "#0B5CAD on #E7F0FB",
+      "neutral": "#4A5659 on #EDF0F1",
+      "ai": "#5236C9 on #EEEAFD"
+    },
+    "dataViz": [
+      "#0F6E7A",
+      "#D9701A",
+      "#6B5BD2",
+      "#2F8A52",
+      "#C2417A",
+      "#8C8C1E"
+    ],
+    "contrastMeasured": [
+      {
+        "pair": "ink on canvas",
+        "ratio": "15.1:1"
+      },
+      {
+        "pair": "ink-2 on canvas",
+        "ratio": "7.0:1"
+      },
+      {
+        "pair": "ink-3 on canvas",
+        "ratio": "5.1:1"
+      },
+      {
+        "pair": "on-brand white on brand",
+        "ratio": "11.1:1"
+      },
+      {
+        "pair": "on-brand-tint on brand-tint",
+        "ratio": "9.4:1"
+      },
+      {
+        "pair": "rail ink on rail",
+        "ratio": "11.0:1"
+      },
+      {
+        "pair": "white on rail-active",
+        "ratio": "7.9:1"
+      },
+      {
+        "pair": "status fg on status bg",
+        "ratio": ">= 5.6:1"
+      },
+      {
+        "pair": "line-strong on surface",
+        "ratio": ">= 3:1"
+      },
+      {
+        "pair": "focus ring",
+        "ratio": ">= 5.5:1"
+      }
+    ],
+    "source": "assets/tokens.css comments; the file states each pair was contrast-checked to WCAG 2.2 AA"
+  },
+  "space": {
+    "base": "4px",
+    "scale": [
+      4,
+      8,
+      12,
+      16,
+      20,
+      24,
+      32,
+      40,
+      48,
+      64
+    ],
+    "gutter": "clamp(16px, 2.2vw, 32px)"
+  },
+  "spacing": "4px base, 8pt rhythm, gutter clamp(16px, 2.2vw, 32px)",
+  "radius": {
+    "sm": "4px",
+    "md": "6px",
+    "lg": "8px",
+    "full": "999px"
+  },
+  "elevation": "borders first; shadow only for sticky bars (e1), menus (e2) and dialogs or drawers (e3)",
+  "layout": {
+    "archetype": "workbench: page head, filter tiles, views, table, preview drawer; record: header, sections, side rail of actions; docs: sticky header, aside and specimens",
+    "grid": "sidebar 280px plus minmax(0,1fr); content 100% fluid, no max width",
+    "navigation": "left sidebar with grouped items (buyer) or four items (supplier); collapses to 64px; drawer under 905px; docs pages use a top bar with five links; page banner above content with the title and global actions",
+    "primarySurface": "the table of records that tiles and views filter"
+  },
+  "navigationModel": "Left sidebar (buyer: Home plus eight groups; supplier: four items) rendered by ps.js from data-shell and data-module; design-system pages use a top documentation bar with Foundations, Components, Templates, Screens, Validation; buyer and supplier pages carry a 160px page banner (title left, global actions right) instead of a 56px top bar",
+  "density": "comfortable 48px rows by default, compact 36px via data-density",
+  "responsiveStrategy": "100% fluid; breakpoints 600 (stack forms and page heads), 905 (sidebar becomes drawer, tables scroll in their box with sticky first column), 1240 and 1440 (more columns in grids); tested 320 to 2560 px by the source",
+  "imagery": {
+    "kind": "iconography",
+    "sources": "Material Symbols Rounded ligatures; the Procuresprint wordmark; no photography"
+  },
+  "motion": "120/200/280 ms with cubic-bezier(.2,0,0,1); sidebar collapse, drawer slide, toast; 0 ms under prefers-reduced-motion",
+  "components": [
+    "Workbench tile that filters the table",
+    "Preview drawer with fields, timeline and primary action",
+    "Status chip with label",
+    "Bulk bar",
+    "Stepper and timeline",
+    "Error summary linking to fields",
+    "Ask Me assistant dialog",
+    "Bid ladder and line charts"
+  ],
+  "patternsToUse": [
+    "Tiles as filters, not decoration",
+    "One primary button per view",
+    "Labelled status chips",
+    "Error summary plus inline errors",
+    "Sticky first table column under 905px",
+    "Dialog confirmation for destructive or irreversible actions",
+    "Page banner: one teal band with the page title and global actions; breadcrumbs shown only on record and form pages"
+  ],
+  "patternsToAvoid": [
+    "Premium Storefront moves: full-bleed hero, serif display, centred wordmark, cart drawer, product imagery (ruled out: this is a workbench, not a shop)",
+    "Decorative KPI tiles that do not filter anything (the habit prior for this domain)",
+    "Centred max-width page column with empty gutters",
+    "Adjacent cliche: generic teal SaaS dashboard with gradient cards and glassy panels",
+    "Icon-only buttons without a name; colour-only status",
+    "Rounded pill buttons; discount-style badges"
+  ],
+  "accessibility": [
+    "Skip link first on every page",
+    "Focus ring 2px --ps-focus with offset",
+    "Status never colour alone",
+    "Dialogs and drawers trap focus and close on Escape",
+    "Forced-colors support in tokens",
+    "Reduced motion honoured"
+  ]
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Item requests</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench. Item master BRD screen S05 (My requests tracker) plus the MDM worklist and the In review queue as views. -->
+<body data-shell="buyer" data-root=".." data-group="items" data-module="item-requests" data-crumbs="Item Master|Item requests">
+<main id="main"><p class="t-body-md ink-3" aria-busy="true">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script src="/assets/js/item-master.js"></script>
+<script src="/assets/js/item-ui.js"></script>
+<script>
+{
+  if (IMUI.qs.get('reset') === '1') { IM.reset(); history.replaceState(null, '', location.pathname); }
+  const ME = 'John Doe', U = IMUI;
+  const NEXT = { Draft: 'Requester', Withdrawn: 'Requester', 'Sent back': 'Requester', 'In review': 'Quality team', 'Pending MDM': 'MDM team', 'Pending finance review': 'Finance (assets)' };
+  const nextActor = r => r.status === 'Pending approval' ? (r.approval?.approver || 'Approver') : NEXT[r.status] || '—';
+  const tagFor = r => [IM.stateOf(r.status).replace(' ', '-').toLowerCase(), r.status.toLowerCase().replace(/[^a-z]+/g, '-'), r.requester === ME ? 'mine' : '', ['Pending MDM'].includes(r.status) ? 'mdm' : '', r.status === 'In review' ? 'review' : ''].filter(Boolean).join(' ');
+  const rows = IM.db().reqs.slice().sort((a, b) => b.id.localeCompare(a.id)).map(r => ({
+    id: r.id, type: r.type, desc: r.f.desc, code: r.itemCode || r.target || '', itemType: r.itemType, plants: r.f.plants.map(p => IM.PLANTS[p][0]).join(', ') || '—',
+    requester: r.requester, channel: r.channel, status: r.status, created: r.created, next: nextActor(r), tags: tagFor(r), r }));
+  const days = h => Math.max(0, Math.round((new Date(h.at.at(-1)) - new Date(h.at[0])) / 864e5));
+  const done = IM.db().reqs.filter(r => r.status === 'Completed' && r.type === 'New');
+  const tat = done.length ? (done.reduce((a, r) => a + days({ at: [r.hist[0].at, r.hist.at(-1).at] }), 0) / done.length).toFixed(1) : '0';
+  const roleHref = r => ({ 'Pending MDM': 'item-mdm-review.html', 'In review': 'item-review.html', 'Pending finance review': 'item-finance-review.html', 'Pending approval': 'item-approval.html' }[r.status]);
+  const ROLE = { 'Pending MDM': 'Open MDM review', 'In review': 'Open review', 'Pending finance review': 'Open asset class review', 'Pending approval': 'Open approval task' };
+  const cnt = m => rows.filter(r => r.tags.split(' ').includes(m)).length;
+
+  window.PAGE = {
+    title: 'Item requests',
+    meta: rows => `${rows.length} requests · search before you create, one item code serves every plant`,
+    statuses: IM.STATUS,
+    kpis: [
+      { label: 'Draft', value: cnt('draft'), sub: 'Saved, not submitted', icon: 'edit_note', tone: 'info', match: 'draft' },
+      { label: 'In progress', value: cnt('in-progress'), sub: 'In review, MDM, finance, approval', icon: 'pending_actions', tone: 'warning', match: 'in-progress' },
+      { label: 'Sent back', value: cnt('sent-back'), sub: 'Waiting for the requester', icon: 'reply', tone: 'danger', match: 'sent-back' },
+      { label: 'Turnaround', value: tat, unit: 'days', sub: 'New items, target under 2 days', icon: 'timer', tone: 'success' },
+    ],
+    tableTitle: 'All requests', search: 'Request number, item, requester or plant…',
+    create: [{ label: 'New item request', icon: 'add', href: 'item-request-new.html' }],
+    gridActions: [{ label: 'Bulk upload', icon: 'upload_file', href: 'item-bulk-upload.html' }],
+    moreMenu: [{ label: 'Reset sample data', icon: 'restart_alt', href: 'item-requests.html?reset=1' }],
+    views: [{ label: 'All', match: '' }, { label: 'My requests', match: 'mine' }, { label: 'MDM worklist', match: 'mdm' }, { label: 'In review', match: 'review' }, { label: 'Sent back', match: 'sent-back' }, { label: 'Completed', match: 'completed' }],
+    columns: [
+      { key: 'id', label: 'Request', sticky: true, sort: true, render: r => `<a class="cell-id" href="item-request.html?id=${U.esc(r.id)}">${U.esc(r.id)}</a>` },
+      { key: 'type', label: 'Type', sort: true, render: r => H.chip('plain', r.type) },
+      { key: 'desc', label: 'Item', sort: true, wrap: true, render: r => H.two(r.desc, [r.itemType, r.code].filter(Boolean).join(' · ')) },
+      { key: 'plants', label: 'Plant', opt: true },
+      { key: 'requester', label: 'Requester', sort: true },
+      { key: 'channel', label: 'Channel', opt: true },
+      { key: 'status', label: 'Status', sort: true, render: r => H.status(r) },
+      { key: 'next', label: 'Next actor', opt: true },
+      { key: 'created', label: 'Raised', sort: true, sortVal: r => r.created, render: r => U.age(r.created) },
+    ],
+    rowAction: r => `<a class="ps-iconbtn ps-iconbtn--sm" href="item-request.html?id=${U.esc(r.id)}" aria-label="Open ${U.esc(r.id)}"><span class="ms" aria-hidden="true">open_in_new</span></a>`,
+    rowMenu: r => [{ label: 'View details', icon: 'visibility', preview: r.id }, roleHref(r.r) ? { label: ROLE[r.status], icon: 'task_alt', href: roleHref(r.r) + '?id=' + r.id } : null,
+      r.r.requester === ME && ['Draft', 'Withdrawn', 'Sent back'].includes(r.status) ? { label: 'Edit and resubmit', icon: 'edit', href: 'item-request-new.html?id=' + r.id } : null].filter(Boolean),
+    rows,
+    preview: {
+      title: r => r.id, sub: r => `${r.type} · ${r.desc}`,
+      alert: r => r.status === 'Sent back' ? `<div class="ps-alert ps-alert--warning" role="note"><span class="ms" aria-hidden="true">reply</span><div><div class="ps-alert__title">Sent back</div><div class="ps-alert__text">${U.esc(r.r.hist.filter(h => h.action === 'Sent back').at(-1)?.comment || '')}</div></div></div>` : '',
+      fields: [['Item type', r => U.esc(r.itemType)], ['Plant', r => U.esc(r.plants)], ['Requester', r => U.esc(r.requester)], ['Channel', r => U.esc(r.channel)], ['Next actor', r => U.esc(r.next)], ['Item code', r => H.dash(r.code)]],
+      timelineTitle: 'Workflow', timeline: r => IM.steps(r.r).map(s => [s.state, s.label, s.who]),
+      record: r => 'item-request.html?id=' + r.id,
+      primary: r => roleHref(r.r) ? ROLE[r.status] : ['Draft', 'Withdrawn', 'Sent back'].includes(r.status) && r.r.requester === ME ? 'Edit and resubmit' : '',
+      primaryHref: r => roleHref(r.r) ? roleHref(r.r) + '?id=' + r.id : 'item-request-new.html?id=' + r.id,
+    },
+    note: 'Sample data saved in this browser. Use More, Reset sample data to start again.',
+  };
+}
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script>{ const v = IMUI.qs.get('view'); if (v) document.querySelector(`.ps-tab[data-match="${v}"]`)?.click(); }</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

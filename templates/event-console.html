@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reverse Auction Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+<style>
+/* Event-console specifics: the clock strip and the ranking board. */
+.ec-strip { display: grid; grid-template-columns: minmax(220px, 1.2fr) repeat(4, minmax(0, 1fr)); background: var(--ps-surface); border: 1px solid var(--ps-line); border-radius: var(--ps-r-sm); }
+.ec-strip > div { padding: 14px 18px; border-left: 1px solid var(--ps-line); display: flex; flex-direction: column; gap: 4px; }
+.ec-strip > div:first-child { border-left: 0; background: var(--ps-brand); color: var(--ps-on-brand); border-radius: var(--ps-r-sm) 0 0 var(--ps-r-sm); }
+.ec-k { font: var(--ps-label-md); color: var(--ps-ink-2); }
+.ec-strip > div:first-child .ec-k { color: inherit; opacity: .85; }
+.ec-v { font: 600 26px/32px var(--ps-font-num); font-variant-numeric: tabular-nums; letter-spacing: -.01em; white-space: nowrap; }
+.ec-clock { font: 600 36px/40px var(--ps-font-num); font-variant-numeric: tabular-nums; }
+.ec-s { font: var(--ps-body-sm); color: var(--ps-ink-3); }
+.ec-strip > div:first-child .ec-s { color: inherit; opacity: .85; }
+@media (max-width: 1239px) { .ec-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); } .ec-strip > div:first-child { grid-column: 1 / -1; border-radius: var(--ps-r-sm) var(--ps-r-sm) 0 0; } .ec-strip > div:nth-child(2) { border-left: 0; } .ec-strip > div:nth-child(n+2) { border-top: 1px solid var(--ps-line); } .ec-strip > div:nth-child(5) { border-left: 0; } }
+@media (max-width: 599px) { .ec-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ec-strip > div:nth-child(2n) { border-left: 0; } .ec-strip > div:nth-child(2n+1):not(:first-child) { border-left: 1px solid var(--ps-line); } }
+.rank { list-style: none; margin: 0; padding: 0; }
+.rank li { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--ps-line); }
+.rank li:last-child { border-bottom: 0; }
+.rank__pos { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font: 600 13px/1 var(--ps-font-num); background: var(--ps-surface-3); color: var(--ps-ink-2); }
+.rank li.is-lead { background: var(--ps-brand-tint); }
+.rank li.is-lead .rank__pos { background: var(--ps-brand); color: var(--ps-on-brand); }
+.rank__name { font: var(--ps-label-lg); display: flex; align-items: center; gap: 6px; }
+.rank__meta { font: var(--ps-body-sm); color: var(--ps-ink-3); }
+.rank__bid { text-align: right; font: 600 15px/20px var(--ps-font-num); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.rank__gap { font: var(--ps-body-sm); color: var(--ps-ink-3); white-space: nowrap; }
+.live { display: inline-flex; align-items: center; gap: 6px; }
+.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ps-success-solid); box-shadow: 0 0 0 0 color-mix(in srgb, var(--ps-success-solid), transparent 40%); animation: pulse 2s infinite; }
+@keyframes pulse { 70% { box-shadow: 0 0 0 8px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+@media (prefers-reduced-motion: reduce) { .live::before { animation: none; } }
+.online { width: 8px; height: 8px; border-radius: 50%; background: var(--ps-success-solid); display: inline-block; }
+.offline { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--ps-neutral-solid); display: inline-block; }
+</style>
+</head>
+<!-- Archetype: EVENT CONSOLE. Used by Reverse Auction (live), Evaluation (scoring stage), E-Awarding (decision).
+     Anatomy: page head with event state → clock/status strip → main visual (bid ladder / score matrix) + ranking board → log + rules. -->
+<body data-shell="buyer" data-root=".." data-group="sourcing" data-module="reverse-auction" data-crumbs="Sourcing|Reverse Auction|RA-2025-018">
+<main id="main">
+  <div class="ps-pagehead">
+    <div class="ps-pagehead__text">
+      <div class="ps-row" style="gap:8px"><span class="ps-chip ps-chip--info ps-chip--plain"><span class="live">Live</span></span><span class="t-body-sm ink-3">English reverse · rank visible to bidders · from RFQ-2025-601</span></div>
+      <h1 class="t-headline">RA-2025-018 · HR steel coils, 2 mm</h1>
+      <p class="ps-pagehead__meta">1,200 t · delivery Chennai plant · Q1 FY27 · owner Ananya Rao</p>
+    </div>
+    <div class="ps-pagehead__actions">
+      <button class="ps-btn ps-btn--secondary" data-todo><span class="ms" aria-hidden="true">campaign</span>Message bidders</button>
+      <div class="ps-menuwrap"><button class="ps-btn ps-btn--secondary" data-menu="ra-ctl" aria-haspopup="menu" aria-expanded="false">Event control <span class="ms" aria-hidden="true">expand_more</span></button>
+        <div class="ps-menu" id="ra-ctl" role="menu" aria-label="Event control"><button role="menuitem" data-toast="Auction extended by 5 minutes"><span class="ms" aria-hidden="true">more_time</span>Extend 5 minutes</button><button role="menuitem" data-toast="Auction paused. Bidders notified."><span class="ms" aria-hidden="true">pause</span>Pause</button><hr><button role="menuitem" class="is-danger" data-open="ra-abort"><span class="ms" aria-hidden="true">block</span>Abort auction</button></div></div>
+    </div>
+  </div>
+
+  <section class="ec-strip" aria-label="Auction status">
+    <div><span class="ec-k">Time left</span><span class="ec-clock" id="clock" role="timer" aria-live="off">12:48</span><span class="ec-s">Ends 15:00 IST · 1 of 3 extensions used</span></div>
+    <div><span class="ec-k">Leading bid</span><span class="ec-v">₹58,940<small class="t-body-sm ink-3"> /t</small></span><span class="ec-s">Kolon Industries · 2 min ago</span></div>
+    <div><span class="ec-k">Savings vs baseline</span><span class="ec-v" style="color:var(--ps-success-fg)">8.6%</span><span class="ec-s">Baseline ₹64,500 /t · ₹66.7 L on volume</span></div>
+    <div><span class="ec-k">Target price</span><span class="ec-v">₹58,000</span><span class="ec-s">₹940 /t still to go</span></div>
+    <div><span class="ec-k">Bids</span><span class="ec-v">37</span><span class="ec-s">5 of 6 bidders active</span></div>
+  </section>
+
+  <div class="ps-grid ps-grid--main-side">
+    <section class="ps-card" aria-labelledby="ladder-t">
+      <div class="ps-card__head ps-card__head--plain"><div><h2 class="ps-card__title" id="ladder-t">Price has fallen 8.6% in 47 minutes; target not yet reached</h2><div class="ps-card__sub">Leading bid over time, ₹ per tonne</div></div></div>
+      <div class="ps-card__body" style="flex:1;display:flex"><div class="ps-fig" id="ladder" style="min-height:300px;flex:1"></div></div>
+    </section>
+    <section class="ps-card" aria-labelledby="rank-t">
+      <div class="ps-card__head"><h2 class="ps-card__title" id="rank-t">Ranking</h2><span class="t-body-sm ink-3">Updated live</span></div>
+      <ol class="rank">
+        <li class="is-lead"><span class="rank__pos">1</span><span><span class="rank__name">Kolon Industries <span class="online" aria-hidden="true"></span><span class="sr-only">online</span></span><span class="rank__meta">11 bids · last 14:47</span></span><span><span class="rank__bid">₹58,940</span><br><span class="rank__gap">Leading</span></span></li>
+        <li><span class="rank__pos">2</span><span><span class="rank__name">JSW Steel Distributors <span class="online" aria-hidden="true"></span><span class="sr-only">online</span></span><span class="rank__meta">9 bids · last 14:46</span></span><span><span class="rank__bid">₹59,200</span><br><span class="rank__gap">+₹260 · 0.4%</span></span></li>
+        <li><span class="rank__pos">3</span><span><span class="rank__name">Aster Components <span class="online" aria-hidden="true"></span><span class="sr-only">online</span></span><span class="rank__meta">8 bids · last 14:41</span></span><span><span class="rank__bid">₹59,850</span><br><span class="rank__gap">+₹910 · 1.5%</span></span></li>
+        <li><span class="rank__pos">4</span><span><span class="rank__name">Shree Metals <span class="online" aria-hidden="true"></span><span class="sr-only">online</span></span><span class="rank__meta">6 bids · last 14:32</span></span><span><span class="rank__bid">₹60,400</span><br><span class="rank__gap">+₹1,460 · 2.5%</span></span></li>
+        <li><span class="rank__pos">5</span><span><span class="rank__name">Vardhman Steel <span class="offline" aria-hidden="true"></span><span class="sr-only">offline</span></span><span class="rank__meta">3 bids · last 14:12</span></span><span><span class="rank__bid">₹61,900</span><br><span class="rank__gap">+₹2,960 · 5.0%</span></span></li>
+        <li><span class="rank__pos">–</span><span><span class="rank__name">Nova Alloys <span class="offline" aria-hidden="true"></span><span class="sr-only">offline</span></span><span class="rank__meta">Accepted invite, no bid</span></span><span><span class="ps-chip">No bid</span></span></li>
+      </ol>
+    </section>
+  </div>
+
+  <div class="ps-grid ps-grid--main-side">
+    <section class="ps-tablecard" aria-labelledby="log-t">
+      <div class="ps-toolbar"><h2 class="ps-toolbar__title" id="log-t">Bid log</h2><div class="ps-toolbar__spacer"></div><button class="ps-btn ps-btn--secondary ps-btn--sm" data-toast="Bid log exported"><span class="ms" aria-hidden="true">download</span>Export</button></div>
+      <div class="ps-table-scroll">
+        <table class="ps-table ps-table--stack">
+          <thead><tr><th>Time</th><th>Bidder</th><th class="num">Bid (₹/t)</th><th class="num">Change</th><th>Rank after</th><th>Note</th></tr></thead>
+          <tbody>
+            <tr><td data-l="Time">14:47:12</td><td data-l="Bidder">Kolon Industries</td><td class="num" data-l="Bid">58,940</td><td class="num" data-l="Change">−310</td><td data-l="Rank after">1</td><td data-l="Note"><span class="ps-chip ps-chip--warning">Extension triggered</span></td></tr>
+            <tr><td data-l="Time">14:46:03</td><td data-l="Bidder">JSW Steel Distributors</td><td class="num" data-l="Bid">59,200</td><td class="num" data-l="Change">−400</td><td data-l="Rank after">1 → 2</td><td data-l="Note">—</td></tr>
+            <tr><td data-l="Time">14:41:40</td><td data-l="Bidder">Aster Components</td><td class="num" data-l="Bid">59,850</td><td class="num" data-l="Change">−250</td><td data-l="Rank after">3</td><td data-l="Note">—</td></tr>
+            <tr><td data-l="Time">14:39:18</td><td data-l="Bidder">Kolon Industries</td><td class="num" data-l="Bid">59,250</td><td class="num" data-l="Change">−350</td><td data-l="Rank after">1</td><td data-l="Note">—</td></tr>
+            <tr><td data-l="Time">14:32:55</td><td data-l="Bidder">Shree Metals</td><td class="num" data-l="Bid">60,400</td><td class="num" data-l="Change">−600</td><td data-l="Rank after">4</td><td data-l="Note">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="ps-pager"><span>5 of 37 bids</span><button class="ps-btn ps-btn--text ps-btn--sm" data-todo>View all</button></div>
+    </section>
+    <section class="ps-card" aria-labelledby="rules-t">
+      <div class="ps-card__head"><h2 class="ps-card__title" id="rules-t"><span class="ms" aria-hidden="true">rule</span>Rules</h2></div>
+      <div class="ps-card__body">
+        <dl class="ps-dl" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+          <div><dt>Minimum decrement</dt><dd>₹100 /t</dd></div>
+          <div><dt>Start price</dt><dd class="num">₹64,500 /t</dd></div>
+          <div><dt>Extension</dt><dd>+5 min if a bid lands in last 2 min, max 3</dd></div>
+          <div><dt>Bidders see</dt><dd>Own rank only</dd></div>
+          <div><dt>Award basis</dt><dd>L1 subject to technical pass</dd></div>
+          <div><dt>Linked RFQ</dt><dd><a href="#" data-todo>RFQ-2025-601</a></dd></div>
+        </dl>
+      </div>
+      <div class="ps-card__foot"><button class="ps-btn ps-btn--secondary ps-btn--sm" disabled title="Available when the auction closes">Recommend award</button></div>
+    </section>
+  </div>
+  <p class="t-body-sm ink-3">Sample data. The clock runs in this preview.</p>
+</main>
+
+<dialog class="ps-dialog" id="ra-abort" aria-labelledby="ab-t">
+  <div class="ps-dialog__head"><span class="ps-dialog__icon ps-dialog__icon--danger"><span class="ms" aria-hidden="true">block</span></span><h2 class="ps-dialog__title" id="ab-t">Abort RA-2025-018?</h2></div>
+  <div class="ps-dialog__body"><p>All 37 bids are voided and bidders are told the event was cancelled. This can't be undone.</p><div class="ps-field"><label class="ps-field__label" for="ab-r">Reason for audit log</label><textarea class="ps-textarea" id="ab-r"></textarea></div></div>
+  <div class="ps-dialog__foot"><button class="ps-btn ps-btn--text" data-close>Keep running</button><button class="ps-btn ps-btn--danger" data-close data-toast="Auction aborted">Abort auction</button></div>
+</dialog>
+
+<script src="/assets/js/ps.js"></script>
+<script src="/assets/js/ps-charts.js"></script>
+<script>
+{
+  PSChart.step(document.getElementById('ladder'), {
+    duration: 60, tickEvery: 10, now: 47, reserve: 58000,
+    fmt: v => '₹' + Math.round(v).toLocaleString('en-IN'),
+    points: [{ t: 0, v: 64500 }, { t: 3, v: 63800 }, { t: 7, v: 63100 }, { t: 11, v: 62600 }, { t: 15, v: 62000 }, { t: 19, v: 61500 }, { t: 24, v: 61000 }, { t: 28, v: 60650 }, { t: 33, v: 60200 }, { t: 37, v: 59900 }, { t: 39, v: 59250 }, { t: 46, v: 59200 }, { t: 47, v: 58940 }],
+    label: 'Leading bid fell from 64,500 to 58,940 rupees per tonne over 47 minutes; target 58,000',
+  });
+  const el = document.getElementById('clock'); let left = 12 * 60 + 48;
+  const tick = () => { left = Math.max(0, left - 1); el.textContent = `${String(Math.floor(left / 60)).padStart(2, '0')}:${String(left % 60).padStart(2, '0')}`; };
+  setInterval(tick, 1000);
+}
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Supplier Portal Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+<style>
+.perf { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+.perf > div { padding: 4px 16px; border-left: 1px solid var(--ps-line); display: flex; flex-direction: column; gap: 2px; }
+.perf > div:first-child { border-left: 0; padding-left: 0; }
+.perf b { font: 600 24px/30px var(--ps-font-num); font-variant-numeric: tabular-nums; }
+.deadline { font: var(--ps-label-md); white-space: nowrap; }
+</style>
+</head>
+<!-- Supplier portal: same components, own shell skin (indigo rail) and own navigation.
+     The supplier sees only their own records with this buyer; actions are respond, ship, update profile. -->
+<body data-shell="supplier" data-root=".." data-group="home" data-module="home" data-crumbs="Home">
+<main id="main">
+  <div class="ps-pagehead">
+    <div class="ps-pagehead__text">
+      <h1 class="t-headline">Aster Components Ltd</h1>
+      <p class="ps-pagehead__meta">Approved supplier to Mindsprint Digital since Mar 2023 · SUP-1042</p>
+    </div>
+    <div class="ps-pagehead__actions">
+      <button class="ps-btn ps-btn--secondary" data-todo><span class="ms" aria-hidden="true">upload_file</span>Upload invoice</button>
+      <a class="ps-btn ps-btn--primary" href="supplier-asn-create.html"><span class="ms" aria-hidden="true">local_shipping</span>Create shipment notice</a>
+    </div>
+  </div>
+
+  <div class="ps-alert ps-alert--warning" role="status"><span class="ms" aria-hidden="true">assignment_late</span><div><div class="ps-alert__title">Your GST certificate expires on 12 Dec 2025</div><div class="ps-alert__text">Upload the renewed certificate to keep receiving new orders and invitations.</div><div class="ps-alert__actions"><button class="ps-btn ps-btn--secondary ps-btn--sm" data-todo>Upload certificate</button></div></div></div>
+
+  <section class="ps-tiles" aria-label="What needs you">
+    <a class="ps-tile ps-tile--warning" href="supplier-invitations.html" style="text-decoration:none"><span class="ps-tile__label"><span class="ms" aria-hidden="true">mail</span>Invitations to answer</span><span class="ps-tile__value">3</span><span class="ps-tile__meta">1 closes in 2 days</span></a>
+    <a class="ps-tile ps-tile--info" href="supplier-orders.html" style="text-decoration:none"><span class="ps-tile__label"><span class="ms" aria-hidden="true">receipt_long</span>Orders to ship</span><span class="ps-tile__value">4</span><span class="ps-tile__meta">₹39.7 L · next due 28 Nov</span></a>
+    <a class="ps-tile" href="supplier-shipments.html" style="text-decoration:none"><span class="ps-tile__label"><span class="ms" aria-hidden="true">local_shipping</span>In transit</span><span class="ps-tile__value">1</span><span class="ps-tile__meta">arriving today, Chennai</span></a>
+    <a class="ps-tile ps-tile--danger" href="supplier-shipments.html" style="text-decoration:none"><span class="ps-tile__label"><span class="ms" aria-hidden="true">assignment_return</span>Goods rejected</span><span class="ps-tile__value">1</span><span class="ps-tile__meta">ASN020000009 · see reason</span></a>
+  </section>
+
+  <div class="ps-grid ps-grid--main-side">
+    <section class="ps-tablecard" aria-labelledby="ord-t">
+      <div class="ps-toolbar"><h2 class="ps-toolbar__title" id="ord-t">Orders to ship</h2><div class="ps-toolbar__spacer"></div><a class="ps-btn ps-btn--text ps-btn--sm" href="supplier-orders.html">All orders</a></div>
+      <div class="ps-table-scroll">
+        <table class="ps-table ps-table--stack">
+          <thead><tr><th>PO</th><th>Items</th><th class="num">Value (₹)</th><th>Deliver by</th><th>Ship to</th><th class="col-actions"><span class="sr-only">Action</span></th></tr></thead>
+          <tbody>
+            <tr><td data-l="PO"><a class="cell-id" href="#" data-todo>PO-2603148</a></td><td data-l="Items"><span class="cell-2line">Bearing set 6204-2RS<small>400 pcs</small></span></td><td class="num" data-l="Value">13,68,000</td><td data-l="Deliver by"><span class="ps-age ps-age--soon">28 Nov · 4 days</span></td><td data-l="Ship to">Chennai plant</td><td class="col-actions"><button class="ps-btn ps-btn--primary ps-btn--sm" data-todo>Create ASN</button></td></tr>
+            <tr><td data-l="PO"><a class="cell-id" href="#" data-todo>PO-2603102</a></td><td data-l="Items"><span class="cell-2line">Industrial safety gloves<small>2,000 packs</small></span></td><td class="num" data-l="Value">9,60,000</td><td data-l="Deliver by">05 Dec</td><td data-l="Ship to">Pune plant</td><td class="col-actions"><a class="ps-btn ps-btn--secondary ps-btn--sm" href="supplier-asn-create.html">Create ASN</a></td></tr>
+            <tr><td data-l="PO"><a class="cell-id" href="#" data-todo>PO-2603077</a></td><td data-l="Items"><span class="cell-2line">Hydraulic seals kit<small>150 kits</small></span></td><td class="num" data-l="Value">8,25,000</td><td data-l="Deliver by">10 Dec</td><td data-l="Ship to">Chennai plant</td><td class="col-actions"><button class="ps-btn ps-btn--secondary ps-btn--sm" data-todo>Create ASN</button></td></tr>
+            <tr><td data-l="PO"><a class="cell-id" href="#" data-todo>PO-2602155</a></td><td data-l="Items"><span class="cell-2line">Gearbox spares<small>160 of 400 pcs left</small></span></td><td class="num" data-l="Value">8,20,000</td><td data-l="Deliver by"><span class="ps-age ps-age--soon">30 Nov · 6 days</span></td><td data-l="Ship to">Pune plant</td><td class="col-actions"><button class="ps-btn ps-btn--secondary ps-btn--sm" data-todo>Create ASN</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="ps-stack">
+      <section class="ps-card" aria-labelledby="inv-t">
+        <div class="ps-card__head"><h2 class="ps-card__title" id="inv-t">Invitations</h2><span class="ps-count ps-count--brand">3</span></div>
+        <ul class="ps-list">
+          <li><div class="ps-list__main"><span class="ps-list__title">RFQ-2025-644 · Conveyor rollers</span><span class="ps-list__meta">Closes 26 Nov, 17:00 · 4 line items</span></div><span class="deadline" style="color:var(--ps-danger-fg)">2 days</span></li>
+          <li><div class="ps-list__main"><span class="ps-list__title">RA-2025-021 · Bearings, annual</span><span class="ps-list__meta">Auction 02 Dec, 11:00 · practice round open</span></div><span class="deadline">8 days</span></li>
+          <li><div class="ps-list__main"><span class="ps-list__title">RFI-2025-112 · Supplier capability</span><span class="ps-list__meta">Closes 10 Dec · questionnaire</span></div><span class="deadline">16 days</span></li>
+        </ul>
+        <div class="ps-card__foot"><a class="ps-btn ps-btn--primary ps-btn--sm" href="supplier-rfq-response.html">Respond to RFQ-2025-644</a></div>
+      </section>
+      <section class="ps-card" aria-labelledby="perf-t">
+        <div class="ps-card__head"><h2 class="ps-card__title" id="perf-t">Your performance</h2><span class="t-body-sm ink-3">Last 90 days</span></div>
+        <div class="ps-card__body">
+          <div class="perf">
+            <div><span class="t-body-sm ink-3">On time</span><b>94%</b><span class="ps-tile__delta ps-tile__delta--good"><span class="ms" aria-hidden="true">north</span>3 pts</span></div>
+            <div><span class="t-body-sm ink-3">Quality pass</span><b>98.2%</b><span class="ps-tile__delta ps-tile__delta--bad"><span class="ms" aria-hidden="true">south</span>0.6 pts</span></div>
+            <div><span class="t-body-sm ink-3">Rating</span><b>A−</b><span class="t-body-sm ink-3">Preferred</span></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <p class="t-body-sm ink-3">Sample data.</p>
+</main>
+<script src="/assets/js/ps.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

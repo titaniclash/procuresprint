@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Respond to RFQ-2025-644</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Supplier portal · Detail · Response form. Line prices first, terms second, Q&A beside; total and deadline always visible. -->
+<body data-shell="supplier" data-root=".." data-group="rfx" data-module="rfx" data-crumbs="Invitations>modules/supplier-invitations.html|RFQ-2025-644">
+<main id="main">
+  <div class="ps-rec">
+    <a class="ps-back" href="supplier-invitations.html"><span class="ms" aria-hidden="true">arrow_back</span>Invitations</a>
+    <div class="ps-rec__top">
+      <div class="ps-rec__title"><span class="ps-rec__id">RFQ-2025-644 · Mindsprint Digital · buyer Pranav Sharma</span><h1 class="t-headline">Conveyor rollers <span class="ps-chip ps-chip--info">Response in draft</span></h1><p style="color:var(--ps-danger-fg);font-weight:600">Closes Wed 26 Nov, 17:00 IST · 2 days left</p></div>
+    </div>
+  </div>
+  <div id="errs" class="ps-alert ps-alert--danger" role="alert" tabindex="-1" hidden></div>
+  <div class="ps-split">
+    <div class="ps-stack">
+      <section class="ps-section" aria-labelledby="ln-t">
+        <div class="ps-section__head"><div><h2 class="ps-section__title" id="ln-t">Your prices</h2><p class="ps-section__sub">Prices in INR, excluding GST, delivered to Chennai plant.</p></div></div>
+        <div class="ps-table-scroll"><table class="ps-lines" aria-label="Line prices">
+          <thead><tr><th>Item</th><th class="num">Qty</th><th class="num">Unit price (₹)</th><th class="num">Lead time (days)</th><th class="num">Amount (₹)</th></tr></thead>
+          <tbody id="ln"></tbody>
+          <tfoot><tr><td colspan="4" style="text-align:right;font-weight:600">Total</td><td class="num" style="font-weight:700" id="tot">0</td></tr></tfoot>
+        </table></div>
+      </section>
+      <section class="ps-section" aria-labelledby="tm-t">
+        <div class="ps-section__head"><h2 class="ps-section__title" id="tm-t">Terms</h2></div>
+        <div class="ps-section__body"><div class="ps-formgrid">
+          <div class="ps-field"><label class="ps-field__label" for="val">Quote valid for</label><select class="ps-select" id="val"><option>30 days</option><option selected>60 days</option><option>90 days</option></select></div>
+          <div class="ps-field"><label class="ps-field__label" for="pay">Payment terms</label><select class="ps-select" id="pay"><option selected>Net 30 (requested)</option><option>Net 45</option></select></div>
+          <div class="ps-field"><label class="ps-field__label" for="war">Warranty</label><input class="ps-input" id="war" value="12 months from installation"></div>
+          <div class="ps-field span-2"><label class="ps-field__label" for="dev">Deviations from the specification <span class="ps-field__opt">(optional)</span></label><textarea class="ps-textarea" id="dev" style="min-height:64px">Roller length tolerance ±1.0 mm instead of ±0.5 mm on item 3 (awaiting buyer answer).</textarea></div>
+          <div class="ps-field span-2"><span class="ps-field__label" id="at-l">Attachments</span><div class="ps-file"><span class="ms" aria-hidden="true">picture_as_pdf</span><span style="flex:1">aster-roller-datasheet.pdf<br><span class="t-body-sm ink-3">1.2 MB</span></span><button class="ps-iconbtn ps-iconbtn--sm" aria-label="Remove aster-roller-datasheet.pdf"><span class="ms" aria-hidden="true">close</span></button></div><div class="ps-drop" aria-labelledby="at-l"><span class="ms" aria-hidden="true">upload_file</span><div><strong>Add a file</strong><div class="ps-field__help">Datasheets, drawings, certificates</div></div></div></div>
+        </div>
+        <label class="ps-check"><input type="checkbox" id="tc">I accept the buyer's standard terms and confirm prices are final for this round</label>
+        <span class="ps-field__error" id="tc-e" hidden><span class="ms" aria-hidden="true">error</span>Accept the terms to submit.</span></div>
+      </section>
+    </div>
+    <aside class="ps-split__aside">
+      <section class="ps-card" aria-labelledby="qa-t">
+        <div class="ps-card__head"><h2 class="ps-card__title" id="qa-t"><span class="ms" aria-hidden="true">forum</span>Questions</h2></div>
+        <div class="ps-card__body ps-stack" style="gap:12px">
+          <div class="ps-chat"><div class="ps-chat__msg ps-chat__msg--me">Item 3: can the length tolerance be ±1.0 mm? Our tooling holds ±0.5 only for runs above 500.</div><p class="t-body-sm ink-3">You asked 23 Nov · waiting for the buyer</p></div>
+          <div class="ps-field"><label class="ps-field__label" for="ask">Ask another question</label><textarea class="ps-textarea" id="ask" style="min-height:64px" placeholder="Visible to the buyer only"></textarea></div>
+          <button class="ps-btn ps-btn--secondary ps-btn--sm" style="align-self:flex-start" data-toast="Question sent to the buyer">Send question</button>
+        </div>
+      </section>
+    </aside>
+  </div>
+  <div class="ps-actionbar">
+    <div class="ps-actionbar__sum"><div><span>Your total</span><b id="sum">₹0</b></div><div><span>Lines priced</span><b id="cnt">0 of 4</b></div></div>
+    <div class="ps-actionbar__btns"><button class="ps-btn ps-btn--text" data-toast="Draft saved">Save draft</button><button class="ps-btn ps-btn--primary" id="sub">Submit response</button></div>
+  </div>
+</main>
+<dialog class="ps-dialog" id="confirm" aria-labelledby="cf-t">
+  <div class="ps-dialog__head"><h2 class="ps-dialog__title" id="cf-t">Submit your response?</h2></div>
+  <div class="ps-dialog__body"><p id="cf-txt"></p><p>You can revise and resubmit until 26 Nov, 17:00. The buyer sees only your latest response.</p></div>
+  <div class="ps-dialog__foot"><button class="ps-btn ps-btn--text" data-close>Keep editing</button><button class="ps-btn ps-btn--primary" id="cf-go">Submit</button></div>
+</dialog>
+<script src="/assets/js/ps.js"></script>
+<script>
+{
+  const L = [
+    { n: 'Carrying roller, 89 mm × 380 mm', s: 'Item 1 · IS 8598', q: 120, p: 1850, lt: 21 },
+    { n: 'Return roller, 89 mm × 1,150 mm', s: 'Item 2 · IS 8598', q: 60, p: 3400, lt: 21 },
+    { n: 'Impact roller, 108 mm × 380 mm', s: 'Item 3 · rubber ring', q: 40, p: null, lt: null },
+    { n: 'Roller brackets, set', s: 'Item 4', q: 80, p: 640, lt: 14 },
+  ];
+  const $ = id => document.getElementById(id);
+  const draw = () => {
+    $('ln').innerHTML = L.map((l, i) => `<tr><td data-l="Item"><strong>${l.n}</strong><br><span class="t-body-sm ink-3">${l.s}</span></td><td class="num" data-l="Qty">${l.q}</td>
+      <td class="num" data-l="Unit price"><label class="sr-only" for="p${i}">Unit price, ${l.n}</label><input class="ps-input" style="width:110px;text-align:right" id="p${i}" inputmode="decimal" data-i="${i}" data-k="p" value="${l.p ?? ''}" placeholder="Price"></td>
+      <td class="num" data-l="Lead time"><label class="sr-only" for="t${i}">Lead time in days, ${l.n}</label><input class="ps-input ps-score" id="t${i}" inputmode="numeric" data-i="${i}" data-k="lt" value="${l.lt ?? ''}"></td>
+      <td class="num" data-l="Amount">${l.p ? (l.p * l.q).toLocaleString('en-IN') : '—'}</td></tr>`).join('');
+    sum();
+  };
+  const sum = () => { const t = L.reduce((a, l) => a + (l.p || 0) * l.q, 0); $('tot').textContent = t.toLocaleString('en-IN'); $('sum').textContent = '₹' + t.toLocaleString('en-IN'); $('cnt').textContent = `${L.filter(l => l.p).length} of ${L.length}`; };
+  document.addEventListener('change', e => { const i = e.target.dataset.i; if (i == null) return; const v = parseFloat(String(e.target.value).replace(/,/g, '')); L[+i][e.target.dataset.k] = v > 0 ? v : null; draw(); });
+  $('sub').addEventListener('click', () => {
+    const miss = L.map((l, i) => [l, i]).filter(([l]) => !l.p || !l.lt);
+    const errs = [...miss.map(([l, i]) => `<li><a href="#${l.p ? 't' : 'p'}${i}">${l.n}: add ${l.p ? 'lead time' : 'a unit price'}</a></li>`)];
+    $('tc-e').hidden = $('tc').checked; if (!$('tc').checked) errs.push('<li><a href="#tc">Accept the terms</a></li>');
+    if (errs.length) { $('errs').innerHTML = `<span class="ms" aria-hidden="true">error</span><div><div class="ps-alert__title">${errs.length} ${errs.length === 1 ? 'thing' : 'things'} to fix before you submit</div><ul>${errs.join('')}</ul></div>`; $('errs').hidden = false; $('errs').focus(); return; }
+    $('errs').hidden = true; $('cf-txt').textContent = `Total ${$('sum').textContent} for 4 lines, valid ${$('val').value}.`; $('confirm').showModal();
+  });
+  $('cf-go').addEventListener('click', () => { $('confirm').close(); PS.toast('Response submitted to Mindsprint Digital'); });
+  draw();
+}
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

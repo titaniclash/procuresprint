@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C-022 Office supplies West</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+<style>
+.opt { display: grid; gap: 8px; }
+.opt label { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 4px 10px; padding: 12px 14px; border: 1px solid var(--ps-line-strong); border-radius: var(--ps-r-sm); cursor: pointer; }
+.opt label:has(input:checked) { border-color: var(--ps-brand); background: var(--ps-brand-tint); }
+.opt input { margin: 2px 0 0; accent-color: var(--ps-brand); width: 18px; height: 18px; }
+.opt small { grid-column: 2; color: var(--ps-ink-2); font: var(--ps-body-sm); }
+</style>
+</head>
+<!-- Detail · Record page (contract) with a decision panel for the one thing that matters now: renewal. -->
+<body data-shell="buyer" data-root=".." data-group="contracts" data-module="contract-workbench" data-crumbs="Contracts|Contract Workbench>modules/contract-workbench.html|C-022">
+<main id="main">
+  <div class="ps-rec">
+    <a class="ps-back" href="contract-workbench.html"><span class="ms" aria-hidden="true">arrow_back</span>Contracts</a>
+    <div class="ps-rec__top">
+      <div class="ps-rec__title"><span class="ps-rec__id">C-022 · Rate contract · signed 21 Dec 2023</span><h1 class="t-headline">Office supplies, West <span class="ps-chip ps-chip--warning">Expiring</span></h1><p class="ink-2">Metro Print House · owner Pooja Nair · Pune and Mumbai offices</p></div>
+      <div class="ps-pagehead__actions"><button class="ps-btn ps-btn--secondary" data-todo><span class="ms" aria-hidden="true">description</span>View signed PDF</button></div>
+    </div>
+    <dl class="ps-rec__facts">
+      <div><dt>Value</dt><dd class="big">₹48,00,000</dd></div>
+      <div><dt>Consumed</dt><dd>₹29.8 L · 62%</dd></div>
+      <div><dt>Ends</dt><dd style="color:var(--ps-danger-fg)">20 Dec 2025 · 26 days</dd></div>
+      <div><dt>Catalogue</dt><dd><a href="e-catalogue.html">Office supplies, West · 42 items</a></dd></div>
+      <div><dt>Payment terms</dt><dd>Net 30</dd></div>
+    </dl>
+  </div>
+  <div class="ps-alert ps-alert--danger" role="status"><span class="ms" aria-hidden="true">event_busy</span><div><div class="ps-alert__title">No renewal plan, 26 days before expiry</div><div class="ps-alert__text">When it ends, 42 catalogue items stop being orderable and office supplies fall back to PR + RFQ.</div></div></div>
+
+  <div class="ps-split">
+    <div class="ps-stack">
+      <section class="ps-section" aria-labelledby="use-t">
+        <div class="ps-section__head"><div><h2 class="ps-section__title" id="use-t">Use has run at ₹1.2 L a month, under plan</h2><p class="ps-section__sub">Monthly call-offs, ₹ lakh, last 12 months · plan ₹2 L a month</p></div></div>
+        <div class="ps-section__body"><div class="ps-fig" id="use" style="height:220px"></div></div>
+      </section>
+      <section class="ps-section" aria-labelledby="terms-t">
+        <div class="ps-section__head"><h2 class="ps-section__title" id="terms-t">Key terms</h2><span class="ps-ai-tag"><span class="ms" aria-hidden="true">auto_awesome</span>Extracted from the signed PDF · check against source</span></div>
+        <div class="ps-section__body">
+          <dl class="ps-dl">
+            <div><dt>Price basis</dt><dd>Fixed for term, ±5% paper index review yearly</dd></div>
+            <div><dt>Renewal</dt><dd>Mutual, written notice 30 days before end</dd></div>
+            <div><dt>Termination</dt><dd>60 days for convenience</dd></div>
+            <div><dt>Delivery SLA</dt><dd>48 hours, metro offices</dd></div>
+            <div><dt>Penalty</dt><dd>1% per day late, cap 10%</dd></div>
+            <div><dt>Liability cap</dt><dd>Annual contract value</dd></div>
+          </dl>
+          <div class="ps-alert ps-alert--warning"><span class="ms" aria-hidden="true">schedule</span><div><div class="ps-alert__title">Renewal notice was due by 20 Nov 2025</div><div class="ps-alert__text">The 30-day notice window has passed. Renewal now needs the supplier's written agreement.</div></div></div>
+        </div>
+      </section>
+    </div>
+    <aside class="ps-split__aside">
+      <section class="ps-card" aria-labelledby="rn-t">
+        <div class="ps-card__head"><h2 class="ps-card__title" id="rn-t"><span class="ms" aria-hidden="true">autorenew</span>Renewal plan</h2></div>
+        <div class="ps-card__body ps-stack" style="gap:12px">
+          <fieldset class="ps-fieldset"><legend class="sr-only">Choose a renewal option</legend><div class="opt">
+            <label><input type="radio" name="rn" value="extend" checked><strong>Extend 6 months as is</strong><small>Keeps catalogue live while you re-source. Needs supplier agreement.</small></label>
+            <label><input type="radio" name="rn" value="source"><strong>Re-source now</strong><small>Creates an E-Sourcing event. Under-use suggests a smaller scope.</small></label>
+            <label><input type="radio" name="rn" value="expire"><strong>Let it expire</strong><small>Requesters buy via PR and RFQ from 21 Dec.</small></label>
+          </div></fieldset>
+          <div class="ps-field"><label class="ps-field__label" for="rn-o">Owner</label><select class="ps-select" id="rn-o"><option>Pooja Nair</option><option>Pranav Sharma</option></select></div>
+        </div>
+        <div class="ps-card__foot"><button class="ps-btn ps-btn--primary" id="rn-go">Start extension</button></div>
+      </section>
+    </aside>
+  </div>
+  <p class="t-body-sm ink-3">Sample data.</p>
+</main>
+<script src="/assets/js/ps.js"></script>
+<script src="/assets/js/ps-charts.js"></script>
+<script>
+{
+  const vals = [1.4, 1.1, 0.9, 1.3, 1.2, 1.0, 1.5, 1.3, 1.1, 1.2, 1.4, 1.2];
+  PSChart.columns(document.getElementById('use'), { labels: ['Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'], values: vals, color: 'var(--ps-cat-1)', highlight: 11, fmt: v => (+v).toFixed(1), label: 'Monthly call-offs averaged 1.2 lakh against a plan of 2 lakh' });
+  const label = { extend: 'Start extension', source: 'Create sourcing event', expire: 'Confirm expiry' };
+  document.addEventListener('change', e => { if (e.target.name === 'rn') document.getElementById('rn-go').textContent = label[e.target.value]; });
+  document.getElementById('rn-go').addEventListener('click', () => PS.toast({ extend: 'Extension request sent to Metro Print House', source: 'Draft event ES-2025-033 created', expire: 'Expiry confirmed; requesters will be told on 14 Dec' }[document.querySelector('[name=rn]:checked').value]));
+}
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

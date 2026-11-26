@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catalog Marketplace</title>
+<meta name="description" content="Find contracted catalog items, add them to the cart and turn the cart into a purchase request at contract prices.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+<style>
+/* Marketplace: one search, one facet rail, one item grid. Everything else was a second way to do the same thing. */
+.mk { display: grid; grid-template-columns: 264px minmax(0, 1fr); gap: 16px; align-items: start; }
+.mk-facets { position: sticky; top: calc(var(--ps-topbar-h) + 16px); }
+.mk-facets summary { list-style: none; cursor: default; }
+.mk-facets summary::-webkit-details-marker { display: none; }
+.mk-facets__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--ps-line); font: var(--ps-title-sm); }
+.mk-facets__head .ms { display: none; }
+.mk-facets__body { display: flex; flex-direction: column; gap: 20px; padding: 16px; }
+.mk-facet { border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.mk-facet legend { font: var(--ps-label-lg); color: var(--ps-ink); padding: 0; margin-bottom: 6px; }
+.mk-facet label { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; gap: 10px; align-items: center; min-height: 36px; padding: 0 8px; margin: 0 -8px; border-radius: var(--ps-r-xs); font: var(--ps-body-md); color: var(--ps-ink-2); cursor: pointer; }
+.mk-facet label:hover { background: var(--ps-surface-3); color: var(--ps-ink); }
+.mk-facet label:has(:checked) { color: var(--ps-ink); font-weight: 600; }
+.mk-facet input { width: 18px; height: 18px; margin: 0; accent-color: var(--ps-brand); }
+.mk-facet__text { display: flex; flex-direction: column; min-width: 0; }
+.mk-facet__text small { font: var(--ps-body-sm); color: var(--ps-ink-3); font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mk-facet .ps-count { justify-self: end; }
+.mk-results { display: flex; flex-direction: column; min-width: 0; }
+.mk-results .ps-toolbar .ps-select { width: auto; height: var(--tb-h); }
+.mk-results__meta { font: var(--ps-body-md); color: var(--ps-ink-2); }
+.mk-results__meta strong { color: var(--ps-ink); }
+.mk-chips { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--ps-line); }
+.mk-chips[hidden] { display: none; }
+.mk-body { padding: 16px; }
+.mk-items { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 236px), 1fr)); gap: 12px; }
+.mk-item { display: flex; flex-direction: column; min-width: 0; background: var(--ps-surface); border: 1px solid var(--ps-line); border-radius: var(--ps-r-sm); transition: border-color var(--ps-dur-1); }
+.mk-item:hover { border-color: var(--ps-line-strong); }
+.mk-item__art { position: relative; height: 104px; display: grid; place-items: center; background: var(--ps-surface-2); border-radius: var(--ps-r-sm) var(--ps-r-sm) 0 0; color: var(--ps-brand); border-bottom: 1px solid var(--ps-line); }
+.mk-item__art > .ms { font-size: 40px; font-variation-settings: "FILL" 0, "wght" 300, "opsz" 24; }
+.mk-item__code { position: absolute; top: 8px; left: 8px; font: 500 12px/20px var(--ps-font-num); padding: 0 8px; border-radius: var(--ps-r-xs); background: var(--ps-surface); border: 1px solid var(--ps-line); color: var(--ps-ink-2); }
+.mk-item__stock { position: absolute; top: 8px; right: 8px; }
+.mk-item__body { display: flex; flex-direction: column; gap: 4px; padding: 12px 14px 0; flex: 1; min-width: 0; }
+.mk-item h3 { font: var(--ps-label-lg); overflow-wrap: anywhere; }
+.mk-item__spec { font: var(--ps-body-sm); color: var(--ps-ink-3); overflow-wrap: anywhere; }
+.mk-item__src { font: var(--ps-body-sm); color: var(--ps-ink-2); margin-top: 4px; overflow-wrap: anywhere; }
+.mk-item__rate { display: inline-flex; gap: 4px; align-items: center; font: var(--ps-label-md); color: var(--ps-ink-2); }
+.mk-item__rate .ms { font-size: 16px; color: var(--ps-warning-solid); font-variation-settings: "FILL" 1; }
+.mk-item__foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; padding: 12px 14px 14px; }
+.mk-item__price { font: 600 16px/22px var(--ps-font-num); font-variant-numeric: tabular-nums; }
+.mk-item__price small { display: block; font: var(--ps-body-sm); color: var(--ps-ink-3); }
+.mk-item__qty { display: inline-flex; align-items: center; gap: 2px; border: 1px solid var(--ps-line-strong); border-radius: var(--ps-r-xs); padding: 1px; }
+.mk-item__qty output { min-width: 28px; text-align: center; font: var(--ps-label-lg); font-variant-numeric: tabular-nums; }
+.mk-items.is-list { grid-template-columns: minmax(0, 1fr); }
+.mk-items.is-list .mk-item { flex-direction: row; align-items: stretch; }
+.mk-items.is-list .mk-item__art { width: 112px; height: auto; flex: none; border-radius: var(--ps-r-sm) 0 0 var(--ps-r-sm); border-bottom: 0; border-right: 1px solid var(--ps-line); }
+.mk-items.is-list .mk-item__body { padding: 12px 14px; }
+.mk-items.is-list .mk-item__foot { flex-direction: column; align-items: flex-end; justify-content: center; padding: 12px 14px; flex: none; }
+.mk-skel { display: flex; flex-direction: column; gap: 8px; padding: 14px; min-height: 236px; border: 1px solid var(--ps-line); border-radius: var(--ps-r-sm); background: var(--ps-surface); }
+.mk-skel .ps-skel:first-child { height: 90px; }
+.cart-line { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "name total" "meta meta" "qty qty"; gap: 4px 12px; padding: 12px 0; border-bottom: 1px solid var(--ps-line); }
+.cart-line strong { grid-area: name; overflow-wrap: anywhere; }
+.cart-line .num { grid-area: total; }
+.cart-line__meta { grid-area: meta; font: var(--ps-body-sm); color: var(--ps-ink-3); }
+.cart-line__qty { grid-area: qty; display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+.cart-total { display: flex; justify-content: space-between; gap: 12px; padding-top: 12px; font: var(--ps-label-lg); }
+.cart-note { font: var(--ps-body-sm); color: var(--ps-ink-3); margin-right: auto; align-self: center; }
+@media (max-width: 904px) {
+  .mk { grid-template-columns: minmax(0, 1fr); }
+  .mk-facets { position: static; }
+  .mk-facets summary { cursor: pointer; }
+  .mk-facets__head .ms { display: inline-block; transition: transform var(--ps-dur-2) var(--ps-ease); }
+  .mk-facets[open] .mk-facets__head .ms { transform: rotate(180deg); }
+  .mk-facets:not([open]) .mk-facets__head { border-bottom: 0; }
+}
+</style>
+</head>
+<!-- E-Catalog marketplace · redesigned: one search, facets that filter, sort that sorts, cart with quantities -->
+<body data-shell="buyer" data-root=".." data-module="e-catalogue-marketplace" data-crumbs="Procurement|E-Catalog|Marketplace">
+<main id="main">
+
+<div class="ps-pagehead">
+  <div class="ps-pagehead__text"><h1 class="t-headline">Catalog Management</h1>
+    <nav class="ps-switch" aria-label="Catalog Management views"><a href="e-catalogue.html">Catalog management</a><a aria-current="page" href="#">Marketplace</a></nav>
+    <p class="ps-pagehead__meta">Contracted items from approved catalogs. Items you add become purchase request lines at contract prices.</p></div>
+  <div class="ps-pagehead__actions" role="group" aria-label="Page actions"><button class="ps-btn ps-btn--secondary" type="button" data-open="mk-cart"><span class="ms" aria-hidden="true">shopping_cart</span>Cart <span class="ps-count" id="mk-cartn" aria-label="0 items in cart">0</span></button></div>
+</div>
+
+<div class="mk">
+  <details class="ps-card mk-facets" id="mk-facets" open>
+    <summary class="mk-facets__head"><span>Filters</span><span class="ms" aria-hidden="true">expand_more</span></summary>
+    <form class="mk-facets__body" id="mk-form">
+      <fieldset class="mk-facet" id="mk-f-cat"><legend>Category</legend></fieldset>
+      <fieldset class="mk-facet" id="mk-f-catalog"><legend>Catalog</legend></fieldset>
+      <fieldset class="mk-facet" id="mk-f-stock"><legend>Availability</legend></fieldset>
+      <button class="ps-btn ps-btn--text" type="reset" id="mk-reset">Clear all filters</button>
+    </form>
+  </details>
+
+  <section class="ps-tablecard mk-results" aria-labelledby="mk-h">
+    <div class="ps-toolbar" role="toolbar" aria-label="Catalog item actions" aria-orientation="horizontal">
+      <h2 class="ps-toolbar__title" id="mk-h">Catalog items</h2>
+      <div class="ps-toolbar__search"><label class="sr-only" for="mk-q">Search items, catalogs or suppliers</label><div class="ps-inputwrap"><span class="ms" aria-hidden="true">search</span><input class="ps-input" id="mk-q" type="search" placeholder="Search items, catalogs or suppliers" autocomplete="off"></div></div>
+      <div class="ps-toolbar__spacer"></div>
+      <div class="ps-toolbar__group">
+        <label class="sr-only" for="mk-sort">Sort items</label>
+        <select class="ps-select" id="mk-sort"><option value="relevance">Sort: relevance</option><option value="price-asc">Sort: price, low to high</option><option value="price-desc">Sort: price, high to low</option><option value="rating">Sort: rating</option><option value="lead">Sort: fastest delivery</option></select>
+        <div class="ps-seg" role="group" aria-label="Layout"><button type="button" aria-pressed="true" data-layout="grid"><span class="ms" aria-hidden="true">grid_view</span>Grid</button><button type="button" aria-pressed="false" data-layout="list"><span class="ms" aria-hidden="true">view_list</span>List</button></div>
+      </div>
+    </div>
+    <div class="mk-chips" id="mk-chips" hidden></div>
+    <div class="mk-body">
+      <p class="mk-results__meta" role="status" id="mk-meta" style="margin-bottom:12px"></p>
+      <div class="mk-items" id="mk-items" aria-busy="true"></div>
+    </div>
+  </section>
+</div>
+<p class="t-body-sm ink-3">Sample data: the 12 items designed in Figma “Catalog Marketplace”. Counts are computed from these items, so facets and results always agree.</p>
+
+<dialog class="ps-drawer" id="mk-cart" aria-labelledby="mk-cart-t">
+  <div class="ps-drawer__head"><div style="flex:1"><h2 class="ps-drawer__title" id="mk-cart-t">Cart</h2><p class="t-body-sm ink-3">Items become lines on a purchase request at contract prices.</p></div><button class="ps-iconbtn" type="button" data-close aria-label="Close cart"><span class="ms" aria-hidden="true">close</span></button></div>
+  <div class="ps-drawer__body" id="mk-cartbody"></div>
+  <div class="ps-drawer__foot"><span class="cart-note" id="mk-cartnote"></span><button class="ps-btn ps-btn--text" type="button" data-close>Continue shopping</button><a class="ps-btn ps-btn--primary" id="mk-createpr" href="pr-create.html">Create PR from cart</a></div>
+</dialog>
+
+</main>
+<script src="/assets/js/ps.js"></script>
+<script>
+{
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const inr = n => '₹' + n.toLocaleString('en-IN');
+
+  /* Approved catalogs (from Catalog management). Items reference a catalog where Figma names one for that category. */
+  const CATALOGS = {
+    dell: { name: 'IT Equipment Catalog', supplier: 'Dell Technologies', type: 'Contract', validTo: '31 Mar 2027' },
+    staples: { name: 'Office Supplies Catalog', supplier: 'Staples', type: 'Independent', validTo: '14 Mar 2027' },
+    grainger: { name: 'Industrial MRO Catalog', supplier: 'Grainger', type: 'Contract', validTo: '31 Dec 2026' },
+    m3: { name: 'Safety Equipment Catalog', supplier: '3M India', type: 'Independent', validTo: '09 Feb 2027' },
+  };
+  const CATS = { IT: ['IT Hardware', 'laptop_mac'], SW: ['Software Licenses', 'apps'], OS: ['Office Supplies', 'inventory_2'], MRO: ['MRO', 'construction'], PS: ['Professional Services', 'support_agent'], FAC: ['Facility', 'cleaning_services'] };
+  const ITEMS = [
+    { id: 'IT-001', cat: 'IT', stock: 'In stock', name: 'Dell Latitude 7450', spec: '14" Business laptop, Intel Core Ultra 7, 16GB RAM, 512GB SSD', rating: 4.5, price: 124000, unit: 'EA', lead: 7, catalog: 'dell' },
+    { id: 'IT-002', cat: 'IT', stock: 'In stock', name: 'HP EliteBook 840 G10', spec: '14" Business laptop, Intel Core i7, 16GB RAM, 256GB SSD', rating: 4.3, price: 98500, unit: 'EA', lead: 5, catalog: 'dell' },
+    { id: 'IT-003', cat: 'IT', stock: 'Low stock', name: 'Lenovo ThinkPad X1 Carbon', spec: '14" Ultra-light business laptop, Intel Core i7, 16GB RAM, 512GB SSD', rating: 4.7, price: 118000, unit: 'EA', lead: 10, catalog: 'dell' },
+    { id: 'IT-004', cat: 'IT', stock: 'In stock', name: 'Apple MacBook Pro M3', spec: '14" MacBook Pro with M3 chip, 16GB unified memory, 512GB SSD', rating: 4.6, price: 189000, unit: 'EA', lead: 14, catalog: 'dell' },
+    { id: 'SW-001', cat: 'SW', stock: 'Available', name: 'Microsoft Office 365 (Annual)', spec: 'Microsoft 365 Business Standard, per user per year', rating: 4.4, price: 12400, unit: 'LICENSE', lead: 0 },
+    { id: 'SW-002', cat: 'SW', stock: 'Available', name: 'Adobe Creative Cloud (Annual)', spec: 'Adobe CC All Apps, per user per year subscription', rating: 4.8, price: 54000, unit: 'LICENSE', lead: 0 },
+    { id: 'OS-001', cat: 'OS', stock: 'In stock', name: 'A4 Copier Paper, 75 GSM', spec: '500 sheets per ream, bright white, multi-purpose', rating: 4.4, price: 285, unit: 'REAM', lead: 2, catalog: 'staples' },
+    { id: 'OS-002', cat: 'OS', stock: 'Low stock', name: 'Ergonomic Office Chair', spec: 'Mesh back with adjustable lumbar support and armrests', rating: 4.5, price: 8750, unit: 'EA', lead: 6, catalog: 'staples' },
+    { id: 'MRO-001', cat: 'MRO', stock: 'In stock', name: 'Industrial Safety Gloves', spec: 'Cut-resistant nitrile coated gloves, pack of 12 pairs', rating: 4.2, price: 1980, unit: 'PACK', lead: 3, catalog: 'm3' },
+    { id: 'MRO-002', cat: 'MRO', stock: 'In stock', name: 'Bearing Set 6204-2RS', spec: 'Sealed deep groove ball bearings, pack of 10', rating: 4.3, price: 3420, unit: 'PACK', lead: 4, catalog: 'grainger' },
+    { id: 'PS-001', cat: 'PS', stock: 'Available', name: 'Annual IT Support Retainer', spec: 'Managed helpdesk and on-site support, 40 hours per month', rating: 4.6, price: 480000, unit: 'YEAR', lead: 0 },
+    { id: 'FAC-001', cat: 'FAC', stock: 'Available', name: 'Housekeeping Services (Monthly)', spec: 'Daily cleaning and consumables for up to 10,000 sq ft', rating: 4.1, price: 62000, unit: 'MONTH', lead: 7 },
+  ];
+  const leadText = d => d === 0 ? 'Instant' : `${d} day${d === 1 ? '' : 's'}`;
+  const stockTone = s => s === 'Low stock' ? 'warning' : 'success';
+
+  /* ---------- facets (counts computed from the items, so they always agree with the grid) ---------- */
+  const facet = (id, name, options, type) => {
+    const count = (k) => ITEMS.filter(x => (id === 'mk-f-cat' ? x.cat : id === 'mk-f-catalog' ? x.catalog : x.stock) === k).length;
+    $(id).insertAdjacentHTML('beforeend', options.map(([k, label, sub]) => `<label><input type="${type}" name="${name}" value="${esc(k)}">${sub ? `<span class="mk-facet__text">${esc(label)}<small>${esc(sub)}</small></span>` : `<span>${esc(label)}</span>`}<span class="ps-count">${count(k)}</span></label>`).join(''));
+  };
+  facet('mk-f-cat', 'cat', Object.entries(CATS).map(([k, [l]]) => [k, l]), 'checkbox');
+  facet('mk-f-catalog', 'catalog', Object.entries(CATALOGS).map(([k, c]) => [k, c.name, `${c.supplier} · ${c.type} · valid to ${c.validTo}`]), 'checkbox');
+  facet('mk-f-stock', 'stock', ['In stock', 'Low stock', 'Available'].map(s => [s, s]), 'checkbox');
+
+  const state = { q: '', sort: 'relevance', cat: [], catalog: [], stock: [] };
+  const readForm = () => { for (const k of ['cat', 'catalog', 'stock']) state[k] = [...document.querySelectorAll(`[name="${k}"]:checked`)].map(x => x.value); };
+
+  /* ---------- results ---------- */
+  const box = $('mk-items'), meta = $('mk-meta'), chips = $('mk-chips');
+  const matches = x => (!state.cat.length || state.cat.includes(x.cat))
+    && (!state.catalog.length || state.catalog.includes(x.catalog))
+    && (!state.stock.length || state.stock.includes(x.stock))
+    && (!state.q || [x.id, x.name, x.spec, CATS[x.cat][0], x.catalog && CATALOGS[x.catalog].name, x.catalog && CATALOGS[x.catalog].supplier].filter(Boolean).join(' ').toLowerCase().includes(state.q));
+  const sorters = { relevance: () => 0, 'price-asc': (a, b) => a.price - b.price, 'price-desc': (a, b) => b.price - a.price, rating: (a, b) => b.rating - a.rating, lead: (a, b) => a.lead - b.lead };
+  const card = x => { const c = x.catalog && CATALOGS[x.catalog]; const n = cart[x.id] || 0; return `<article class="mk-item" aria-labelledby="mk-i-${esc(x.id)}">
+    <div class="mk-item__art"><span class="mk-item__code">${esc(x.id)}</span><span class="ms" aria-hidden="true">${CATS[x.cat][1]}</span><span class="mk-item__stock ps-chip ps-chip--${stockTone(x.stock)}">${esc(x.stock)}</span></div>
+    <div class="mk-item__body"><h3 id="mk-i-${esc(x.id)}">${esc(x.name)}</h3><p class="mk-item__spec">${esc(x.spec)}</p><span class="mk-item__rate"><span class="ms" aria-hidden="true">star</span>${x.rating.toFixed(1)}<span class="sr-only"> out of 5</span></span>${c ? `<p class="mk-item__src">${esc(c.name)} · ${esc(c.supplier)}</p>` : ''}</div>
+    <div class="mk-item__foot"><span class="mk-item__price">${inr(x.price)}<small>per ${esc(x.unit)} · ${leadText(x.lead)}</small></span>${n ? `<span class="mk-item__qty" role="group" aria-label="Quantity of ${esc(x.name)} in cart"><button class="ps-iconbtn ps-iconbtn--sm" type="button" data-qty="${esc(x.id)}" data-delta="-1" aria-label="Remove one"><span class="ms" aria-hidden="true">remove</span></button><output aria-live="polite">${n}</output><button class="ps-iconbtn ps-iconbtn--sm" type="button" data-qty="${esc(x.id)}" data-delta="1" aria-label="Add one"><span class="ms" aria-hidden="true">add</span></button></span>` : `<button class="ps-btn ps-btn--secondary ps-btn--sm" type="button" data-qty="${esc(x.id)}" data-delta="1" aria-label="Add ${esc(x.name)} to cart"><span class="ms" aria-hidden="true">add</span>Add</button>`}</div></article>`; };
+  const chip = (k, v, label) => `<button class="ps-fchip" type="button" aria-pressed="true" data-clear="${k}" data-value="${esc(v)}" aria-label="Remove filter ${esc(label)}">${esc(label)}<span class="ms" aria-hidden="true">close</span></button>`;
+  const draw = () => {
+    const list = ITEMS.filter(matches).sort(sorters[state.sort]);
+    const active = [...state.cat.map(k => chip('cat', k, CATS[k][0])), ...state.catalog.map(k => chip('catalog', k, CATALOGS[k].name)), ...state.stock.map(s => chip('stock', s, s)), ...(state.q ? [chip('q', state.q, `“${state.q}”`)] : [])];
+    chips.innerHTML = active.length ? active.join('') + '<button class="ps-btn ps-btn--text ps-btn--sm" type="button" data-clear="all">Clear all</button>' : '';
+    chips.hidden = !active.length;
+    meta.innerHTML = `<strong>${list.length}</strong> of ${ITEMS.length} items${active.length ? ' match your filters' : ' across approved catalogs'}`;
+    box.innerHTML = list.length ? list.map(card).join('') : `<div class="ps-state" style="grid-column:1/-1"><div class="ps-state__art"><span class="ms" aria-hidden="true">search_off</span></div><div class="ps-state__title">No items match</div><p class="ps-state__text">${state.q ? `Nothing in the approved catalogs matches “${esc(state.q)}”` : 'No catalog item fits every filter you chose'}. Clear a filter or ask the catalog manager to add the item.</p><div class="ps-state__actions"><button class="ps-btn ps-btn--secondary" type="button" data-clear="all">Clear all filters</button><a class="ps-btn ps-btn--text" href="pr-create.html">Raise a free-text request</a></div></div>`;
+    box.setAttribute('aria-busy', 'false');
+  };
+  const skeleton = () => { box.setAttribute('aria-busy', 'true'); meta.textContent = 'Loading catalog items'; box.innerHTML = Array.from({ length: 8 }, () => '<div class="mk-skel" aria-hidden="true"><span class="ps-skel"></span><span class="ps-skel" style="width:70%;height:16px"></span><span class="ps-skel" style="width:90%"></span><span class="ps-skel" style="width:40%;height:22px"></span></div>').join(''); };
+  const failed = (err) => { box.setAttribute('aria-busy', 'false'); meta.textContent = ''; box.innerHTML = `<div class="ps-state" style="grid-column:1/-1"><div class="ps-state__art ps-state__art--danger"><span class="ms" aria-hidden="true">cloud_off</span></div><div class="ps-state__title">Couldn't load catalog items</div><p class="ps-state__text">${esc(err && err.message ? err.message : 'The catalog feed did not answer')}. Your cart is kept.</p><div class="ps-state__actions"><button class="ps-btn ps-btn--secondary" type="button" id="mk-retry"><span class="ms" aria-hidden="true">refresh</span>Try again</button></div></div>`; $('mk-retry').addEventListener('click', load); };
+  const load = () => { skeleton(); setTimeout(() => { try { draw(); } catch (err) { failed(err); } }, 350); };
+
+  /* ---------- cart ---------- */
+  const cart = {};
+  const cartCount = () => Object.values(cart).reduce((a, n) => a + n, 0);
+  const cartTotal = () => Object.entries(cart).reduce((a, [k, n]) => a + ITEMS.find(i => i.id === k).price * n, 0);
+  const drawCart = () => {
+    const n = cartCount(); const ids = Object.keys(cart);
+    $('mk-cartn').textContent = n; $('mk-cartn').setAttribute('aria-label', `${n} item${n === 1 ? '' : 's'} in cart`);
+    $('mk-cartbody').innerHTML = ids.length ? ids.map(k => { const x = ITEMS.find(i => i.id === k); return `<div class="cart-line"><strong>${esc(x.name)}</strong><span class="num">${inr(x.price * cart[k])}</span><span class="cart-line__meta">${esc(x.id)} · ${inr(x.price)} per ${esc(x.unit)} · ${leadText(x.lead)}</span><span class="cart-line__qty"><span class="mk-item__qty" role="group" aria-label="Quantity of ${esc(x.name)}"><button class="ps-iconbtn ps-iconbtn--sm" type="button" data-qty="${esc(k)}" data-delta="-1" aria-label="Remove one"><span class="ms" aria-hidden="true">remove</span></button><output>${cart[k]}</output><button class="ps-iconbtn ps-iconbtn--sm" type="button" data-qty="${esc(k)}" data-delta="1" aria-label="Add one"><span class="ms" aria-hidden="true">add</span></button></span><button class="ps-btn ps-btn--text ps-btn--sm" type="button" data-qty="${esc(k)}" data-delta="-${cart[k]}">Remove</button></span></div>`; }).join('') + `<p class="cart-total">Total <span class="num">${inr(cartTotal())}</span></p>`
+      : '<div class="ps-state"><div class="ps-state__art"><span class="ms" aria-hidden="true">shopping_cart</span></div><div class="ps-state__title">Your cart is empty</div><p class="ps-state__text">Add items from the catalog grid. Quantities can be changed here before you create the request.</p></div>';
+    const go = $('mk-createpr'); go.setAttribute('aria-disabled', String(!n)); go.tabIndex = n ? 0 : -1;
+    $('mk-cartnote').textContent = n ? `${n} item${n === 1 ? '' : 's'} · ${inr(cartTotal())}` : 'Add an item to create a request';
+  };
+  $('mk-createpr').addEventListener('click', e => { if (!cartCount()) e.preventDefault(); });
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-qty]'); if (!b) return;
+    const id = b.dataset.qty, x = ITEMS.find(i => i.id === id); const next = (cart[id] || 0) + Number(b.dataset.delta);
+    if (next <= 0) { delete cart[id]; PS.toast(`${x.name} removed from cart`); } else { cart[id] = next; if (!b.closest('#mk-cart') && next === 1) PS.toast(`${x.name} added to cart`, { action: 'View cart' }); }
+    drawCart(); draw();
+    if (b.closest('#mk-items')) document.querySelector(`#mk-items [data-qty="${CSS.escape(id)}"][data-delta="1"]`)?.focus();
+  });
+  document.addEventListener('click', e => { if (e.target.closest('.ps-toast__action')) $('mk-cart').showModal(); });
+
+  /* ---------- controls ---------- */
+  $('mk-form').addEventListener('change', () => { readForm(); draw(); });
+  $('mk-form').addEventListener('reset', () => setTimeout(() => { readForm(); draw(); }, 0));
+  $('mk-q').addEventListener('input', e => { state.q = e.target.value.trim().toLowerCase(); draw(); });
+  $('mk-sort').addEventListener('change', e => { state.sort = e.target.value; draw(); });
+  document.querySelector('.mk-results .ps-seg').addEventListener('click', e => { const b = e.target.closest('[data-layout]'); if (b) box.classList.toggle('is-list', b.dataset.layout === 'list'); });
+  document.addEventListener('click', e => {
+    const c = e.target.closest('[data-clear]'); if (!c) return;
+    if (c.dataset.clear === 'all') { $('mk-form').reset(); $('mk-q').value = ''; state.q = ''; readForm(); draw(); return; }
+    if (c.dataset.clear === 'q') { $('mk-q').value = ''; state.q = ''; draw(); return; }
+    const input = document.querySelector(`[name="${c.dataset.clear}"][value="${CSS.escape(c.dataset.value)}"]`); if (input) input.checked = false; readForm(); draw();
+  });
+  /* facets collapse to a disclosure on narrow screens, stay open beside the grid otherwise */
+  const narrow = matchMedia('(max-width: 904px)');
+  const syncFacets = () => { $('mk-facets').open = !narrow.matches; };
+  narrow.addEventListener('change', syncFacets); syncFacets();
+
+  drawCart();
+  load();
+}
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

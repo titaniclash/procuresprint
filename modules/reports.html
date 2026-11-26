@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reports</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_d.py -->
+<body data-shell="buyer" data-root=".." data-group="reports" data-module="reports" data-crumbs="Reports & Analytics|Reports">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+const RP = [
+  ['RPT-001','PR ageing by department','Procurement','Weekly · Mon 08:00','John Doe','23 Sep 2025','scheduled'],
+  ['RPT-002','Open PO commitments','Finance','Daily · 07:00','Vikram Sen','23 Sep 2025','scheduled'],
+  ['RPT-003','Supplier OTIF scorecard','Supplier Management','Monthly · 1st','Ananya Rao','01 Sep 2025','scheduled'],
+  ['RPT-004','Savings vs target, FY25','Sourcing','Monthly · 1st','John Doe','01 Sep 2025','scheduled'],
+  ['RPT-005','Contracts expiring in 90 days','Contracts','Weekly · Fri 09:00','Meera Iyer','19 Sep 2025','scheduled'],
+  ['RPT-006','Invoice exceptions by cause','Invoicing','On demand','Priya Nair','22 Sep 2025','adhoc'],
+  ['RPT-007','Catalog usage by category','Procurement','On demand','Rohan Shah','18 Sep 2025','adhoc'],
+  ['RPT-008','Maverick spend, non-PO','Finance','Quarterly','Vikram Sen','01 Jul 2025','draft'],
+];
+window.PAGE = {
+  title: 'Reports',
+  switch: [{ label: 'Spend Analytics', href: 'spend.html' }, { label: 'Reports', current: true }],
+  banner: '<div class="ps-alert" role="note"><span class="ms" aria-hidden="true">info</span><div><div class="ps-alert__title">No Figma reference</div><div class="ps-alert__text">Reports & Analytics is expandable in the Figma navigation but its children are not designed. Layout and actions follow the shared workbench pattern; content is representative sample data to confirm with the module owner.</div></div></div>',
+  statuses: { scheduled: ['success', 'Scheduled'], adhoc: ['info', 'On demand'], draft: ['', 'Draft'] },
+  kpis: [
+    { label: 'Saved reports', value: '8', sub: '5 scheduled · 2 on demand', icon: 'summarize', tone: 'info' },
+    { label: 'Scheduled', value: '5', sub: 'Next run today 07:00', icon: 'schedule_send', tone: 'success', match: 'scheduled' },
+    { label: 'Shared with me', value: '12', sub: 'From 4 colleagues', icon: 'group', tone: 'brand' },
+    { label: 'Drafts', value: '1', sub: 'Not yet scheduled', icon: 'edit_note', tone: 'warning', match: 'draft' },
+  ],
+  tableTitle: 'My reports', search: 'Search report name or area…',
+  create: [{ label: 'New report', icon: 'add' }],
+  views: [{ label: 'All', match: '' }, { label: 'Scheduled', match: 'scheduled' }, { label: 'On demand', match: 'adhoc' }, { label: 'Drafts', match: 'draft' }],
+  columns: [
+    { key: 'id', label: 'Report', sticky: true, render: r => `<a class="cell-id" href="#" data-preview="${esc(r.id)}">${esc(r.name)}</a><br><small class="t-body-sm ink-3">${esc(r.id)}</small>` },
+    { key: 'area', label: 'Area', sort: true },
+    { key: 'sched', label: 'Schedule' },
+    { opt: true, key: 'owner', label: 'Owner', sort: true },
+    { key: 'last', label: 'Last run', sort: true, sortVal: r => r.id },
+    { key: 'status', label: 'Status', render: r => H.status(r) },
+  ],
+  bulk: ['Run now', 'Share', 'Delete'],
+  rows: RP.map(([id, name, area, sched, owner, last, status]) => ({ id, name, area, sched, owner, last, status, tags: status })),
+  rowMenu: r => [{ label: 'Open report', icon: 'visibility', preview: r.id }, { label: 'Run now', icon: 'play_arrow', toast: `${r.name} is running` }, { label: 'Edit schedule', icon: 'schedule' }, { label: 'Share', icon: 'share' }, { label: 'Download Excel', icon: 'download', toast: `${r.name} downloaded` }, '-', { label: 'Delete report', icon: 'delete', danger: true }],
+  rowAction: r => `<button class="ps-iconbtn ps-iconbtn--sm" type="button" aria-label="Run ${esc(r.name)} now" data-toast="${esc(r.name)} is running"><span class="ms" aria-hidden="true">play_arrow</span></button>`,
+  preview: { title: r => r.name, sub: r => `${r.id} · ${r.area}`, fields: [['Schedule', r => esc(r.sched)], ['Owner', r => esc(r.owner)], ['Last run', r => esc(r.last)]], primary: r => 'Run now' },
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

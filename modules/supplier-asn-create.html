@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create shipment notice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+<style>.asn { width: 100%; }</style>
+</head>
+<!-- Supplier portal · Detail · Create form, single column. Starts from the PO so the supplier only enters what is shipping now. -->
+<body data-shell="supplier" data-root=".." data-group="shipments" data-module="shipments" data-crumbs="Orders>modules/supplier-orders.html|PO-2603102|New shipment notice">
+<main id="main">
+  <div class="ps-pagehead">
+    <div class="ps-pagehead__text">
+      <a class="ps-back" href="supplier-orders.html"><span class="ms" aria-hidden="true">arrow_back</span>Orders</a>
+      <h1 class="t-headline">New shipment notice</h1>
+      <p class="ps-pagehead__meta">For PO-2603102 · ship to Pune plant, Gate 3 · deliver by 05 Dec 2025</p>
+    </div>
+  </div>
+  <div id="errs" class="ps-alert ps-alert--danger" role="alert" tabindex="-1" hidden></div>
+  <section class="ps-section asn" aria-labelledby="w-t">
+    <div class="ps-section__head"><div><h2 class="ps-section__title" id="w-t">What's shipping</h2><p class="ps-section__sub">You can ship part now and the rest later.</p></div></div>
+    <div class="ps-section__body">
+      <div class="ps-table-scroll"><table class="ps-lines" aria-label="Lines to ship">
+        <thead><tr><th>Item</th><th class="num">Ordered</th><th class="num">Already shipped</th><th class="num">Ship now</th><th>Batch</th></tr></thead>
+        <tbody><tr>
+          <td data-l="Item"><strong>Industrial safety gloves, nitrile</strong><br><span class="t-body-sm ink-3">PP-002 · pack of 12 pairs</span></td>
+          <td class="num" data-l="Ordered">2,000</td><td class="num" data-l="Already shipped">0</td>
+          <td class="num" data-l="Ship now"><label class="sr-only" for="qty">Packs shipping now</label><input class="ps-input" style="width:100px;text-align:right" id="qty" inputmode="numeric" value="1200" aria-describedby="qty-e"></td>
+          <td data-l="Batch"><label class="sr-only" for="bt">Batch number</label><input class="ps-input" style="width:140px" id="bt" value="GL-2511-07"></td>
+        </tr></tbody>
+      </table></div>
+      <span class="ps-field__error" id="qty-e" hidden><span class="ms" aria-hidden="true">error</span>Ship between 1 and 2,000 packs (the open quantity).</span>
+      <p class="t-body-sm ink-3" id="bal" aria-live="polite"></p>
+    </div>
+  </section>
+  <section class="ps-section asn" aria-labelledby="t-t">
+    <div class="ps-section__head"><h2 class="ps-section__title" id="t-t">Transport</h2></div>
+    <div class="ps-section__body"><div class="ps-formgrid">
+      <div class="ps-field"><label class="ps-field__label" for="dd">Dispatch date</label><input class="ps-input" id="dd" type="date" value="2025-11-26"></div>
+      <div class="ps-field"><label class="ps-field__label" for="ea">Expected arrival</label><input class="ps-input" id="ea" type="date" value="2025-11-28" aria-describedby="ea-e"><span class="ps-field__error" id="ea-e" hidden><span class="ms" aria-hidden="true">error</span>Arrival can't be before dispatch.</span></div>
+      <div class="ps-field"><label class="ps-field__label" for="pk">Packages</label><input class="ps-input" id="pk" inputmode="numeric" value="24"><span class="ps-field__help">Cartons of 50 packs</span></div>
+      <div class="ps-field"><label class="ps-field__label" for="vh">Vehicle number</label><input class="ps-input" id="vh" value="TN 22 CK 1180" autocomplete="off"></div>
+      <div class="ps-field"><label class="ps-field__label" for="ew">E-way bill number</label><input class="ps-input" id="ew" inputmode="numeric" placeholder="12 digits" aria-describedby="ew-h ew-e"><span class="ps-field__help" id="ew-h">Required above ₹50,000</span><span class="ps-field__error" id="ew-e" hidden><span class="ms" aria-hidden="true">error</span>Enter the 12-digit e-way bill number.</span></div>
+      <div class="ps-field"><label class="ps-field__label" for="inv">Invoice number <span class="ps-field__opt">(optional)</span></label><input class="ps-input" id="inv" placeholder="Attach later if not ready"></div>
+    </div></div>
+  </section>
+  <div class="ps-actionbar">
+    <div class="ps-actionbar__sum"><div><span>Shipping</span><b id="s1">0 packs</b></div><div><span>Value</span><b id="s2">₹0</b></div></div>
+    <div class="ps-actionbar__btns"><button class="ps-btn ps-btn--text" data-toast="Draft saved as ASN030000023">Save draft</button><button class="ps-btn ps-btn--primary" id="send"><span class="ms" aria-hidden="true">local_shipping</span>Send to buyer</button></div>
+  </div>
+</main>
+<script src="/assets/js/ps.js"></script>
+<script>
+{
+  const $ = id => document.getElementById(id); const price = 480;
+  const upd = () => { const q = parseInt($('qty').value.replace(/,/g, ''), 10) || 0; $('s1').textContent = `${q.toLocaleString('en-IN')} packs`; $('s2').textContent = '₹' + (q * price).toLocaleString('en-IN'); $('bal').textContent = q > 0 && q < 2000 ? `${(2000 - q).toLocaleString('en-IN')} packs stay open on the PO for a later shipment.` : ''; };
+  $('qty').addEventListener('input', upd); upd();
+  const err = (id, bad) => { $(id).setAttribute('aria-invalid', String(bad)); $(id + '-e').hidden = !bad; return bad ? id : null; };
+  $('send').addEventListener('click', () => {
+    const q = parseInt($('qty').value.replace(/,/g, ''), 10) || 0;
+    const bad = [err('qty', !(q >= 1 && q <= 2000)), err('ea', $('ea').value < $('dd').value), err('ew', q * price > 50000 && !/^\d{12}$/.test($('ew').value.trim()))].filter(Boolean);
+    if (bad.length) { const m = { qty: 'Ship quantity', ea: 'Expected arrival', ew: 'E-way bill number' }; $('errs').innerHTML = `<span class="ms" aria-hidden="true">error</span><div><div class="ps-alert__title">Check ${bad.length === 1 ? 'this field' : 'these fields'}</div><ul>${bad.map(b => `<li><a href="#${b}">${m[b]}</a></li>`).join('')}</ul></div>`; $('errs').hidden = false; $('errs').focus(); return; }
+    $('errs').hidden = true; PS.toast('ASN030000023 sent · Pune plant notified'); setTimeout(() => { location.href = 'supplier-shipments.html'; }, 1600);
+  });
+}
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Score ES-2025-028</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+<style>
+.ec-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: var(--ps-surface); border: 1px solid var(--ps-line); border-radius: var(--ps-r-sm); }
+.ec-strip > div { padding: 12px 16px; border-left: 1px solid var(--ps-line); display: flex; flex-direction: column; gap: 2px; }
+.ec-strip > div:first-child { border-left: 0; }
+.ec-strip b { font: 600 20px/26px var(--ps-font-num); font-variant-numeric: tabular-nums; }
+@media (max-width: 904px) { .ec-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ec-strip > div:nth-child(3) { border-left: 0; border-top: 1px solid var(--ps-line); } .ec-strip > div:nth-child(4) { border-top: 1px solid var(--ps-line); } }
+.ps-matrix td .ps-score { margin-left: auto; display: block; }
+.ps-matrix td.err .ps-score { border-color: var(--ps-danger-fg); box-shadow: 0 0 0 1px var(--ps-danger-fg); }
+.wt { font: var(--ps-body-sm); color: var(--ps-ink-3); display: block; }
+</style>
+</head>
+<!-- Detail · Event console (scoring stage). Sealed: prices hidden until all technical scores are in; other evaluators' scores hidden until you submit. -->
+<body data-shell="buyer" data-root=".." data-group="sourcing" data-module="evaluation" data-crumbs="Sourcing|Evaluation>modules/evaluation.html|ES-2025-028">
+<main id="main">
+  <div class="ps-rec">
+    <a class="ps-back" href="evaluation.html"><span class="ms" aria-hidden="true">arrow_back</span>Evaluation</a>
+    <div class="ps-rec__top">
+      <div class="ps-rec__title"><span class="ps-rec__id">ES-2025-028 · RFP · technical envelope</span><h1 class="t-headline">Facility management, 3 plants <span class="ps-chip ps-chip--info">Technical scoring</span></h1><p class="ink-2">Your scores are due 21 Nov · 3 days overdue · owner Sneha Iyer</p></div>
+      <div class="ps-pagehead__actions"><button class="ps-btn ps-btn--secondary" data-open="guide"><span class="ms" aria-hidden="true">menu_book</span>Scoring guide</button></div>
+    </div>
+  </div>
+  <section class="ec-strip" aria-label="Evaluation status">
+    <div><span class="t-body-sm ink-3">Suppliers</span><b>5</b><span class="t-body-sm ink-3">all technically responsive</span></div>
+    <div><span class="t-body-sm ink-3">Evaluators done</span><b>2 of 4</b><span class="t-body-sm ink-3">Sneha Iyer, Arun Das</span></div>
+    <div><span class="t-body-sm ink-3">Your progress</span><b id="prog">0 of 30</b><span class="t-body-sm ink-3">scores entered</span></div>
+    <div><span class="t-body-sm ink-3">Commercial envelope</span><b><span class="ms" aria-hidden="true" style="vertical-align:-3px">lock</span> Sealed</b><span class="t-body-sm ink-3">opens when all 4 submit</span></div>
+  </section>
+  <div id="errs" class="ps-alert ps-alert--danger" role="alert" tabindex="-1" hidden></div>
+
+  <section class="ps-section" aria-labelledby="sc-t">
+    <div class="ps-section__head"><div><h2 class="ps-section__title" id="sc-t">Your technical scores</h2><p class="ps-section__sub">Score each criterion 0–10. Weighted totals update as you type. Pass mark 60.</p></div><span class="ps-ai-tag"><span class="ms" aria-hidden="true">auto_awesome</span>Response summaries available per cell</span></div>
+    <div class="ps-table-scroll">
+      <table class="ps-matrix" id="mx"><thead></thead><tbody></tbody><tfoot></tfoot></table>
+    </div>
+  </section>
+  <section class="ps-section" aria-labelledby="cm-t">
+    <div class="ps-section__head"><h2 class="ps-section__title" id="cm-t">Comments for the panel</h2><span class="ps-section__sub">Shared after everyone submits</span></div>
+    <div class="ps-section__body"><label class="sr-only" for="cmt">Comments</label><textarea class="ps-textarea" id="cmt">Avant's transition plan is the only one with a named site lead per plant. Pinnacle relies on subcontracted staff at Hosur.</textarea></div>
+  </section>
+  <div class="ps-actionbar">
+    <div class="ps-actionbar__sum"><div><span>Leading on your scores</span><b id="lead">—</b></div><div><span>Below pass mark</span><b id="below">—</b></div></div>
+    <div class="ps-actionbar__btns"><button class="ps-btn ps-btn--text" data-toast="Scores saved">Save</button><button class="ps-btn ps-btn--primary" id="submit">Submit my scores</button></div>
+  </div>
+</main>
+<dialog class="ps-dialog" id="guide" aria-labelledby="g-t">
+  <div class="ps-dialog__head"><h2 class="ps-dialog__title" id="g-t">Scoring guide</h2><button class="ps-iconbtn" data-close aria-label="Close"><span class="ms" aria-hidden="true">close</span></button></div>
+  <div class="ps-dialog__body"><p><strong>0</strong> not addressed · <strong>3</strong> partly meets · <strong>5</strong> meets · <strong>8</strong> exceeds with evidence · <strong>10</strong> exceptional, verified by reference.</p><p>Score what the response shows, not what you know about the supplier. Declare any conflict of interest before scoring.</p></div>
+  <div class="ps-dialog__foot"><button class="ps-btn ps-btn--primary" data-close>Got it</button></div>
+</dialog>
+<script src="/assets/js/ps.js"></script>
+<script>
+{
+  const sup = ['Avant Facility Services', 'Kiran Facility Mgmt', 'Pinnacle FM', 'Sterling Integrated', 'UrbanCare FM'];
+  const crit = [['Experience and references', 25], ['Staffing plan', 20], ['Statutory compliance', 20], ['Transition plan', 15], ['Reporting and technology', 10], ['ESG practices', 10]];
+  const S = [[8, 7, 6, 7, 6], [8, 6, 5, null, null], [7, 4, 6, null, null], [9, 6, 5, null, null], [7, null, null, null, null], [6, null, null, null, null]];
+  const $ = id => document.getElementById(id);
+  const tot = j => crit.reduce((a, [, w], i) => a + (S[i][j] ?? 0) * w / 10, 0);
+  const head = () => { $('mx').tHead.innerHTML = `<tr><th scope="col">Criterion <small>weight</small></th>${sup.map(s => `<th scope="col">${s}</th>`).join('')}</tr>`; };
+  const body = () => { $('mx').tBodies[0].innerHTML = crit.map(([c, w], i) => `<tr><th scope="row" style="text-align:left;font-weight:500">${c}<span class="wt">${w}%</span></th>${sup.map((s, j) => `<td><label class="sr-only" for="c${i}_${j}">${c}, ${s}</label><input class="ps-input ps-score" id="c${i}_${j}" inputmode="numeric" data-i="${i}" data-j="${j}" value="${S[i][j] ?? ''}" placeholder="–"></td>`).join('')}</tr>`).join(''); };
+  const foot = () => {
+    const full = sup.map((_, j) => S.every(r => r[j] != null));
+    const t = sup.map((_, j) => full[j] ? tot(j) : null), done = t.filter(v => v != null), max = done.length ? Math.max(...done) : null;
+    $('mx').tFoot.innerHTML = `<tr class="is-row-total"><td>Weighted total (100)</td>${t.map(v => v == null ? '<td class="ink-3" style="font-weight:500">Incomplete</td>' : `<td class="${v === max ? 'is-best good' : v < 60 ? 'bad' : ''}">${v.toFixed(1)}</td>`).join('')}</tr>`;
+    const n = S.flat().filter(v => v != null).length; $('prog').textContent = `${n} of 30`;
+    $('lead').textContent = max != null ? `${sup[t.indexOf(max)]} · ${max.toFixed(1)}` : '—';
+    $('below').textContent = done.length ? `${done.filter(v => v < 60).length} of ${done.length} scored` : '—';
+  };
+  document.addEventListener('input', e => {
+    const c = e.target; if (c.dataset.i == null) return;
+    const v = c.value.trim() === '' ? null : Number(c.value);
+    const bad = v != null && (!Number.isInteger(v) || v < 0 || v > 10);
+    c.setAttribute('aria-invalid', String(bad)); c.closest('td').classList.toggle('err', bad);
+    S[c.dataset.i][c.dataset.j] = bad ? null : v; foot();
+  });
+  $('submit').addEventListener('click', () => {
+    const missing = []; S.forEach((r, i) => r.forEach((v, j) => { if (v == null) missing.push([i, j]); }));
+    if (missing.length) {
+      $('errs').innerHTML = `<span class="ms" aria-hidden="true">error</span><div><div class="ps-alert__title">${missing.length} scores missing</div><div class="ps-alert__text">Every criterion needs a whole number from 0 to 10 for each supplier. <a href="#c${missing[0][0]}_${missing[0][1]}">Go to the first one</a></div></div>`;
+      $('errs').hidden = false; $('errs').focus(); return;
+    }
+    $('errs').hidden = true; PS.toast('Scores submitted. 3 of 4 evaluators done.');
+  });
+  head(); body(); foot();
+}
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

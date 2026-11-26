@@ -1,0 +1,36 @@
+{
+  "status": "confirmed",
+  "productType": "application",
+  "platform": "web",
+  "domain": "ecommerce",
+  "frontend": "static-html",
+  "backend": "none",
+  "styling": "css-variables",
+  "stateManagement": "none",
+  "routing": "multi-page",
+  "designSystem": "custom",
+  "template": {
+    "id": "ec-premium-storefront"
+  },
+  "brand": {
+    "theme": "light"
+  },
+  "keyScreens": [],
+  "sources": {
+    "productType": "recommended",
+    "websiteKind": "recommended",
+    "platform": "recommended",
+    "domain": "recommended",
+    "frontend": "user",
+    "backend": "recommended",
+    "backendNotes": "recommended",
+    "styling": "recommended",
+    "stateManagement": "user",
+    "routing": "user",
+    "designSystem": "user",
+    "template": "recommended",
+    "brand": "recommended",
+    "keyScreens": "recommended"
+  },
+  "confirmedAt": "2026-11-26T05:23:30.186Z"
+}

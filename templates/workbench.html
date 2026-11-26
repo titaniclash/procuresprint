@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Purchase Requests Workbench</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Archetype: WORKBENCH. Used by PR, Demand Intake, E-Sourcing, RFQ, RFQ Automation, ASN, GRN, Onboarding, Contract Workbench.
+     Anatomy: page head → action tiles (filter) → table card (views, toolbar, bulk bar, rows, pager) → preview drawer. -->
+<body data-shell="buyer" data-root=".." data-group="requisition" data-module="pr" data-crumbs="Requisition|Purchase requests">
+<main id="main">
+  <div class="ps-pagehead">
+    <div class="ps-pagehead__text">
+      <h1 class="t-headline">Purchase requests</h1>
+      <p class="ps-pagehead__meta">Global Mfg · 156 open · ₹14.2 Cr awaiting action</p>
+    </div>
+    <div class="ps-pagehead__actions">
+      <button class="ps-btn ps-btn--secondary" data-todo><span class="ms" aria-hidden="true">upload</span>Import</button>
+      <button class="ps-btn ps-btn--primary" data-todo><span class="ms" aria-hidden="true">add</span>Create PR</button>
+    </div>
+  </div>
+
+  <section aria-label="Work that needs attention" class="ps-tiles">
+    <button class="ps-tile ps-tile--danger" aria-pressed="false" data-target="pr-table" data-match="overdue"><span class="ps-tile__label"><span class="ms" aria-hidden="true">schedule</span>Past approval SLA</span><span class="ps-tile__value">3</span><span class="ps-tile__meta">₹41 L · oldest 9 days</span></button>
+    <button class="ps-tile ps-tile--warning" aria-pressed="false" data-target="pr-table" data-match="mine"><span class="ps-tile__label"><span class="ms" aria-hidden="true">pending_actions</span>Awaiting my action</span><span class="ps-tile__value">3</span><span class="ps-tile__meta">1 past SLA · ₹27.8 L</span></button>
+    <button class="ps-tile ps-tile--info" aria-pressed="false" data-target="pr-table" data-match="ready"><span class="ps-tile__label"><span class="ms" aria-hidden="true">shopping_cart_checkout</span>Approved, no PO yet</span><span class="ps-tile__value">3</span><span class="ps-tile__meta">₹16.2 L · 2 have a live contract</span></button>
+    <button class="ps-tile" aria-pressed="false" data-target="pr-table" data-match="returned"><span class="ps-tile__label"><span class="ms" aria-hidden="true">undo</span>Returned for clarification</span><span class="ps-tile__value">1</span><span class="ps-tile__meta">Needs requester reply</span></button>
+    <div class="ps-tile ps-tile--brand ps-tile--static"><span class="ps-tile__label"><span class="ms" aria-hidden="true">timer</span>Approval cycle time</span><span class="ps-tile__value">4.5<small>days</small></span><span class="ps-tile__meta"><span class="ps-tile__delta ps-tile__delta--good"><span class="ms" aria-hidden="true">south</span>1.2 d</span>vs last quarter</span></div>
+  </section>
+
+  <section class="ps-tablecard" data-density-scope aria-labelledby="pr-title">
+    <div class="ps-toolbar">
+      <h2 class="ps-toolbar__title" id="pr-title">All requests <span class="sr-only">table</span></h2>
+      <div class="ps-toolbar__search"><label class="sr-only" for="pr-q">Search requests</label><div class="ps-inputwrap"><span class="ms" aria-hidden="true">search</span><input class="ps-input" id="pr-q" type="search" placeholder="PR number, item, requester"></div></div>
+      <div class="ps-toolbar__spacer"></div>
+      <div class="ps-toolbar__group">
+        <div class="ps-seg" role="group" aria-label="Row density"><button aria-pressed="true" data-density="comfortable" aria-label="Comfortable rows"><span class="ms" aria-hidden="true">density_medium</span></button><button aria-pressed="false" data-density="compact" aria-label="Compact rows"><span class="ms" aria-hidden="true">density_small</span></button></div>
+        <button class="ps-btn ps-btn--secondary ps-btn--sm" data-todo><span class="ms" aria-hidden="true">view_column</span>Columns</button>
+        <button class="ps-btn ps-btn--secondary ps-btn--sm" data-todo><span class="ms" aria-hidden="true">filter_list</span>Filters</button>
+        <div class="ps-menuwrap"><button class="ps-iconbtn ps-iconbtn--sm" data-menu="pr-more" aria-haspopup="menu" aria-expanded="false" aria-label="More table actions"><span class="ms" aria-hidden="true">more_vert</span></button>
+          <div class="ps-menu" id="pr-more" role="menu" aria-label="More table actions"><button role="menuitem" data-toast="Export started. You'll get an email when it's ready."><span class="ms" aria-hidden="true">download</span>Export to Excel</button><button role="menuitem" data-todo><span class="ms" aria-hidden="true">bookmark_add</span>Save as view</button></div></div>
+      </div>
+    </div>
+    <div class="ps-tabs" role="tablist" aria-label="Saved views" data-target="pr-table">
+      <button class="ps-tab" role="tab" aria-selected="true" data-match="">All <span class="ps-count">12</span></button>
+      <button class="ps-tab" role="tab" aria-selected="false" tabindex="-1" data-match="draft">My drafts <span class="ps-count">1</span></button>
+      <button class="ps-tab" role="tab" aria-selected="false" tabindex="-1" data-match="pending">Pending approval <span class="ps-count">5</span></button>
+      <button class="ps-tab" role="tab" aria-selected="false" tabindex="-1" data-match="approved">Approved <span class="ps-count">3</span></button>
+      <button class="ps-tab" role="tab" aria-selected="false" tabindex="-1" data-match="po">Converted to PO <span class="ps-count">1</span></button>
+      <button class="ps-tab" role="tab" aria-selected="false" tabindex="-1" data-match="rejected">Rejected <span class="ps-count">1</span></button>
+    </div>
+    <div class="ps-bulkbar" data-bulk-for="pr-table"><span data-bulk-count>0 selected</span><button class="ps-btn ps-btn--sm" data-todo><span class="ms" aria-hidden="true">request_quote</span>Create RFQ</button><button class="ps-btn ps-btn--sm" data-todo><span class="ms" aria-hidden="true">shopping_cart_checkout</span>Create PO</button><button class="ps-btn ps-btn--sm" data-todo>Assign buyer</button></div>
+    <div class="ps-table-scroll">
+      <table class="ps-table ps-table--stack" id="pr-table">
+        <caption class="sr-only">Purchase requests. Select a PR number to preview it.</caption>
+        <thead><tr>
+          <th class="col-check col-sticky"><input type="checkbox" data-all aria-label="Select all visible requests"></th>
+          <th class="col-sticky2"><button class="ps-sort">PR number <span class="ms" aria-hidden="true">swap_vert</span></button></th>
+          <th>Title</th>
+          <th>Requester · Dept</th>
+          <th class="num"><button class="ps-sort">Value (₹) <span class="ms" aria-hidden="true">swap_vert</span></button></th>
+          <th>Required by</th>
+          <th><button class="ps-sort">Waiting <span class="ms" aria-hidden="true">swap_vert</span></button></th>
+          <th>Status</th>
+          <th>With</th>
+          <th class="col-actions"><span class="sr-only">Actions</span></th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="ps-state" data-empty-for="pr-table" hidden><div class="ps-state__art"><span class="ms" aria-hidden="true">filter_alt_off</span></div><div class="ps-state__title">Nothing in this view</div><p class="ps-state__text">No requests match. Choose another view or clear the tile filter.</p></div>
+    </div>
+    <div class="ps-pager"><div class="ps-row"><label for="pr-rows">Rows per page</label><select class="ps-select" id="pr-rows" style="width:auto"><option>25</option><option>50</option><option>100</option></select><span>Showing <span data-count-for="pr-table">12</span> of 156</span></div><div class="ps-pager__nav"><button disabled aria-label="Previous page"><span class="ms" aria-hidden="true">chevron_left</span></button><button aria-current="page">1</button><button>2</button><button>3</button><span aria-hidden="true">…</span><button>7</button><button aria-label="Next page"><span class="ms" aria-hidden="true">chevron_right</span></button></div></div>
+  </section>
+  <p class="t-body-sm ink-3">Sample data.</p>
+</main>
+
+<dialog class="ps-drawer" id="pr-preview" aria-labelledby="pv-title">
+  <div class="ps-drawer__head"><div style="flex:1"><h2 class="ps-drawer__title" id="pv-title"></h2><p class="t-body-sm ink-3" id="pv-sub"></p></div><span id="pv-chip"></span><button class="ps-iconbtn" data-close aria-label="Close preview"><span class="ms" aria-hidden="true">close</span></button></div>
+  <div class="ps-drawer__body">
+    <div id="pv-alert"></div>
+    <dl class="ps-dl" id="pv-dl"></dl>
+    <div>
+      <h3 class="t-title-sm" style="margin-bottom:8px">Approval</h3>
+      <ol class="ps-timeline" id="pv-tl"></ol>
+    </div>
+  </div>
+  <div class="ps-drawer__foot"><button class="ps-btn ps-btn--text" data-close>Close</button><button class="ps-btn ps-btn--secondary" data-todo>Open full record</button><button class="ps-btn ps-btn--primary" id="pv-primary" data-todo></button></div>
+</dialog>
+
+<script src="/assets/js/ps.js"></script>
+<script>
+{
+  const S = { draft: ['', 'Draft'], pending: ['warning', 'Pending approval'], approved: ['success', 'Approved'], po: ['success', 'Converted to PO'], rejected: ['danger', 'Rejected'], returned: ['', 'Returned'] };
+  const rows = [
+    { id: 'PR-2025-00123', t: 'Business laptops', who: 'Pranav Sharma', d: 'IT', v: 2250000, by: '15 Oct', w: 0, s: 'pending', with: 'John Doe', tags: '' },
+    { id: 'PR-2025-00122', t: 'Ergonomic chairs', who: 'Rohit Kumar', d: 'HR', v: 800000, by: '30 Sep', w: 1, s: 'pending', with: 'You', tags: 'mine' },
+    { id: 'PR-2025-00121', t: 'HVAC servicing, Q3', who: 'Sneha Iyer', d: 'Facilities', v: 1200000, by: '10 Oct', w: 2, s: 'returned', with: 'Sneha Iyer', tags: 'returned' },
+    { id: 'PR-2025-00120', t: 'Safety helmets and boots', who: 'Amit Verma', d: 'Operations', v: 250000, by: '25 Sep', w: 3, s: 'approved', with: 'Buyer pool', tags: 'ready' },
+    { id: 'PR-2025-00119', t: 'Developer monitors', who: 'Kavya Menon', d: 'IT', v: 360000, by: '05 Oct', w: 4, s: 'po', with: '—', tags: '' },
+    { id: 'PR-2025-00118', t: 'Bearings and seals', who: 'Vikram S', d: 'Maintenance', v: 180000, by: '28 Sep', w: 5, s: 'pending', with: 'You', tags: 'mine' },
+    { id: 'PR-2025-00117', t: 'Brand campaign agency', who: 'Neha Gupta', d: 'Marketing', v: 500000, by: '20 Nov', w: 6, s: 'rejected', with: '—', tags: '' },
+    { id: 'PR-2025-00116', t: 'Design software licences', who: 'Rahul Jain', d: 'Finance', v: 1800000, by: '01 Oct', w: 7, s: 'pending', with: 'You', tags: 'mine overdue' },
+    { id: 'PR-2025-00115', t: 'Printer paper, A4', who: 'Pooja Nair', d: 'Admin', v: 75000, by: '25 Sep', w: 8, s: 'approved', with: 'Buyer pool', tags: 'ready' },
+    { id: 'PR-2025-00114', t: 'Network switches', who: 'Siddharth Rao', d: 'Projects', v: 1000000, by: '31 Oct', w: 9, s: 'pending', with: 'Meera Iyer', tags: 'overdue' },
+    { id: 'PR-2025-00113', t: 'Forklift rental', who: 'Arun Das', d: 'Warehouse', v: 1300000, by: '12 Oct', w: 9, s: 'approved', with: 'Buyer pool', tags: 'ready overdue' },
+    { id: 'PR-2025-00112', t: 'Pantry supplies', who: 'Pranav Sharma', d: 'Admin', v: 42000, by: '—', w: 0, s: 'draft', with: 'You', tags: '' },
+  ];
+  rows.forEach(r => { r.tags = `${r.s} ${r.tags}`.trim(); });
+  const inr = n => n.toLocaleString('en-IN');
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const age = r => r.s === 'draft' ? '<span class="ps-age">—</span>' : r.tags.includes('overdue') ? `<span class="ps-age ps-age--late">${r.w} d · past SLA</span>` : r.w === 0 ? '<span class="ps-age">Today</span>' : `<span class="ps-age">${r.w} d</span>`;
+  document.querySelector('#pr-table tbody').innerHTML = rows.map(r => `
+    <tr data-tags="${esc(r.tags)}">
+      <td class="col-check col-sticky"><input type="checkbox" aria-label="Select ${esc(r.id)}"></td>
+      <td class="col-sticky2" data-l="PR number"><a class="cell-id" href="#" data-preview="${esc(r.id)}">${esc(r.id)}</a></td>
+      <td data-l="Title">${esc(r.t)}</td>
+      <td data-l="Requester"><span class="cell-2line">${esc(r.who)}<small>${esc(r.d)}</small></span></td>
+      <td class="num" data-l="Value (₹)" data-sort="${r.v}">${inr(r.v)}</td>
+      <td data-l="Required by">${esc(r.by)}</td>
+      <td data-l="Waiting" data-sort="${r.w}">${age(r)}</td>
+      <td data-l="Status"><span class="ps-chip ${S[r.s][0] ? 'ps-chip--' + S[r.s][0] : ''}">${S[r.s][1]}</span></td>
+      <td data-l="With">${esc(r.with)}</td>
+      <td class="col-actions"><button class="ps-iconbtn ps-iconbtn--sm" aria-label="Preview ${esc(r.id)}" data-preview="${esc(r.id)}"><span class="ms" aria-hidden="true">right_panel_open</span></button></td>
+    </tr>`).join('');
+
+  const dlg = document.getElementById('pr-preview');
+  document.addEventListener('click', e => {
+    const a = e.target.closest('[data-preview]'); if (!a) return; e.preventDefault();
+    const r = rows.find(x => x.id === a.dataset.preview);
+    document.getElementById('pv-title').textContent = `${r.id} · ${r.t}`;
+    document.getElementById('pv-sub').textContent = `${r.who} · ${r.d} · Global Mfg`;
+    document.getElementById('pv-chip').innerHTML = `<span class="ps-chip ${S[r.s][0] ? 'ps-chip--' + S[r.s][0] : ''}">${S[r.s][1]}</span>`;
+    document.getElementById('pv-alert').innerHTML = r.tags.includes('overdue') ? `<div class="ps-alert ps-alert--danger"><span class="ms" aria-hidden="true">schedule</span><div><div class="ps-alert__title">${r.w} days waiting, past the 5-day SLA</div><div class="ps-alert__text">Currently with ${esc(r.with)}.</div></div></div>` : '';
+    document.getElementById('pv-dl').innerHTML = `<div><dt>Estimated value</dt><dd class="num">₹${inr(r.v)}</dd></div><div><dt>Required by</dt><dd>${esc(r.by)} 2025</dd></div><div><dt>Department</dt><dd>${esc(r.d)}</dd></div><div><dt>Currently with</dt><dd>${esc(r.with)}</dd></div>`;
+    const done = r.s !== 'draft';
+    document.getElementById('pv-tl').innerHTML = `
+      <li><span class="ps-timeline__mark ${done ? 'ps-timeline__mark--done' : ''}"><span class="ms" aria-hidden="true">${done ? 'check' : 'edit'}</span></span><div><div class="ps-timeline__title">${done ? 'Submitted' : 'Draft'} by ${esc(r.who)}</div><div class="ps-timeline__meta">${r.w} days ago</div></div></li>
+      <li><span class="ps-timeline__mark ${['approved', 'po'].includes(r.s) ? 'ps-timeline__mark--done' : r.s === 'pending' ? 'ps-timeline__mark--now' : ''}"><span class="ms" aria-hidden="true">${['approved', 'po'].includes(r.s) ? 'check' : 'hourglass_top'}</span></span><div><div class="ps-timeline__title">Department approval</div><div class="ps-timeline__meta">${r.s === 'pending' ? 'Waiting on ' + esc(r.with) : r.s === 'rejected' ? 'Rejected: budget not available' : '—'}</div></div></li>
+      <li><span class="ps-timeline__mark ${r.s === 'po' ? 'ps-timeline__mark--done' : ''}"><span class="ms" aria-hidden="true">${r.s === 'po' ? 'check' : 'more_horiz'}</span></span><div><div class="ps-timeline__title">Purchase order</div><div class="ps-timeline__meta">${r.s === 'po' ? 'PO-2602198 raised' : 'Not started'}</div></div></li>`;
+    const p = document.getElementById('pv-primary');
+    p.textContent = r.with === 'You' ? 'Approve' : r.s === 'approved' ? 'Create PO' : r.tags.includes('overdue') ? 'Send reminder' : 'Open';
+    dlg.showModal();
+  });
+}
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

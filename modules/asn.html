@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Advance shipping notices</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_a.py -->
+<body data-shell="buyer" data-root=".." data-group="procurement" data-module="asn" data-crumbs="Procurement|ASN">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+const AS = [
+  ['ASN030000014','PO-2603148','Mindsprint Digital Pvt Ltd','Supplier','14 Mar 2026','18 Mar 2026','draft'],
+  ['ASN020000013','PO-2602276','Mindsprint Digital Pvt Ltd','Supplier','24 Feb 2026','28 Feb 2026','dispatched'],
+  ['ASN020000012','PO-2602241','Mindsprint Digital Pvt Ltd','Supplier','23 Feb 2026','27 Feb 2026','dispatched'],
+  ['ASN020000011','PO-2602198','Mindsprint Digital Pvt Ltd','Supplier','24 Feb 2026','26 Feb 2026','dispatched'],
+  ['ASN020000010','PO-2602155','Aster Components Ltd','Supplier','21 Feb 2026','24 Feb 2026','posted'],
+  ['ASN020000009','PO-2602088','Aster Components Ltd','Supplier','21 Feb 2026','23 Feb 2026','grnrejected'],
+  ['ASN020000008','PO-2602052','Mindsprint Digital Pvt Ltd','Buyer','21 Feb 2026','25 Feb 2026','dispatched'],
+  ['ASN020000007','PO-2601986','Aster Components Ltd','Supplier','20 Feb 2026','23 Feb 2026','posted'],
+  ['ASN020000006','PO-2601944','Mindsprint Digital Pvt Ltd','Supplier','19 Feb 2026','22 Feb 2026','transit'],
+  ['ASN020000005','PO-2601902','Aster Components Ltd','Buyer','18 Feb 2026','21 Feb 2026','transit'],
+];
+window.PAGE = {
+  title: 'Advance shipping notices',
+  statuses: { draft: ['', 'Draft'], dispatched: ['info', 'Dispatched'], transit: ['warning', 'In transit'], posted: ['success', 'GRN Posted'], grnrejected: ['danger', 'GRN Rejected'] },
+  kpis: [
+    { label: 'Total shipments', value: '14', sub: '12 supplier · 2 buyer', icon: 'local_shipping', tone: 'info' },
+    { label: 'ASN drafted', value: '2', sub: 'Awaiting dispatch', icon: 'edit_note', tone: 'brand', match: 'draft' },
+    { label: 'In transit', value: '9', sub: '2 arriving this week', icon: 'conveyor_belt', tone: 'warning', match: 'transit' },
+    { label: 'Needs attention', value: '1', sub: 'GRN rejected', icon: 'error', tone: 'danger', match: 'grnrejected' },
+  ],
+  tableTitle: 'All shipments', search: 'Search ASN, PO, or company…', total: 14, pages: 2,
+  create: [{ label: 'Create ASN', icon: 'add' }],
+  views: [{ label: 'All', match: '', count: 14 }, { label: 'Draft', match: 'draft', count: 1 }, { label: 'Dispatched', match: 'dispatched', count: 4 }, { label: 'GRN Posted', match: 'posted', count: 2 }, { label: 'GRN Rejected', match: 'grnrejected', count: 1 }, { label: 'GRN Number', match: 'grnno', count: 1 }],
+  columns: [
+    { key: 'id', label: 'ASN Number', sticky: true, sort: true, render: r => H.id(r.id) },
+    { key: 'po', label: 'Purchase Order', sort: true },
+    { key: 'co', label: 'Company', sort: true },
+    { key: 'by', label: 'Created By' },
+    { key: 'sent', label: 'Dispatched', sort: true, sortVal: r => r.id },
+    { key: 'eta', label: 'Expected Arrival', sort: true, sortVal: r => r.id },
+    { key: 'status', label: 'Status', render: r => H.status(r) },
+  ],
+  bulk: ['Download labels', 'Export selected'],
+  rows: AS.map(([id, po, co, by, sent, eta, status]) => ({ id, po, co, by, sent, eta, status, tags: status === 'transit' ? 'transit' : status })),
+  rowMenu: r => [
+    { label: 'View ASN', icon: 'visibility', preview: r.id },
+    ['dispatched', 'transit'].includes(r.status) ? { label: 'Record receipt (GRN)', icon: 'inventory', href: 'grn-receive.html' } : null,
+    r.status === 'draft' ? { label: 'Edit draft', icon: 'edit' } : null,
+    { label: 'Track shipment', icon: 'pin_drop' },
+    { label: 'Download packing list', icon: 'download', toast: `${r.id} packing list downloaded` },
+    r.status === 'draft' ? '-' : null, r.status === 'draft' ? { label: 'Delete draft', icon: 'delete', danger: true } : null,
+  ],
+  preview: {
+    title: r => r.id, sub: r => `${r.po} · ${r.co}`,
+    fields: [['Purchase order', r => esc(r.po)], ['Created by', r => esc(r.by)], ['Dispatched', r => esc(r.sent)], ['Expected arrival', r => esc(r.eta)]],
+    primary: r => ['dispatched', 'transit'].includes(r.status) ? 'Record receipt' : '', primaryHref: r => 'grn-receive.html',
+  },
+  note: 'Content from Figma “Advance shipping notices”. The Figma tab “GRN Number” and status “In transit” (not a tab) are kept as designed.',
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

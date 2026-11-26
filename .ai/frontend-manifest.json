@@ -1,0 +1,797 @@
+{
+  "framework": "static-html",
+  "entry": "index.html",
+  "routes": [
+    {
+      "path": "/",
+      "screen": "S-01",
+      "file": "index.html"
+    },
+    {
+      "path": "/components.html",
+      "screen": "S-02",
+      "file": "components.html"
+    },
+    {
+      "path": "/templates.html",
+      "screen": "S-03",
+      "file": "templates.html"
+    },
+    {
+      "path": "/screens.html",
+      "screen": "S-04",
+      "file": "screens.html"
+    },
+    {
+      "path": "/validation.html",
+      "screen": "S-05",
+      "file": "validation.html"
+    },
+    {
+      "path": "/templates/workbench.html",
+      "screen": "S-06",
+      "file": "templates/workbench.html"
+    },
+    {
+      "path": "/templates/event-console.html",
+      "screen": "S-07",
+      "file": "templates/event-console.html"
+    },
+    {
+      "path": "/templates/insight.html",
+      "screen": "S-08",
+      "file": "templates/insight.html"
+    },
+    {
+      "path": "/templates/supplier-portal.html",
+      "screen": "S-09",
+      "file": "templates/supplier-portal.html"
+    },
+    {
+      "path": "/modules/home.html",
+      "screen": "S-10",
+      "file": "modules/home.html"
+    },
+    {
+      "path": "/modules/pr.html",
+      "screen": "S-11",
+      "file": "modules/pr.html"
+    },
+    {
+      "path": "/modules/pr-create.html",
+      "screen": "S-12",
+      "file": "modules/pr-create.html"
+    },
+    {
+      "path": "/modules/pr-detail.html",
+      "screen": "S-13",
+      "file": "modules/pr-detail.html"
+    },
+    {
+      "path": "/modules/approvals.html",
+      "screen": "S-14",
+      "file": "modules/approvals.html"
+    },
+    {
+      "path": "/modules/e-catalogue.html",
+      "screen": "S-15",
+      "file": "modules/e-catalogue.html"
+    },
+    {
+      "path": "/modules/e-catalogue-marketplace.html",
+      "screen": "S-16",
+      "file": "modules/e-catalogue-marketplace.html"
+    },
+    {
+      "path": "/modules/asn.html",
+      "screen": "S-17",
+      "file": "modules/asn.html"
+    },
+    {
+      "path": "/modules/grn.html",
+      "screen": "S-18",
+      "file": "modules/grn.html"
+    },
+    {
+      "path": "/modules/grn-receive.html",
+      "screen": "S-19",
+      "file": "modules/grn-receive.html"
+    },
+    {
+      "path": "/modules/demand-intake.html",
+      "screen": "S-20",
+      "file": "modules/demand-intake.html"
+    },
+    {
+      "path": "/modules/onboarding.html",
+      "screen": "S-21",
+      "file": "modules/onboarding.html"
+    },
+    {
+      "path": "/modules/supplier-scout.html",
+      "screen": "S-22",
+      "file": "modules/supplier-scout.html"
+    },
+    {
+      "path": "/modules/supplier-risk.html",
+      "screen": "S-23",
+      "file": "modules/supplier-risk.html"
+    },
+    {
+      "path": "/modules/srm.html",
+      "screen": "S-24",
+      "file": "modules/srm.html"
+    },
+    {
+      "path": "/modules/supplier-profile.html",
+      "screen": "S-25",
+      "file": "modules/supplier-profile.html"
+    },
+    {
+      "path": "/modules/rfq.html",
+      "screen": "S-26",
+      "file": "modules/rfq.html"
+    },
+    {
+      "path": "/modules/rfq-compare.html",
+      "screen": "S-27",
+      "file": "modules/rfq-compare.html"
+    },
+    {
+      "path": "/modules/rfq-automation.html",
+      "screen": "S-28",
+      "file": "modules/rfq-automation.html"
+    },
+    {
+      "path": "/modules/evaluation.html",
+      "screen": "S-29",
+      "file": "modules/evaluation.html"
+    },
+    {
+      "path": "/modules/evaluation-scoring.html",
+      "screen": "S-30",
+      "file": "modules/evaluation-scoring.html"
+    },
+    {
+      "path": "/modules/negotiation.html",
+      "screen": "S-31",
+      "file": "modules/negotiation.html"
+    },
+    {
+      "path": "/modules/e-awarding.html",
+      "screen": "S-32",
+      "file": "modules/e-awarding.html"
+    },
+    {
+      "path": "/modules/award-decision.html",
+      "screen": "S-33",
+      "file": "modules/award-decision.html"
+    },
+    {
+      "path": "/modules/reverse-auction.html",
+      "screen": "S-34",
+      "file": "modules/reverse-auction.html"
+    },
+    {
+      "path": "/modules/e-sourcing.html",
+      "screen": "S-35",
+      "file": "modules/e-sourcing.html"
+    },
+    {
+      "path": "/modules/agreement-architect.html",
+      "screen": "S-36",
+      "file": "modules/agreement-architect.html"
+    },
+    {
+      "path": "/modules/contract-workbench.html",
+      "screen": "S-37",
+      "file": "modules/contract-workbench.html"
+    },
+    {
+      "path": "/modules/contract-detail.html",
+      "screen": "S-38",
+      "file": "modules/contract-detail.html"
+    },
+    {
+      "path": "/modules/invoicing.html",
+      "screen": "S-39",
+      "file": "modules/invoicing.html"
+    },
+    {
+      "path": "/modules/spend.html",
+      "screen": "S-40",
+      "file": "modules/spend.html"
+    },
+    {
+      "path": "/modules/reports.html",
+      "screen": "S-41",
+      "file": "modules/reports.html"
+    },
+    {
+      "path": "/modules/users.html",
+      "screen": "S-42",
+      "file": "modules/users.html"
+    },
+    {
+      "path": "/modules/roles.html",
+      "screen": "S-43",
+      "file": "modules/roles.html"
+    },
+    {
+      "path": "/modules/mdm.html",
+      "screen": "S-44",
+      "file": "modules/mdm.html"
+    },
+    {
+      "path": "/modules/administration.html",
+      "screen": "S-45",
+      "file": "modules/administration.html"
+    },
+    {
+      "path": "/modules/supplier-home.html",
+      "screen": "S-46",
+      "file": "modules/supplier-home.html"
+    },
+    {
+      "path": "/modules/supplier-invitations.html",
+      "screen": "S-47",
+      "file": "modules/supplier-invitations.html"
+    },
+    {
+      "path": "/modules/supplier-rfq-response.html",
+      "screen": "S-48",
+      "file": "modules/supplier-rfq-response.html"
+    },
+    {
+      "path": "/modules/supplier-orders.html",
+      "screen": "S-49",
+      "file": "modules/supplier-orders.html"
+    },
+    {
+      "path": "/modules/supplier-shipments.html",
+      "screen": "S-50",
+      "file": "modules/supplier-shipments.html"
+    },
+    {
+      "path": "/modules/supplier-asn-create.html",
+      "screen": "S-51",
+      "file": "modules/supplier-asn-create.html"
+    },
+    {
+      "path": "/404.html",
+      "screen": "S-52",
+      "file": "404.html"
+    },
+    {
+      "path": "/modules/item-requests.html",
+      "screen": "S-53",
+      "file": "modules/item-requests.html"
+    },
+    {
+      "path": "/modules/item-request-new.html",
+      "screen": "S-54",
+      "file": "modules/item-request-new.html"
+    },
+    {
+      "path": "/modules/item-request.html",
+      "screen": "S-55",
+      "file": "modules/item-request.html"
+    },
+    {
+      "path": "/modules/item-mdm-review.html",
+      "screen": "S-56",
+      "file": "modules/item-mdm-review.html"
+    },
+    {
+      "path": "/modules/item-review.html",
+      "screen": "S-57",
+      "file": "modules/item-review.html"
+    },
+    {
+      "path": "/modules/item-finance-review.html",
+      "screen": "S-58",
+      "file": "modules/item-finance-review.html"
+    },
+    {
+      "path": "/modules/item-approval.html",
+      "screen": "S-59",
+      "file": "modules/item-approval.html"
+    },
+    {
+      "path": "/modules/item-master.html",
+      "screen": "S-60",
+      "file": "modules/item-master.html"
+    },
+    {
+      "path": "/modules/item-record.html",
+      "screen": "S-61",
+      "file": "modules/item-record.html"
+    },
+    {
+      "path": "/modules/item-bulk-upload.html",
+      "screen": "S-62",
+      "file": "modules/item-bulk-upload.html"
+    },
+    {
+      "path": "/modules/item-ask-me.html",
+      "screen": "S-63",
+      "file": "modules/item-ask-me.html"
+    },
+    {
+      "path": "/modules/item-insights.html",
+      "screen": "S-64",
+      "file": "modules/item-insights.html"
+    }
+  ],
+  "components": [
+    {
+      "name": "App shell (sidebar, page banner with breadcrumbs, page title and global actions, assistant, user menu, toasts)",
+      "file": "public/assets/js/ps.js",
+      "usedBy": [
+        "S-06",
+        "S-07",
+        "S-08",
+        "S-09",
+        "S-10",
+        "S-11",
+        "S-12",
+        "S-13",
+        "S-14",
+        "S-15",
+        "S-16",
+        "S-17",
+        "S-18",
+        "S-19",
+        "S-20",
+        "S-21",
+        "S-22",
+        "S-23",
+        "S-24",
+        "S-25",
+        "S-26",
+        "S-27",
+        "S-28",
+        "S-29",
+        "S-30",
+        "S-31",
+        "S-32",
+        "S-33",
+        "S-34",
+        "S-35",
+        "S-36",
+        "S-37",
+        "S-38",
+        "S-39",
+        "S-40",
+        "S-41",
+        "S-42",
+        "S-43",
+        "S-44",
+        "S-45",
+        "S-46",
+        "S-47",
+        "S-48",
+        "S-49",
+        "S-50",
+        "S-51",
+        "S-53",
+        "S-54",
+        "S-55",
+        "S-56",
+        "S-57",
+        "S-58",
+        "S-59",
+        "S-60",
+        "S-61",
+        "S-62",
+        "S-63",
+        "S-64"
+      ]
+    },
+    {
+      "name": "Workbench runtime (page head, tiles, views, table, bulk bar, preview drawer)",
+      "file": "public/assets/js/workbench.js",
+      "usedBy": [
+        "S-11",
+        "S-15",
+        "S-17",
+        "S-18",
+        "S-20",
+        "S-21",
+        "S-23",
+        "S-26",
+        "S-28",
+        "S-29",
+        "S-32",
+        "S-34",
+        "S-35",
+        "S-36",
+        "S-37",
+        "S-39",
+        "S-41",
+        "S-42",
+        "S-43",
+        "S-47",
+        "S-49",
+        "S-50",
+        "S-53",
+        "S-60"
+      ]
+    },
+    {
+      "name": "SVG charts (line, columns, bid ladder)",
+      "file": "public/assets/js/ps-charts.js",
+      "usedBy": [
+        "S-07",
+        "S-08",
+        "S-10",
+        "S-24",
+        "S-25",
+        "S-31",
+        "S-40"
+      ]
+    },
+    {
+      "name": "Component styles (ps-*)",
+      "file": "src/styles/ps.css",
+      "usedBy": [
+        "S-01",
+        "S-02",
+        "S-03",
+        "S-04",
+        "S-05",
+        "S-06",
+        "S-07",
+        "S-08",
+        "S-09",
+        "S-10",
+        "S-11",
+        "S-12",
+        "S-13",
+        "S-14",
+        "S-15",
+        "S-16",
+        "S-17",
+        "S-18",
+        "S-19",
+        "S-20",
+        "S-21",
+        "S-22",
+        "S-23",
+        "S-24",
+        "S-25",
+        "S-26",
+        "S-27",
+        "S-28",
+        "S-29",
+        "S-30",
+        "S-31",
+        "S-32",
+        "S-33",
+        "S-34",
+        "S-35",
+        "S-36",
+        "S-37",
+        "S-38",
+        "S-39",
+        "S-40",
+        "S-41",
+        "S-42",
+        "S-43",
+        "S-44",
+        "S-45",
+        "S-46",
+        "S-47",
+        "S-48",
+        "S-49",
+        "S-50",
+        "S-51",
+        "S-52",
+        "S-53",
+        "S-54",
+        "S-55",
+        "S-56",
+        "S-57",
+        "S-58",
+        "S-59",
+        "S-60",
+        "S-61",
+        "S-62",
+        "S-63",
+        "S-64"
+      ]
+    },
+    {
+      "name": "Documentation chrome (ds-*)",
+      "file": "src/styles/docs.css",
+      "usedBy": [
+        "S-01",
+        "S-02",
+        "S-03",
+        "S-04",
+        "S-05",
+        "S-52"
+      ]
+    },
+    {
+      "name": "Design tokens",
+      "file": "src/styles/tokens.css",
+      "usedBy": [
+        "S-01",
+        "S-02",
+        "S-03",
+        "S-04",
+        "S-05",
+        "S-06",
+        "S-07",
+        "S-08",
+        "S-09",
+        "S-10",
+        "S-11",
+        "S-12",
+        "S-13",
+        "S-14",
+        "S-15",
+        "S-16",
+        "S-17",
+        "S-18",
+        "S-19",
+        "S-20",
+        "S-21",
+        "S-22",
+        "S-23",
+        "S-24",
+        "S-25",
+        "S-26",
+        "S-27",
+        "S-28",
+        "S-29",
+        "S-30",
+        "S-31",
+        "S-32",
+        "S-33",
+        "S-34",
+        "S-35",
+        "S-36",
+        "S-37",
+        "S-38",
+        "S-39",
+        "S-40",
+        "S-41",
+        "S-42",
+        "S-43",
+        "S-44",
+        "S-45",
+        "S-46",
+        "S-47",
+        "S-48",
+        "S-49",
+        "S-50",
+        "S-51",
+        "S-52",
+        "S-53",
+        "S-54",
+        "S-55",
+        "S-56",
+        "S-57",
+        "S-58",
+        "S-59",
+        "S-60",
+        "S-61",
+        "S-62",
+        "S-63",
+        "S-64"
+      ]
+    },
+    {
+      "name": "Studio inspector bridge (dev only)",
+      "file": "src/main.js",
+      "usedBy": [
+        "S-01",
+        "S-02",
+        "S-03",
+        "S-04",
+        "S-05",
+        "S-06",
+        "S-07",
+        "S-08",
+        "S-09",
+        "S-10",
+        "S-11",
+        "S-12",
+        "S-13",
+        "S-14",
+        "S-15",
+        "S-16",
+        "S-17",
+        "S-18",
+        "S-19",
+        "S-20",
+        "S-21",
+        "S-22",
+        "S-23",
+        "S-24",
+        "S-25",
+        "S-26",
+        "S-27",
+        "S-28",
+        "S-29",
+        "S-30",
+        "S-31",
+        "S-32",
+        "S-33",
+        "S-34",
+        "S-35",
+        "S-36",
+        "S-37",
+        "S-38",
+        "S-39",
+        "S-40",
+        "S-41",
+        "S-42",
+        "S-43",
+        "S-44",
+        "S-45",
+        "S-46",
+        "S-47",
+        "S-48",
+        "S-49",
+        "S-50",
+        "S-51",
+        "S-52",
+        "S-53",
+        "S-54",
+        "S-55",
+        "S-56",
+        "S-57",
+        "S-58",
+        "S-59",
+        "S-60",
+        "S-61",
+        "S-62",
+        "S-63",
+        "S-64"
+      ]
+    },
+    {
+      "name": "MUI theme mirror of the tokens (reference, linked from Foundations)",
+      "file": "public/theme/mui-theme.js",
+      "usedBy": [
+        "S-01"
+      ]
+    },
+    {
+      "name": "Gilroy brand font files (Regular, Medium, SemiBold, Bold)",
+      "file": "public/assets/fonts",
+      "usedBy": [
+        "S-01",
+        "S-02",
+        "S-03",
+        "S-04",
+        "S-05",
+        "S-06",
+        "S-07",
+        "S-08",
+        "S-09",
+        "S-10",
+        "S-11",
+        "S-12",
+        "S-13",
+        "S-14",
+        "S-15",
+        "S-16",
+        "S-17",
+        "S-18",
+        "S-19",
+        "S-20",
+        "S-21",
+        "S-22",
+        "S-23",
+        "S-24",
+        "S-25",
+        "S-26",
+        "S-27",
+        "S-28",
+        "S-29",
+        "S-30",
+        "S-31",
+        "S-32",
+        "S-33",
+        "S-34",
+        "S-35",
+        "S-36",
+        "S-37",
+        "S-38",
+        "S-39",
+        "S-40",
+        "S-41",
+        "S-42",
+        "S-43",
+        "S-44",
+        "S-45",
+        "S-46",
+        "S-47",
+        "S-48",
+        "S-49",
+        "S-50",
+        "S-51",
+        "S-52",
+        "S-53",
+        "S-54",
+        "S-55",
+        "S-56",
+        "S-57",
+        "S-58",
+        "S-59",
+        "S-60",
+        "S-61",
+        "S-62",
+        "S-63",
+        "S-64"
+      ]
+    },
+    {
+      "name": "Item master data layer: sample items and requests, store, workflow routing, duplicate check, data quality score",
+      "file": "public/assets/js/item-master.js",
+      "usedBy": [
+        "S-53",
+        "S-54",
+        "S-55",
+        "S-56",
+        "S-57",
+        "S-58",
+        "S-59",
+        "S-60",
+        "S-61",
+        "S-62",
+        "S-63",
+        "S-64"
+      ]
+    },
+    {
+      "name": "Item master shared UI helpers (dates, chips, fields, timeline, confirm dialog)",
+      "file": "public/assets/js/item-ui.js",
+      "usedBy": [
+        "S-53",
+        "S-54",
+        "S-55",
+        "S-56",
+        "S-57",
+        "S-58",
+        "S-59",
+        "S-60",
+        "S-61",
+        "S-62",
+        "S-63",
+        "S-64"
+      ]
+    },
+    {
+      "name": "Item request form (stepper, similar-item panel, AI suggestions)",
+      "file": "public/assets/js/item-request-form.js",
+      "usedBy": [
+        "S-54"
+      ]
+    },
+    {
+      "name": "Item request record runtime (requester, MDM, review, finance and approval views)",
+      "file": "public/assets/js/item-request-view.js",
+      "usedBy": [
+        "S-55",
+        "S-56",
+        "S-57",
+        "S-58",
+        "S-59"
+      ]
+    }
+  ],
+  "data": [
+    "Inline sample data in each page script (window.PAGE for workbench pages)",
+    "Item master sample items and requests in public/assets/js/item-master.js, kept in localStorage under ps-im-v1"
+  ],
+  "tests": [
+    "tests/links.test.js",
+    "tests/pages.test.js",
+    "tests/item-master.test.js"
+  ]
+}

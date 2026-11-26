@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RFx</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_d.py -->
+<body data-shell="buyer" data-root=".." data-group="sourcing" data-module="rfq" data-crumbs="Sourcing|RFx">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+const RX = [
+  ['RFX-2024-001','Sustainable Packaging Solutions for Food Products','RFP','2024-03-15','$3.2M',15],
+  ['RFX-2024-002','Eco-friendly Packaging Innovations for Beverages','RFI','2024-04-10','$1.5M',10],
+  ['RFX-2024-003','Biodegradable Materials for Personal Care Items','RFQ','2024-05-01','$2.8M',12],
+  ['RFX-2024-004','Recyclable Packaging for Household Products','RFP','2024-06-15','$4.0M',20],
+  ['RFX-2024-005','Compostable Solutions for E-commerce Shipping','RFI','2024-07-20','$2.0M',8],
+];
+const stat = (k, v) => `<div><dt>${k}</dt><dd class="num" style="font:600 20px/26px var(--ps-font-num)">${v}</dd></div>`;
+window.PAGE = {
+  title: 'RFx', sideCols: 3,
+  pageMenu: [{ label: 'Open E-Sourcing events', icon: 'hub', href: 'e-sourcing.html' }, { label: 'RFx Automation', icon: 'smart_toy', href: 'rfq-automation.html' }],
+  statuses: { active: ['success', 'Active'] },
+  kpis: [
+    { label: 'Active RFx', value: '100', icon: 'request_quote', tone: 'info' },
+    { label: 'Open PR', value: '20', icon: 'description', tone: 'brand' },
+    { label: 'Long Pending', value: '10', icon: 'hourglass_bottom', tone: 'danger' },
+    { label: 'Partial PR', value: '25', icon: 'pie_chart', tone: 'warning' },
+  ],
+  tableTitle: 'Recent RFX Requests', search: 'Search RFx number or title…', total: 798, pages: 80,
+  create: [{ label: 'Create RFx', icon: 'add' }],
+  views: [{ label: 'Recent RFX Requests', match: '', count: 5 }, { label: 'Recent Activity', match: 'activity', count: 0 }, { label: 'All RFX', match: 'all', count: 798 }],
+  columns: [
+    { key: 'id', label: 'RFx', sticky: true, sort: true, render: r => H.id(r.id) },
+    { key: 't', label: 'Title', wrap: true },
+    { key: 'type', label: 'Type', render: r => H.chip('info', r.type) },
+    { key: 'status', label: 'Status', render: r => H.status(r) },
+    { key: 'date', label: 'Date', sort: true },
+    { key: 'val', label: 'Value', num: true, sort: true, sortVal: r => parseFloat(r.val.slice(1)) },
+    { key: 'resp', label: 'Responses', num: true, sort: true },
+  ],
+  bulk: ['Extend deadline', 'Export selected'],
+  rows: RX.map(([id, t, type, date, val, resp]) => ({ id, t, type, date, val, resp, status: 'active', tags: 'all' })),
+  rowMenu: r => [
+    { label: 'View Details', icon: 'visibility', preview: r.id },
+    { label: 'Compare responses', icon: 'compare_arrows', href: 'rfq-compare.html' },
+    { label: 'Send reminder to vendors', icon: 'notifications', toast: `Reminder sent for ${r.id}` },
+    { label: 'Extend deadline', icon: 'event' },
+    { label: 'Move to evaluation', icon: 'fact_check', href: 'evaluation.html' },
+    '-', { label: 'Cancel RFx', icon: 'cancel', danger: true },
+  ],
+  side: `<section class="ps-card" aria-labelledby="pm-h"><div class="ps-card__head"><h2 class="t-title-md" id="pm-h">Performance Metrics</h2></div><div class="ps-card__body"><dl class="ps-dl">${stat('Stock Qty', '98,786')}${stat('Avg. Response Time', '2.3 days')}${stat('Completion Rate', '94%')}${stat('Vendor Satisfaction', '4.7/5')}</dl></div></section>
+    <section class="ps-card" aria-labelledby="vh-h"><div class="ps-card__head"><h2 class="t-title-md" id="vh-h">Vendor Highlights</h2></div><div class="ps-card__body"><dl class="ps-dl">${stat('Active Vendors', '89')}${stat('New This month', '12')}${stat('Top Performer', '<span style="font-size:16px">Tech Corp. Ltd.</span>')}</dl></div></section>
+    <section class="ps-card" aria-labelledby="fo-h"><div class="ps-card__head"><h2 class="t-title-md" id="fo-h">Financial Overview</h2></div><div class="ps-card__body"><dl class="ps-dl">${stat('Total Value', '$12.4M')}${stat('Avg. Contracts site', '$540k')}${stat('Cost savings', '18%')}</dl></div></section>`,
+  preview: {
+    title: r => r.id, sub: r => r.t,
+    fields: [['Type', r => esc(r.type)], ['Date', r => esc(r.date)], ['Value', r => esc(r.val)], ['Responses', r => esc(r.resp)]],
+    primary: r => 'Compare responses', primaryHref: r => 'rfq-compare.html',
+  },
+  note: 'Content from Figma RFx dashboard (legacy screen 1:4169), including its labels “Avg. Contracts site” and US$ values.',
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

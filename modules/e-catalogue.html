@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catalog Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_d.py -->
+<body data-shell="buyer" data-root=".." data-group="procurement" data-module="e-catalogue" data-crumbs="Procurement|E-Catalog">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+const CT = [
+  ['CAT-1001','IT Equipment Catalog','Contract','Dell Technologies','CTR-2001','01 Apr 2026 to 31 Mar 2027','active','12 Mar 2026'],
+  ['CAT-1002','Office Supplies Catalog','Independent','Staples','—','15 Mar 2026 to 14 Mar 2027','active','12 Mar 2026'],
+  ['CAT-1003','Industrial MRO Catalog','Contract','Grainger','CTR-2002','01 Jan 2026 to 31 Dec 2026','active','12 Mar 2026'],
+  ['CAT-1004','Packaging Materials Catalog','Contract','Uline','CTR-2003','01 Feb 2026 to 31 Jan 2027','active','18 Mar 2026'],
+  ['CAT-1005','Safety Equipment Catalog','Independent','3M India','—','10 Feb 2026 to 09 Feb 2027','active','20 Mar 2026'],
+  ['CAT-1006','Laboratory Supplies Catalog','Contract','Thermo Fisher','CTR-2004','01 May 2026 to 30 Apr 2027','draft','25 Mar 2026'],
+  ['CAT-1007','Facility Maintenance Catalog','Independent','Johnson Controls','—','01 Jun 2026 to 31 May 2027','draft','02 Apr 2026'],
+  ['CAT-1008','Furniture & Fixtures Catalog','Contract','Godrej Interio','CTR-2005','01 Jul 2026 to 30 Jun 2027','draft','08 Apr 2026'],
+  ['CAT-1009','Electrical Components Catalog','Contract','Siemens','CTR-2006','01 Jan 2025 to 31 Dec 2025','expired','15 Dec 2024'],
+  ['CAT-1010','Cleaning Supplies Catalog','Independent','Diversey','—','01 Nov 2024 to 31 Oct 2025','expired','05 Nov 2024'],
+];
+window.PAGE = {
+  title: 'Catalog Management',
+  switch: [{ label: 'Catalog management', current: true }, { label: 'Marketplace', href: 'e-catalogue-marketplace.html' }],
+  statuses: { active: ['success', 'Active'], draft: ['', 'Draft'], expired: ['danger', 'Expired'] },
+  kpis: [
+    { label: 'Total catalogs', value: '24', sub: 'Across 12 approved suppliers', icon: 'inventory_2', tone: 'info' },
+    { label: 'Active catalogs', value: '18', sub: 'Across 12 approved suppliers', icon: 'check_circle', tone: 'success', match: 'active' },
+    { label: 'Draft catalogs', value: '4', sub: 'Across 12 approved suppliers', icon: 'edit_note', tone: 'warning', match: 'draft' },
+    { label: 'Expired catalogs', value: '2', sub: 'Across 12 approved suppliers', icon: 'event_busy', tone: 'danger', match: 'expired' },
+  ],
+  tableTitle: 'All catalogs', search: 'Search by catalog name, ID or supplier…', total: 24, pages: 3,
+  create: [{ label: 'Create catalog', icon: 'add' }],
+  gridActions: [{ label: 'Bulk upload', icon: 'upload_file' }],
+  views: [{ label: 'All', match: '', count: 24 }, { label: 'Active', match: 'active', count: 18 }, { label: 'Draft', match: 'draft', count: 4 }, { label: 'Expired', match: 'expired', count: 2 }],
+  columns: [
+    { key: 'id', label: 'Catalog ID', sticky: true, sort: true, render: r => H.id(r.id) },
+    { key: 'name', label: 'Catalog Name', sort: true },
+    { key: 'type', label: 'Type', render: r => H.chip(r.type === 'Contract' ? 'info' : '', r.type) },
+    { key: 'sup', label: 'Supplier', sort: true },
+    { opt: true, key: 'ctr', label: 'Contract', render: r => H.dash(r.ctr) },
+    { opt: true, key: 'cur', label: 'Currency' },
+    { key: 'val', label: 'Validity', wrap: true },
+    { key: 'status', label: 'Status', render: r => H.status(r) },
+    { opt: true, key: 'created', label: 'Created', sort: true, sortVal: r => r.id },
+  ],
+  bulk: ['Publish', 'Extend validity', 'Export selected'],
+  rows: CT.map(([id, name, type, sup, ctr, val, status, created]) => ({ id, name, type, sup, ctr, cur: 'INR', val, status, created, tags: status })),
+  rowMenu: r => [
+    { label: 'View catalog', icon: 'visibility', preview: r.id },
+    { label: r.status === 'draft' ? 'Edit draft' : 'Edit items', icon: 'edit' },
+    r.status === 'draft' ? { label: 'Publish', icon: 'publish' } : null,
+    r.status === 'expired' ? { label: 'Renew validity', icon: 'event_repeat' } : null,
+    { label: 'Open in marketplace', icon: 'storefront', href: 'e-catalogue-marketplace.html' },
+    { label: 'Download items (Excel)', icon: 'download', toast: `${r.id} items downloaded` },
+    r.status === 'active' ? '-' : null, r.status === 'active' ? { label: 'Deactivate', icon: 'block', danger: true } : null,
+  ],
+  preview: {
+    title: r => `${r.id} · ${r.name}`, sub: r => `${r.sup} · ${r.type} catalog`,
+    fields: [['Contract', r => H.dash(r.ctr)], ['Currency', r => esc(r.cur)], ['Validity', r => esc(r.val)], ['Created', r => esc(r.created)]],
+    primary: r => r.status === 'draft' ? 'Publish' : r.status === 'expired' ? 'Renew validity' : '',
+  },
+  note: 'Content from Figma “Catalog Management”.',
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

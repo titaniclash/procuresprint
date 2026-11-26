@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reverse Auction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_b.py -->
+<body data-shell="buyer" data-root=".." data-group="sourcing" data-module="reverse-auction" data-crumbs="Sourcing|Reverse Auction">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+window.PAGE = {
+  title: 'Reverse auctions',
+  meta: rows => `${rows.filter(r => r.status === 'scheduled').length} scheduled · average saving 7.9% below baseline this year`,
+  banner: "<div class=\"ps-alert\" role=\"note\"><span class=\"ms\" aria-hidden=\"true\">info</span><div><div class=\"ps-alert__title\">Scope assumed</div><div class=\"ps-alert__text\">Reverse Auction is shown as English reverse auctions with ranks, time extensions and practice rounds. There is no Figma reference for this module; fields and statuses follow common S2P practice. Confirm with the module owner (open question Q5).</div></div></div>" + `<a class="ps-card" href="../templates/event-console.html" style="text-decoration:none;color:inherit;flex-direction:row;align-items:center;gap:16px;padding:14px 16px;border-color:var(--ps-brand);background:var(--ps-brand-tint);flex-wrap:wrap"><span class="ps-chip ps-chip--info ps-chip--plain"><span class="ms ms--fill" aria-hidden="true">sensors</span>Live now</span><span style="flex:1;min-width:220px"><strong>RA-2025-018 · HR steel coils, 2 mm</strong><br><span class="t-body-sm ink-2">Leading ₹58,940/t · 8.6% below baseline · 37 bids · about 13 min left</span></span><span class="ps-btn ps-btn--primary">Open live console<span class="ms" aria-hidden="true">arrow_forward</span></span></a>`,
+  actions: [{ label: 'Create auction', icon: 'add', kind: 'primary' }],
+  statuses: { draft: ['', 'Draft'], scheduled: ['info', 'Scheduled'], live: ['info', 'Live', 'sensors'], closed: ['warning', 'Closed · award pending'], awarded: ['success', 'Awarded'] },
+  tiles: [
+    { label: 'Starting in 7 days', icon: 'event', tone: 'info', match: 'soon', meta: m => m.map(r => r.when).join(' · ') },
+    { label: 'Bidders not confirmed', icon: 'person_alert', tone: 'warning', match: 'unconfirmed', meta: () => 'practice round not done' },
+    { label: 'Closed, award pending', icon: 'gavel', tone: 'danger', match: 'closed', meta: m => lakh(sum(m, 'v')) },
+    { label: 'Average saving', icon: 'savings', static: { value: '7.9', unit: '%', meta: 'FY26, 11 auctions' } },
+  ],
+  views: [{ label: 'All', match: '' }, { label: 'Live', match: 'live' }, { label: 'Scheduled', match: 'scheduled' }, { label: 'Closed', match: 'closed' }, { label: 'Awarded', match: 'awarded' }],
+  tableTitle: 'Auctions', search: 'Auction, item, supplier', total: 16,
+  columns: [
+    { key: 'id', label: 'Auction', sticky: true, render: r => r.status === 'live' ? `<a class="cell-id" href="../templates/event-console.html">${esc(r.id)}</a>` : H.id(r.id) },
+    { key: 't', label: 'Item · lot', wrap: true, render: r => H.two(r.t, r.lot) },
+    { opt: true, key: 'when', label: 'Start' },
+    { key: 'bid', label: 'Bidders', render: r => H.progress(Math.round(r.ok / r.inv * 100), `${r.ok} of ${r.inv} confirmed`) },
+    { key: 'base', label: 'Baseline (₹)', num: true, render: r => inr(r.base) },
+    { key: 'best', label: 'Best bid (₹)', num: true, render: r => r.best ? `${inr(r.best)} <small class="t-body-sm" style="color:var(--ps-success-fg)">−${((1 - r.best / r.base) * 100).toFixed(1)}%</small>` : '—' },
+    { key: 'status', label: 'Status', render: r => H.status(r) },
+  ],
+  rows: [
+    { id: 'RA-2025-018', t: 'HR steel coils, 2 mm', lot: '1,200 t · Chennai', when: 'Today 14:00', inv: 6, ok: 6, base: 64500, best: 58940, v: 70728000, status: 'live', tags: 'live' },
+    { id: 'RA-2025-021', t: 'Bearings, annual rate contract', lot: '38 SKUs · all plants', when: '02 Dec 11:00', inv: 5, ok: 3, base: 1820000, best: 0, v: 0, status: 'scheduled', tags: 'scheduled soon unconfirmed' },
+    { id: 'RA-2025-020', t: 'Corrugated boxes, South', lot: '3 lots by size', when: '28 Nov 15:00', inv: 4, ok: 4, base: 6400000, best: 0, v: 0, status: 'scheduled', tags: 'scheduled soon' },
+    { id: 'RA-2025-022', t: 'Diesel, plant generators', lot: 'Q4 volume', when: '09 Dec 10:00', inv: 5, ok: 2, base: 9100000, best: 0, v: 0, status: 'scheduled', tags: 'scheduled unconfirmed' },
+    { id: 'RA-2025-017', t: 'Aluminium sheet, 1.5 mm', lot: '240 t', when: '18 Nov', inv: 5, ok: 5, base: 248000, best: 231500, v: 55560000, status: 'closed', tags: 'closed' },
+    { id: 'RA-2025-015', t: 'Packaging film, LDPE', lot: '90 t', when: '04 Nov', inv: 4, ok: 4, base: 152000, best: 139800, v: 12582000, status: 'awarded', tags: 'awarded' },
+  ],
+  preview: {
+    title: r => `${r.id} · ${r.t}`, sub: r => `${r.lot} · starts ${r.when}`,
+    alert: r => r.tags.includes('unconfirmed') ? `<div class="ps-alert ps-alert--warning"><span class="ms" aria-hidden="true">person_alert</span><div><div class="ps-alert__title">${r.inv - r.ok} invited bidders have not confirmed</div><div class="ps-alert__text">They have not completed the practice round. Policy needs 3 confirmed bidders to start.</div></div></div>` : '',
+    fields: [['Baseline', r => '₹' + inr(r.base)], ['Best bid', r => r.best ? '₹' + inr(r.best) : '—'], ['Bidders confirmed', r => `${r.ok} of ${r.inv}`], ['Start', r => esc(r.when)]],
+    primary: r => ({ scheduled: 'Remind bidders', closed: 'Recommend award', live: 'Open live console', draft: 'Continue setup' })[r.status] || '',
+  },
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

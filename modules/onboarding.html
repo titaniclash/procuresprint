@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Supplier Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_c.py -->
+<body data-shell="buyer" data-root=".." data-group="suppliers" data-module="onboarding" data-crumbs="Suppliers|Supplier onboarding">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+window.PAGE = {
+  title: 'Supplier onboarding',
+  meta: rows => `${rows.filter(r => r.status !== 'approved' && r.status !== 'declined').length} suppliers in onboarding · 6 steps from invitation to approved`,
+  actions: [{ label: 'Invite supplier', icon: 'person_add', kind: 'primary' }],
+  statuses: { invited: ['', 'Invited'], filling: ['info', 'Supplier filling'], docs: ['warning', 'Documents pending'], checks: ['info', 'Checks running'], approval: ['warning', 'Awaiting approval'], approved: ['success', 'Approved'], declined: ['danger', 'Declined'] },
+  tiles: [
+    { label: 'Awaiting my approval', icon: 'how_to_reg', tone: 'warning', match: 'mine', meta: m => m.map(r => r.sup.split(' ')[0]).join(', ') },
+    { label: 'Check failed', icon: 'gpp_maybe', tone: 'danger', match: 'failed', meta: () => 'bank, GST or sanctions check' },
+    { label: 'Stalled over 14 days', icon: 'hourglass_disabled', tone: 'info', match: 'stalled', meta: () => 'no supplier activity' },
+    { label: 'Approved this month', icon: 'verified', tone: 'success', match: 'approved', meta: () => 'now orderable' },
+    { label: 'Time to onboard', icon: 'timer', static: { value: '11', unit: 'days', meta: 'invitation → approved, median' } },
+  ],
+  views: [{ label: 'All', match: '' }, { label: 'With supplier', match: 'withsup' }, { label: 'With us', match: 'withus' }, { label: 'Approved', match: 'approved' }, { label: 'Declined', match: 'declined' }],
+  tableTitle: 'Onboarding requests', search: 'Supplier, GSTIN, requester', total: 19,
+  columns: [
+    { key: 'id', label: 'Request', sticky: true, render: r => H.id(r.id) },
+    { key: 'sup', label: 'Supplier', render: r => H.two(r.sup, r.cat) },
+    { opt: true, key: 'who', label: 'Requested by' },
+    { key: 'step', label: 'Progress', render: r => H.progress(Math.round(r.step / 6 * 100), `Step ${r.step} of 6`) },
+    { key: 'days', label: 'Open', num: true, sort: true, render: r => H.age(r.days + ' d', r.tags.includes('stalled') ? 'late' : '') },
+    { opt: true, key: 'issue', label: 'Blocker', wrap: true, render: r => r.issue ? esc(r.issue) : '<span class="ink-3">—</span>' },
+    { key: 'status', label: 'Status', render: r => H.status(r) },
+  ],
+  bulk: ['Remind suppliers'],
+  rows: [
+    { id: 'ON-0231', sup: 'Vertex Engineering', cat: 'MRO · Chennai', who: 'Vikram S', step: 5, days: 9, issue: '', status: 'approval', tags: 'withus mine' },
+    { id: 'ON-0230', sup: 'Greenline Packaging', cat: 'Packaging · Pune', who: 'Amit Verma', step: 5, days: 7, issue: '', status: 'approval', tags: 'withus mine' },
+    { id: 'ON-0229', sup: 'Vertex Fasteners', cat: 'Direct materials', who: 'Ananya Rao', step: 4, days: 12, issue: 'Bank account name does not match PAN', status: 'checks', tags: 'withus failed' },
+    { id: 'ON-0228', sup: 'Linde India', cat: 'Industrial gases', who: 'Ananya Rao', step: 3, days: 6, issue: 'GST certificate, cancelled cheque', status: 'docs', tags: 'withsup' },
+    { id: 'ON-0226', sup: 'Brightway Events', cat: 'Marketing services', who: 'Neha Gupta', step: 2, days: 19, issue: 'No activity since 5 Nov', status: 'filling', tags: 'withsup stalled' },
+    { id: 'ON-0225', sup: 'Orbit Scientific', cat: 'Lab consumables', who: 'Pooja Nair', step: 6, days: 10, issue: '', status: 'approved', tags: 'approved' },
+    { id: 'ON-0224', sup: 'Star Tech Rentals', cat: 'Equipment rental', who: 'Arun Das', step: 4, days: 15, issue: 'Sanctions screening: name match', status: 'declined', tags: 'declined' },
+  ],
+  preview: {
+    title: r => `${r.id} · ${r.sup}`, sub: r => `${r.cat} · requested by ${r.who}`,
+    alert: r => r.tags.includes('failed') ? `<div class="ps-alert ps-alert--danger"><span class="ms" aria-hidden="true">gpp_maybe</span><div><div class="ps-alert__title">Bank validation failed</div><div class="ps-alert__text">${esc(r.issue)}. Ask the supplier for a cancelled cheque.</div></div></div>` : '',
+    fields: [['Step', r => `${r.step} of 6`], ['Open for', r => r.days + ' days'], ['Requested by', r => esc(r.who)]],
+    timelineTitle: 'Steps',
+    timeline: r => ['Invitation', 'Company details', 'Documents', 'Bank, GST and sanctions checks', 'Approval', 'Created in ERP'].map((s, i) => [i + 1 < r.step || r.status === 'approved' ? 'done' : i + 1 === r.step ? 'now' : '', s, '']),
+    primary: r => r.tags.includes('mine') ? 'Review and approve' : r.tags.includes('withsup') ? 'Remind supplier' : r.tags.includes('failed') ? 'Request correction' : '',
+  },
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

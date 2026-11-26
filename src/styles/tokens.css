@@ -1,0 +1,160 @@
+/* Gilroy is the brand face (licensed): files are served from public/assets/fonts.
+   If they are removed, the stack falls back to Plus Jakarta Sans. */
+@font-face { font-family: "Gilroy"; font-weight: 400; font-style: normal; font-display: swap; src: url("/assets/fonts/Gilroy-Regular.ttf") format("truetype"); }
+@font-face { font-family: "Gilroy"; font-weight: 500; font-style: normal; font-display: swap; src: url("/assets/fonts/Gilroy-Medium.ttf") format("truetype"); }
+@font-face { font-family: "Gilroy"; font-weight: 600; font-style: normal; font-display: swap; src: url("/assets/fonts/Gilroy-SemiBold.ttf") format("truetype"); }
+@font-face { font-family: "Gilroy"; font-weight: 700; font-style: normal; font-display: swap; src: url("/assets/fonts/Gilroy-Bold.ttf") format("truetype"); }
+
+/* ==========================================================================
+   Procuresprint 2.0 — Design tokens (single source of truth)
+   Tier 1: primitives (--p-*)   raw values, never used in components
+   Tier 2: semantic  (--ps-*)   intent; light + dark via light-dark()
+   Tier 3: component tokens live at the top of ps.css and read only tier 2.
+   Every text/background pair below was contrast-checked (WCAG 2.2 AA).
+   Mirrors: theme/mui-theme.js (keep both in step).
+   ========================================================================== */
+
+:root {
+  color-scheme: light; /* light is the default everywhere; dark is opt-in via data-ps-theme="dark" */
+
+  /* ---------- Tier 1 · primitives ---------- */
+  --p-teal-50: #E3EEEF;  --p-teal-100: #C2D9DC; --p-teal-300: #5A98A1;
+  --p-teal-500: #0A6E79; --p-teal-600: #0B5A66; --p-teal-700: #06424C; /* brand */
+  --p-teal-800: #04343C; --p-teal-900: #04282E; --p-teal-950: #021A1E;
+  --p-teal-200d: #7FD0D8; --p-teal-100d: #9EDDE3; --p-teal-tint-d: #16363B;
+
+  --p-grey-0: #FFFFFF;   --p-grey-25: #F8FAFA;  --p-grey-50: #F4F6F6;
+  --p-grey-100: #EDF0F1; --p-grey-200: #DCE2E3; --p-grey-400: #8A9699;
+  --p-grey-500: #5F6B6F; --p-grey-600: #4A5659; --p-grey-900: #172124;
+  --p-grey-d0: #0E1517;  --p-grey-d1: #151F22;  --p-grey-d2: #1A2629;
+  --p-grey-d3: #222E31;  --p-grey-d4: #2A3A3E;  --p-grey-d5: #6E8084;
+  --p-grey-d7: #93A2A5;  --p-grey-d8: #B3C0C2;  --p-grey-d9: #E6EDEE;
+
+  /* ---------- Tier 2 · semantic: surfaces & ink ---------- */
+  --ps-bg:            light-dark(var(--p-grey-50),  var(--p-grey-d0));
+  --ps-surface:       light-dark(var(--p-grey-0),   var(--p-grey-d1));
+  --ps-surface-2:     light-dark(var(--p-grey-25),  var(--p-grey-d2));   /* table head, footers */
+  --ps-surface-3:     light-dark(var(--p-grey-100), var(--p-grey-d3));   /* hover, sunken */
+  --ps-ink:           light-dark(var(--p-grey-900), var(--p-grey-d9));   /* 15.1:1 / 15.6:1 */
+  --ps-ink-2:         light-dark(var(--p-grey-600), var(--p-grey-d8));   /* 7.0:1 / 9.0:1  */
+  --ps-ink-3:         light-dark(var(--p-grey-500), var(--p-grey-d7));   /* 5.1:1 / 6.4:1  */
+  --ps-line:          light-dark(var(--p-grey-200), var(--p-grey-d4));   /* decorative dividers */
+  --ps-line-strong:   light-dark(var(--p-grey-400), var(--p-grey-d5));   /* input edges ≥3:1 (1.4.11) */
+  --ps-scrim:         rgb(2 26 30 / .48);
+
+  /* ---------- brand / action ---------- */
+  --ps-brand:         light-dark(var(--p-teal-700), var(--p-teal-200d));
+  --ps-brand-hover:   light-dark(var(--p-teal-800), var(--p-teal-100d));
+  --ps-brand-press:   light-dark(var(--p-teal-900), #B9E8EC);
+  --ps-on-brand:      light-dark(#FFFFFF, var(--p-teal-900));            /* 11.1:1 / 8.8:1 */
+  --ps-brand-tint:    light-dark(var(--p-teal-50), var(--p-teal-tint-d));
+  --ps-on-brand-tint: light-dark(var(--p-teal-700), var(--p-teal-100d)); /* 9.4:1 / 8.6:1 */
+  --ps-link:          light-dark(var(--p-teal-500), var(--p-teal-200d));
+  --ps-focus:         light-dark(var(--p-teal-500), var(--p-teal-200d)); /* ring ≥5.5:1 */
+
+  /* ---------- navigation chrome (dark in both themes) ---------- */
+  --ps-rail-bg:       var(--p-teal-900);
+  --ps-rail-ink:      #C9DCDE;          /* 11.0:1 */
+  --ps-rail-active:   var(--p-teal-600);  /* white on it 7.9:1 */
+  --ps-rail-hover:    var(--p-teal-800);
+  --ps-rail-supplier: #23233F;          /* supplier portal shell */
+
+  /* ---------- status: fg on its own bg ≥5.6:1 both themes ---------- */
+  --ps-success-fg: light-dark(#1E6B3C, #7FD49B); --ps-success-bg: light-dark(#E6F3EA, #15301F); --ps-success-solid: light-dark(#2F8A52, #5CC07F);
+  --ps-warning-fg: light-dark(#8A4500, #F5B86B); --ps-warning-bg: light-dark(#FFF1DC, #3A2610); --ps-warning-solid: light-dark(#B85F00, #F0954A);
+  --ps-danger-fg:  light-dark(#B3261E, #FF9C92); --ps-danger-bg:  light-dark(#FCEBE9, #3D1A17); --ps-danger-solid:  light-dark(#C9302C, #FF8A80);
+  --ps-info-fg:    light-dark(#0B5CAD, #8DBDF5); --ps-info-bg:    light-dark(#E7F0FB, #132A44); --ps-info-solid:    light-dark(#1C6DD0, #8DBDF5);
+  --ps-on-danger: light-dark(#FFFFFF, #2B0A07);
+  --ps-neutral-fg: light-dark(#4A5659, #B3C0C2); --ps-neutral-bg: light-dark(#EDF0F1, #222E31); --ps-neutral-solid: light-dark(#8A9699, #6E8084);
+  --ps-ai-fg:      light-dark(#5236C9, #B6A6FF); --ps-ai-bg:      light-dark(#EEEAFD, #261F45); --ps-ai-solid:      light-dark(#6B5BD2, #9D90F0);
+
+  /* ---------- data visualisation (≥3:1 on surface, both themes) ---------- */
+  --ps-cat-1: light-dark(#0F6E7A, #4FB3BF);
+  --ps-cat-2: light-dark(#D9701A, #F0954A);
+  --ps-cat-3: light-dark(#6B5BD2, #9D90F0);
+  --ps-cat-4: light-dark(#2F8A52, #5CC07F);
+  --ps-cat-5: light-dark(#C2417A, #E5719F);
+  --ps-cat-6: light-dark(#8C8C1E, #C4C452);
+  --ps-chart-grid: light-dark(#E6EBEC, #243236);
+  --ps-chart-axis: light-dark(#8A9699, #6E8084);
+  --ps-chart-muted: light-dark(#B9C3C5, #3C4C50);
+
+  /* ---------- typography ---------- */
+  --ps-font: "Gilroy", "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ps-font-num: "Plus Jakarta Sans", system-ui, sans-serif;  /* tabular figures */
+  /* size / line-height / weight — MD3 role names */
+  --ps-display:     600 32px/40px var(--ps-font);   /* KPI hero numbers, page H1 on Home */
+  --ps-headline:    600 24px/32px var(--ps-font);   /* page title */
+  --ps-title-lg:    600 20px/28px var(--ps-font);   /* dialog, drawer title */
+  --ps-title-md:    600 16px/24px var(--ps-font);   /* card / section title */
+  --ps-title-sm:    600 14px/20px var(--ps-font);   /* table title, group label */
+  --ps-body-lg:     400 16px/24px var(--ps-font);
+  --ps-body-md:     400 14px/20px var(--ps-font);   /* default UI text, table cells */
+  --ps-body-sm:     400 12px/16px var(--ps-font);   /* helper, meta — floor is 12px */
+  --ps-label-lg:    600 14px/20px var(--ps-font);   /* buttons */
+  --ps-label-md:    500 12px/16px var(--ps-font);   /* chips, table header, tabs count */
+
+  /* ---------- space (4px base, 8pt rhythm) ---------- */
+  --ps-s1: 4px;  --ps-s2: 8px;  --ps-s3: 12px; --ps-s4: 16px; --ps-s5: 20px;
+  --ps-s6: 24px; --ps-s8: 32px; --ps-s10: 40px; --ps-s12: 48px; --ps-s16: 64px;
+
+  /* ---------- shape ---------- */
+  --ps-r-xs: 4px;   /* inputs, buttons, chips */
+  --ps-r-sm: 6px;   /* cards, menus */
+  --ps-r-md: 8px;   /* dialogs, drawers */
+  --ps-r-full: 999px; /* avatars, count badges only */
+
+  /* ---------- elevation: borders first, shadow only for overlays ---------- */
+  --ps-e0: none;
+  --ps-e1: 0 1px 2px rgb(4 40 46 / .06);                                  /* sticky bars */
+  --ps-e2: 0 4px 12px rgb(4 40 46 / .10), 0 1px 3px rgb(4 40 46 / .08);  /* menus, popovers */
+  --ps-e3: 0 12px 32px rgb(4 40 46 / .18), 0 2px 6px rgb(4 40 46 / .10); /* dialogs, drawers */
+
+  /* ---------- layout ---------- */
+  --ps-rail-w: 88px;
+  --ps-drawer-w: 280px;
+  --ps-topbar-h: 56px;
+  --ps-banner-h: 160px; /* page banner: title, breadcrumbs and global actions */
+  --ps-content-max: none; /* 100% fluid: content fills the viewport at every width */
+  --ps-gutter: clamp(16px, 2.2vw, 32px);
+  /* breakpoints (reference, used in @media): sm 600 · md 905 · lg 1240 · xl 1440 */
+
+  /* ---------- density (table rows, list items) ---------- */
+  --ps-row-h: 48px;  /* comfortable */
+
+  /* ---------- motion ---------- */
+  --ps-ease: cubic-bezier(.2, 0, 0, 1);
+  --ps-dur-1: 120ms; --ps-dur-2: 200ms; --ps-dur-3: 280ms;
+}
+
+:root[data-ps-theme="dark"] { color-scheme: dark; } /* opt-in only; host/OS dark preferences do not switch the product */
+[data-density="compact"]  { --ps-row-h: 36px; }
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --ps-dur-1: 0ms; --ps-dur-2: 0ms; --ps-dur-3: 0ms; }
+}
+
+/* Windows High Contrast / forced colours: let the system palette win, keep structure */
+@media (forced-colors: active) {
+  :root { --ps-focus: Highlight; --ps-line: CanvasText; --ps-line-strong: CanvasText; }
+}
+
+/* ==========================================================================
+   Studio role aliases (added for this preview; not part of the Procuresprint source).
+   They map the Studio's token names onto the Procuresprint semantic tokens so
+   pages added here (404.html) and base.css read the same values. Nothing above changes.
+   ========================================================================== */
+:root {
+  --bg: var(--ps-bg); --surface: var(--ps-surface); --surface-raised: var(--ps-surface-2);
+  --text: var(--ps-ink); --text-muted: var(--ps-ink-3); --border: var(--ps-line); --border-strong: var(--ps-line-strong);
+  --primary: var(--ps-brand); --on-primary: var(--ps-on-brand); --accent: var(--ps-link); --focus: var(--ps-focus);
+  --success: var(--ps-success-fg); --success-soft: var(--ps-success-bg); --on-success: #FFFFFF;
+  --warning: var(--ps-warning-fg); --warning-soft: var(--ps-warning-bg); --on-warning: #172124;
+  --danger: var(--ps-danger-fg); --danger-soft: var(--ps-danger-bg); --on-danger: var(--ps-on-danger);
+  --radius-sm: var(--ps-r-xs); --radius-md: var(--ps-r-sm); --radius-lg: var(--ps-r-md);
+  --space-1: var(--ps-s1); --space-2: var(--ps-s2); --space-3: var(--ps-s3); --space-4: var(--ps-s4); --space-5: var(--ps-s5); --space-6: var(--ps-s6); --space-7: var(--ps-s8);
+  --control-h: 40px;
+  --font-sans: var(--ps-font); --font-mono: var(--ps-font-num); --font-display: var(--ps-font);
+  --text-xs: 12px; --text-sm: 12px; --text-md: 14px; --text-lg: 16px; --text-xl: 20px; --text-2xl: 24px;
+  --shadow-overlay: var(--ps-e3);
+}

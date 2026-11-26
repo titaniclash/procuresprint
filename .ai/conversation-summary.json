@@ -1,0 +1,29 @@
+{
+  "summary": "Building a Vite+React procurement app (52 pages: 5 design-system, 4 archetype templates, 42 buyer/supplier module pages, 1 not-found). ProcureSprint design system kept. Initial issue: Vite not installed in dependencies, breaking preview. Fixed by moving vite/vitest from devDependencies to regular dependencies. All pages render, 141 tests pass, no script errors. User requests header redesign from Figma \"ready for dev\" screens: replace plain white top bar + separate page head with single deep teal wave-textured banner containing title/metadata, icons (bell, Ask Me pill, Refresh), and record action buttons below. Figma link had access issues; user provided reference screenshots. No header changes applied yet pending Figma access confirmation.",
+  "decisions": [
+    "Kept ProcureSprint design system over Premium Storefront template",
+    "Did not add mock API layer, OpenAPI file, or role guards",
+    "Moved vite and vitest to regular dependencies (from devDependencies)",
+    "Fixed placeholder data: John Doe → Kavita Menon",
+    "Fixed dead links in components.html",
+    "Removed unused Gilroy font from stacks"
+  ],
+  "openItems": [
+    "Implement header redesign: deep teal wave-textured banner with page title, record actions (Back, Shortlist, Enrich, Start Onboarding), bell, Ask Me pill, Refresh",
+    "Resolve Figma access: request public share link or additional screenshot exports from 'ready for dev' section",
+    "Confirm preview visual appearance matches expectation",
+    "Clarify if header redesign applies to both app pages and design-system pages or only app pages"
+  ],
+  "vocabulary": {
+    "ready for dev": "Figma frames/sections designated as ready for implementation",
+    "ProcureSprint": "Custom design system name",
+    "modules": "Buyer and supplier feature areas (42 pages total)",
+    "banner": "Header section containing title and key actions",
+    "record actions": "Action buttons below main header (Back, Shortlist, Enrich, Start Onboarding)",
+    "left rail": "Navigation sidebar (64px icon strip or full labelled version)",
+    "devDependencies": "npm packages only needed during development",
+    "wave-textured": "Design pattern with wave visual treatment",
+    "Ask Me": "Support/help button/pill element"
+  },
+  "updatedAt": "2026-11-26T06:59:07.758Z"
+}

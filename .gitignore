@@ -1,0 +1,16 @@
+node_modules
+dist
+.vite
+.ai/screenshots
+.studio
+.env
+.env.*
+!.env.example
+.studio/
+.ai/knowledge/
+.next
+.angular
+.expo
+web-build
+*.log
+.DS_Store

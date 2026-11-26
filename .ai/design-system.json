@@ -1,0 +1,39 @@
+{
+  "name": "Procuresprint 2.0",
+  "source": "Supplied; see design-system-contract.json",
+  "tokensFile": "src/styles/tokens.css",
+  "componentCss": "src/styles/ps.css",
+  "docsCss": "src/styles/docs.css",
+  "tiers": {
+    "primitives": "--p-*",
+    "semantic": "--ps-*",
+    "component": "top of ps.css, reads only --ps-*",
+    "studioAliases": "--bg, --surface, --surface-raised, --text, --text-muted, --border, --primary, --on-primary, --accent, --success, --warning, --danger, --focus, --radius-*, --space-*, --control-h, --font-sans, --font-mono, --text-* appended to tokens.css and mapped onto the --ps-* tokens"
+  },
+  "components": [
+    "ps-btn (primary, secondary, tonal, text, danger, danger-outline, ai, sm)",
+    "ps-iconbtn",
+    "ps-chip (info, success, warning, danger, ai, outline, plain)",
+    "ps-input, ps-select, ps-textarea, ps-field, ps-check, ps-switch, ps-combo, ps-fieldset, ps-formgrid",
+    "ps-table, ps-tablecard, ps-table-scroll, ps-sort, ps-pager, ps-bulkbar, ps-rowactions",
+    "ps-tiles, ps-tile, ps-kpis, ps-kpi",
+    "ps-tabs, ps-tab, ps-seg",
+    "ps-dialog, ps-drawer, ps-menu, ps-toasts, ps-toast",
+    "ps-alert, ps-errsum, ps-state, ps-skel, ps-progress",
+    "ps-stepper, ps-step, ps-timeline",
+    "ps-card, ps-section, ps-sechead, ps-grid, ps-split, ps-stack, ps-pagehead, ps-crumbs",
+    "ps-side, ps-topbar (page banner), ps-app, ps-bu, ps-avatar, ps-skip",
+    "ps-risk, ps-prio, ps-score, ps-age, ps-matrix, ps-legend, ps-chat, ps-fig",
+    "ds-* documentation chrome"
+  ],
+  "runtime": {
+    "shell": "public/assets/js/ps.js",
+    "workbench": "public/assets/js/workbench.js",
+    "charts": "public/assets/js/ps-charts.js",
+    "muiTheme": "public/theme/mui-theme.js"
+  },
+  "fonts": {
+    "brand": "Gilroy 400, 500, 600, 700 (public/assets/fonts, @font-face in tokens.css)",
+    "fallback": "Plus Jakarta Sans"
+  }
+}

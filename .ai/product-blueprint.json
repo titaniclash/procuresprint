@@ -1,0 +1,853 @@
+{
+  "product": {
+    "name": "ProcureSprint",
+    "oneLiner": "The Procuresprint 2.0 source-to-pay design system and its 58 buyer, supplier and template screens, rendered exactly as the connected folder defines them so the owner can review before enhancing.",
+    "domain": "Source-to-pay procurement (enterprise, India); the setup's domain field says eCommerce, which here means the catalogue marketplace inside procurement"
+  },
+  "purpose": "A design-system owner and the buyer-side and supplier-side reviewers sit at a laptop, open the landing page, click through foundations, components, templates and every module screen, try the interactions (tiles that filter tables, preview drawers, forms with validation, dialogs, toasts) and decide what to enhance next.",
+  "platform": {
+    "kind": "web",
+    "confidence": "confirmed",
+    "basis": "README: open index.html in a browser or serve the folder; the turn asked for a browser preview; every page is a desktop-first fluid layout with a 280px sidebar."
+  },
+  "users": [
+    {
+      "id": "U-01",
+      "name": "Buyer-side reviewer (requester, buyer, approver, category lead, CPO, CFO office, AP, receiving)",
+      "constraint": "Laptop, mouse and keyboard, reviewing in the buyer shell",
+      "goals": [
+        "See every buyer module the way the Figma flows intended",
+        "Try the workbench interactions: filter by tile, switch views, open the preview drawer, act on a record",
+        "Walk a purchase request from creation to approval and a sourcing event to award"
+      ]
+    },
+    {
+      "id": "U-02",
+      "name": "Supplier reviewer (Aster Components Ltd admin persona)",
+      "constraint": "Laptop, supplier portal shell with its own dark rail",
+      "goals": [
+        "See the supplier home, invitations, orders and shipments",
+        "Respond to an RFQ and create a shipment notice with the form validation the design defines"
+      ]
+    },
+    {
+      "id": "U-03",
+      "name": "Design-system owner (folder owner)",
+      "constraint": "Reviews on a laptop, will phrase enhancement requests after the preview",
+      "goals": [
+        "Confirm the foundations, components and templates render with live tokens",
+        "Read the validation page and its open gaps",
+        "Decide what to enhance next"
+      ]
+    },
+    {
+      "id": "U-04",
+      "name": "Item requester (any buyer-side employee who needs an item that does not exist yet)",
+      "constraint": "Laptop, searches before creating, wants the item code fast and never a duplicate",
+      "goals": [
+        "Find out if the item already exists in my plant",
+        "Raise a request that does not bounce back",
+        "See where my request is and who has it"
+      ]
+    },
+    {
+      "id": "U-05",
+      "name": "MDM team member (master data management)",
+      "constraint": "Laptop, works a queue all day against a 24 hour target",
+      "goals": [
+        "Complete and clean the data once",
+        "Stop duplicates and bad data before an item code exists",
+        "Load many items at once"
+      ]
+    },
+    {
+      "id": "U-06",
+      "name": "Item approvers: quality reviewer, finance asset accountant, category or compliance approver",
+      "constraint": "Laptop, decides one request at a time, view only except finance",
+      "goals": [
+        "See the rule that sent it to me",
+        "Decide with a comment",
+        "Set the asset class correctly"
+      ]
+    }
+  ],
+  "roles": [
+    {
+      "id": "R-01",
+      "name": "Buyer shell",
+      "permissions": [
+        "Opens every buyer module page and the Home persona views",
+        "Sees the buyer sidebar (Procurement, Supplier Management, Sourcing, Contracts, Invoicing, Reports, Users, MDM, Administration) and the Ask Me assistant"
+      ]
+    },
+    {
+      "id": "R-02",
+      "name": "Supplier shell",
+      "permissions": [
+        "Opens supplier home, invitations, RFQ response, orders, shipments and shipment notice",
+        "Sees the supplier sidebar only; no buyer modules in navigation"
+      ]
+    },
+    {
+      "id": "R-03",
+      "name": "Item master task roles",
+      "permissions": [
+        "Requester raises, withdraws, edits and resubmits",
+        "MDM team edits all data, sends back, rejects, sends to review and forwards",
+        "Quality reviewer approves, sends back or rejects before MDM",
+        "Finance sets asset class for Asset items",
+        "Approver decides view only; the requester cannot approve their own request (BR37)",
+        "No sign-in exists: each role has its own task page and the page says who it acts as"
+      ]
+    }
+  ],
+  "businessGoals": [
+    "Preview the whole design system and every screen without touching the source folder",
+    "Make the preview a faithful base for the enhancement requests that follow"
+  ],
+  "journeys": [
+    {
+      "id": "J-01",
+      "name": "Review the foundations and the design-system pages",
+      "persona": "U-03",
+      "steps": [
+        "Open the landing page and read principles, colour with live contrast check, status map, type, spacing, layout, icons and accessibility",
+        "Open Components and try the interactive variants and states",
+        "Open Templates and read the module to template map",
+        "Open Screens and read the consistency review",
+        "Open Validation and read the seven criteria, accessibility and responsive results and the open gaps",
+        "Note what to enhance"
+      ],
+      "features": [
+        "F-01",
+        "F-06",
+        "F-09"
+      ]
+    },
+    {
+      "id": "J-02",
+      "name": "Work a purchase request in the buyer workbench",
+      "persona": "U-01",
+      "steps": [
+        "Open Home (optionally as a persona via the Screens page) and read tasks and events",
+        "Open Purchase Request from the sidebar",
+        "Click a tile to filter the table, switch a view, search",
+        "Open a row's preview drawer and read the summary and timeline",
+        "Open the purchase request record",
+        "Approve, return or reject with the required comment and see the toast",
+        "Return to the workbench"
+      ],
+      "features": [
+        "F-02",
+        "F-04",
+        "F-05",
+        "F-11",
+        "F-09"
+      ]
+    },
+    {
+      "id": "J-03",
+      "name": "Raise a purchase request",
+      "persona": "U-01",
+      "steps": [
+        "Open Purchase Request and choose Create PR",
+        "Fill header fields and line items",
+        "Submit with gaps and read the error summary that links to each field",
+        "Fix the fields and submit",
+        "Confirm in the dialog and see the success toast"
+      ],
+      "features": [
+        "F-02",
+        "F-05"
+      ]
+    },
+    {
+      "id": "J-04",
+      "name": "Source, evaluate, negotiate and award",
+      "persona": "U-01",
+      "steps": [
+        "Open RFx and filter to events needing attention",
+        "Open Compare quotes for an RFQ",
+        "Open Evaluation and score a response",
+        "Open Negotiation and review rounds and bid charts",
+        "Open Award decision, declare no conflict of interest and approve the award",
+        "Open the contract record that follows the award and choose a renewal action"
+      ],
+      "features": [
+        "F-02",
+        "F-04",
+        "F-05",
+        "F-08"
+      ]
+    },
+    {
+      "id": "J-05",
+      "name": "Receive goods against a shipment",
+      "persona": "U-01",
+      "steps": [
+        "Open ASN and find an expected shipment",
+        "Open GRN",
+        "Open Receive ASN and record quantities one line at a time",
+        "Confirm the receipt and see the toast"
+      ],
+      "features": [
+        "F-02",
+        "F-04",
+        "F-05"
+      ]
+    },
+    {
+      "id": "J-06",
+      "name": "Respond as a supplier and ship",
+      "persona": "U-02",
+      "steps": [
+        "Open Supplier home and read invitations, orders and shipments to act on",
+        "Open Invitations and choose an RFQ",
+        "Fill prices and validity, accept the terms, fix anything the error summary lists",
+        "Confirm and see the submitted toast",
+        "Open Orders and choose Create shipment notice",
+        "Fill the notice and submit",
+        "See the shipment in Shipments"
+      ],
+      "features": [
+        "F-03",
+        "F-04",
+        "F-05"
+      ]
+    },
+    {
+      "id": "J-07",
+      "name": "Administer users, roles, master data and reports",
+      "persona": "U-01",
+      "steps": [
+        "Open Administration and read the setup hub",
+        "Open Users, filter by status and open the row preview",
+        "Switch to Roles & Permissions",
+        "Open Master Data Management",
+        "Open Spend Analytics and Reports"
+      ],
+      "features": [
+        "F-02",
+        "F-04",
+        "F-08"
+      ]
+    },
+    {
+      "id": "J-08",
+      "name": "Review the landing archetype templates",
+      "persona": "U-03",
+      "steps": [
+        "Open Templates",
+        "Open the Workbench template and try tiles, views, bulk bar and preview drawer",
+        "Open the Event console template and watch the clock strip and ranking board",
+        "Open the Insight template and read the charts",
+        "Open the Supplier portal template"
+      ],
+      "features": [
+        "F-06",
+        "F-07",
+        "F-08"
+      ]
+    },
+    {
+      "id": "J-09",
+      "name": "Recover from a wrong address",
+      "persona": "U-03",
+      "steps": [
+        "Open an address that does not exist",
+        "Read that the page is not part of the design system",
+        "Return to the foundations page"
+      ],
+      "features": [
+        "F-10"
+      ]
+    },
+    {
+      "id": "J-10",
+      "name": "Raise a new item without creating a duplicate",
+      "persona": "U-04",
+      "steps": [
+        "Open Item requests and choose New item request",
+        "Pick New and the item type; fill the justification",
+        "Describe the item; see similar items and AI suggestions beside the form",
+        "Use the existing item, extend it, or explain why it is not a duplicate",
+        "Choose plants, storage location and tax code",
+        "Review the workflow preview and submit",
+        "Follow the request on its own page"
+      ],
+      "features": [
+        "F-12",
+        "F-13",
+        "F-14",
+        "F-17"
+      ]
+    },
+    {
+      "id": "J-11",
+      "name": "Take a request to a created item",
+      "persona": "U-05",
+      "steps": [
+        "Open the MDM worklist and open a request",
+        "Edit the data, tick the checklist and read the data quality score",
+        "Send to review, send back with a comment, or forward",
+        "Finance sets the asset class for an Asset",
+        "The approver decides by rule",
+        "Open the created item with its code and ERP sync"
+      ],
+      "features": [
+        "F-13",
+        "F-14",
+        "F-18"
+      ]
+    },
+    {
+      "id": "J-12",
+      "name": "Change an item: update, extend, block, unblock or inactivate",
+      "persona": "U-04",
+      "steps": [
+        "Search the item master and open the item record",
+        "Choose Request update, Extend to plant, Block, Unblock or Inactivate",
+        "Give the changes or the mandatory reason; see the impact on open documents",
+        "Submit; MDM and the approver complete it",
+        "See the new status on the item record"
+      ],
+      "features": [
+        "F-14",
+        "F-16"
+      ]
+    },
+    {
+      "id": "J-13",
+      "name": "Load many items from a file",
+      "persona": "U-05",
+      "steps": [
+        "Open Bulk upload and download the template",
+        "Upload the CSV",
+        "Read the row results and download the error file",
+        "Submit the valid rows",
+        "Find the new requests in the MDM worklist"
+      ],
+      "features": [
+        "F-15"
+      ]
+    },
+    {
+      "id": "J-14",
+      "name": "Request an item by chat",
+      "persona": "U-04",
+      "steps": [
+        "Open Request by chat and describe the item",
+        "Answer the one question the agent asks",
+        "Check the summary card",
+        "Submit, or edit in the portal"
+      ],
+      "features": [
+        "F-17"
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "F-01",
+      "name": "Foundations landing page rendered with live tokens and the colour contrast check",
+      "priority": "must",
+      "requirements": [
+        "FR-01"
+      ],
+      "journeys": [
+        "J-01"
+      ]
+    },
+    {
+      "id": "F-02",
+      "name": "Buyer shell: dark teal sidebar (280/64 px collapse), top bar with business unit, Ask Me assistant, notifications and user menu, breadcrumbs from navigation",
+      "priority": "must",
+      "requirements": [
+        "FR-02",
+        "FR-03"
+      ],
+      "journeys": [
+        "J-02",
+        "J-03",
+        "J-04",
+        "J-05",
+        "J-07"
+      ]
+    },
+    {
+      "id": "F-03",
+      "name": "Supplier shell with its own rail, four destinations and invitation badge",
+      "priority": "must",
+      "requirements": [
+        "FR-04"
+      ],
+      "journeys": [
+        "J-06"
+      ]
+    },
+    {
+      "id": "F-04",
+      "name": "Workbench runtime: page head, tiles that filter, views, search, sortable table, bulk bar, preview drawer with primary action",
+      "priority": "must",
+      "requirements": [
+        "FR-05",
+        "FR-06",
+        "FR-07"
+      ],
+      "journeys": [
+        "J-02",
+        "J-04",
+        "J-05",
+        "J-06",
+        "J-07"
+      ]
+    },
+    {
+      "id": "F-05",
+      "name": "Record and form screens: purchase request, create PR, receive ASN, compare quotes, scoring, negotiation, award decision, contract, supplier profile, RFQ response, shipment notice",
+      "priority": "must",
+      "requirements": [
+        "FR-08",
+        "FR-09",
+        "FR-10"
+      ],
+      "journeys": [
+        "J-02",
+        "J-03",
+        "J-04",
+        "J-05",
+        "J-06"
+      ]
+    },
+    {
+      "id": "F-06",
+      "name": "Design-system documentation pages: components, templates, screens, validation",
+      "priority": "should",
+      "requirements": [
+        "FR-11"
+      ],
+      "journeys": [
+        "J-01",
+        "J-08"
+      ]
+    },
+    {
+      "id": "F-07",
+      "name": "Archetype template pages: workbench, event console, insight, supplier portal",
+      "priority": "should",
+      "requirements": [
+        "FR-12"
+      ],
+      "journeys": [
+        "J-08"
+      ]
+    },
+    {
+      "id": "F-08",
+      "name": "SVG charts (line, columns, bid ladder) drawn from page data",
+      "priority": "should",
+      "requirements": [
+        "FR-13"
+      ],
+      "journeys": [
+        "J-04",
+        "J-07",
+        "J-08"
+      ]
+    },
+    {
+      "id": "F-09",
+      "name": "Every internal link and script path resolves inside the project; the source folder is untouched",
+      "priority": "must",
+      "requirements": [
+        "FR-14",
+        "NFR-05"
+      ],
+      "journeys": [
+        "J-01",
+        "J-02"
+      ]
+    },
+    {
+      "id": "F-10",
+      "name": "Not-found page in the design system's own look",
+      "priority": "could",
+      "requirements": [
+        "FR-15"
+      ],
+      "journeys": [
+        "J-09"
+      ]
+    },
+    {
+      "id": "F-11",
+      "name": "Home persona views (business, buyer, approver, category, CPO, CFO) selected by the view query",
+      "priority": "should",
+      "requirements": [
+        "FR-16"
+      ],
+      "journeys": [
+        "J-02"
+      ]
+    },
+    {
+      "id": "F-12",
+      "name": "Item request intake: one form for New, Update, Extend and Block, Unblock, Inactivate; item type first; similar-item panel with Use this item, Extend and Not a duplicate; one item code for every plant",
+      "priority": "must",
+      "requirements": [],
+      "journeys": [
+        "J-10",
+        "J-12"
+      ],
+      "source": "Item master BRD S01, S02, BR01-BR29, AC01-AC11"
+    },
+    {
+      "id": "F-13",
+      "name": "Item request workflow: states and statuses, In review, MDM review with data quality score, finance asset class, rule-based approval, withdraw, send back, reject, created item and ERP sync",
+      "priority": "must",
+      "requirements": [],
+      "journeys": [
+        "J-10",
+        "J-11"
+      ],
+      "source": "Item master BRD S03, S04, S05, S12, Stages and Statuses, BR30-BR47"
+    },
+    {
+      "id": "F-14",
+      "name": "Item master list with search and item record with plants, tax, documents, history and alternates",
+      "priority": "must",
+      "requirements": [],
+      "journeys": [
+        "J-10",
+        "J-11",
+        "J-12"
+      ],
+      "source": "Item master BRD S06, S07"
+    },
+    {
+      "id": "F-15",
+      "name": "Bulk upload from CSV with row validation, error file and submit valid rows",
+      "priority": "should",
+      "requirements": [],
+      "journeys": [
+        "J-13"
+      ],
+      "source": "Item master BRD S09"
+    },
+    {
+      "id": "F-16",
+      "name": "Lifecycle requests from an item record: update with old and new values, extend, block, unblock, inactivate with impact and replacement",
+      "priority": "should",
+      "requirements": [],
+      "journeys": [
+        "J-12"
+      ],
+      "source": "Item master BRD Workflow sheet, BR41-BR45"
+    },
+    {
+      "id": "F-17",
+      "name": "Describe with AI suggestions and request by chat (Ask Me and MS Teams agent) with a summary card",
+      "priority": "could",
+      "requirements": [],
+      "journeys": [
+        "J-10",
+        "J-14"
+      ],
+      "source": "Item master BRD S08, Autonomy and AI Agent L1-L2"
+    },
+    {
+      "id": "F-18",
+      "name": "Item insights: turnaround, right first time, duplicates prevented, queue age, channels",
+      "priority": "could",
+      "requirements": [],
+      "journeys": [
+        "J-11"
+      ],
+      "source": "Item master BRD S10 (phase 2), Outcomes and KPIs"
+    }
+  ],
+  "businessRules": [
+    "A reverse auction needs 3 confirmed bidders to start [modules/reverse-auction.html]",
+    "Default approval SLA is 5 days; approval limits have 4 value tiers up to INR 25 L+ [modules/administration.html]",
+    "An approver must confirm no conflict of interest before approving an award; a comment is required to return or reject [modules/award-decision.html]",
+    "A supplier must accept the terms before an RFQ response can be submitted [modules/supplier-rfq-response.html]",
+    "Destructive actions confirm in a dialog; one primary action per view [components.html Buttons]",
+    "Item type must be chosen first and the form shows only its fields; account assignment is locked: Asset A, Goods and Service K [Item master BRD BR01, BR02]",
+    "Short description is noun first, upper case, 40 characters at most; category must be the lowest level; a hazardous item needs a safety data sheet; required by date cannot be in the past; High and Critical priority need a reason; GTIN check digit is validated [BR10, BR11, BR14, BR17, BR20]",
+    "Exact duplicate (same manufacturer and part number, same GTIN, or same normalised description, item type, category and unit) blocks submit and offers the existing item or Extend; a blocked item cannot be created; similarity of 85 percent or more warns and 70 to 84 informs; same name with a different item type is allowed with a reason; pending requests are searched too [BR21-BR28]",
+    "MDM can edit all fields; send back and reject need a comment; approval is blocked below a data quality score of 80; MDM can send a request to In review [BR31-BR33, BR47]",
+    "Asset items get a finance step for asset class and useful life; approvers can only view; the requester and approver of a request must differ; the requester can withdraw while In progress and approvals reset [BR09, BR34, BR36-BR38]",
+    "Default approval routing: Goods up to USD 5,000 and not hazardous need MDM only; Goods above USD 5,000 add the category owner; hazardous adds the HSE approver; Asset adds finance and the finance controller above the limit; block, unblock and inactivate add a compliance approver [Decision Matrix]",
+    "Item code and item type cannot change after creation; extend adds plant data only and is refused if the plant already exists; blocked items are hidden from new documents while open documents continue; inactive items point to a replacement [BR41, BR43-BR45]",
+    "Request statuses are a closed set: Draft, Withdrawn, In review, Pending MDM, Pending finance review, Pending approval, Sent back, Completed, Rejected, Closed \u2013 duplicate, Cancelled; items are Active, Blocked or Inactive [Stages and Statuses]"
+  ],
+  "dataEntities": [
+    {
+      "name": "Purchase request",
+      "fields": [
+        "id",
+        "date",
+        "requester",
+        "value",
+        "entity",
+        "department",
+        "lines",
+        "age",
+        "category",
+        "quantity",
+        "needBy",
+        "status",
+        "sourcingFlag",
+        "purchaseOrder"
+      ]
+    },
+    {
+      "name": "RFx event",
+      "fields": [
+        "id",
+        "title",
+        "status",
+        "value",
+        "owner",
+        "nextStep",
+        "responses",
+        "questions"
+      ]
+    },
+    {
+      "name": "Reverse auction",
+      "fields": [
+        "id",
+        "title",
+        "lots",
+        "start",
+        "invited",
+        "confirmed",
+        "baseline",
+        "bestBid",
+        "value",
+        "status"
+      ]
+    },
+    {
+      "name": "Contract",
+      "fields": [
+        "id",
+        "title",
+        "supplier",
+        "value",
+        "status",
+        "expiry",
+        "renewalPlan"
+      ]
+    },
+    {
+      "name": "Invoice",
+      "fields": [
+        "id",
+        "purchaseOrder",
+        "supplier",
+        "value",
+        "dueDate",
+        "status"
+      ]
+    },
+    {
+      "name": "Supplier",
+      "fields": [
+        "id",
+        "name",
+        "segment",
+        "scorecard",
+        "riskLevel",
+        "status"
+      ]
+    },
+    {
+      "name": "Purchase order (supplier view)",
+      "fields": [
+        "id",
+        "item",
+        "value",
+        "dueDate",
+        "status"
+      ]
+    },
+    {
+      "name": "Shipment notice (ASN)",
+      "fields": [
+        "id",
+        "purchaseOrder",
+        "lines",
+        "expectedDate",
+        "status"
+      ]
+    },
+    {
+      "name": "Goods receipt (GRN)",
+      "fields": [
+        "id",
+        "asn",
+        "lines",
+        "receivedQuantity",
+        "status"
+      ]
+    },
+    {
+      "name": "User",
+      "fields": [
+        "name",
+        "email",
+        "role",
+        "status"
+      ]
+    },
+    {
+      "name": "Role",
+      "fields": [
+        "id",
+        "name",
+        "description",
+        "usersAssigned",
+        "kind"
+      ]
+    },
+    {
+      "name": "Report",
+      "fields": [
+        "id",
+        "name",
+        "area",
+        "schedule",
+        "status"
+      ]
+    },
+    {
+      "name": "Catalogue item",
+      "fields": [
+        "name",
+        "supplier",
+        "price",
+        "category"
+      ]
+    },
+    {
+      "name": "Item request",
+      "fields": [
+        "id",
+        "type",
+        "itemType",
+        "requester",
+        "channel",
+        "status",
+        "priority",
+        "requiredBy",
+        "justification",
+        "description",
+        "category",
+        "unit",
+        "hsCode",
+        "plants",
+        "storageLocation",
+        "taxCode",
+        "glAccount",
+        "attachments",
+        "duplicateDecision",
+        "mdmChecks",
+        "mdmRemarks",
+        "dataQualityScore",
+        "review",
+        "assetClass",
+        "approval",
+        "history",
+        "itemCode",
+        "erpCode"
+      ]
+    },
+    {
+      "name": "Item",
+      "fields": [
+        "code",
+        "erpCode",
+        "description",
+        "longDescription",
+        "type",
+        "category",
+        "unspsc",
+        "unit",
+        "manufacturer",
+        "partNumber",
+        "gtin",
+        "countryOfOrigin",
+        "hazardClass",
+        "qualityInspection",
+        "catalogEligible",
+        "standardPrice",
+        "currency",
+        "leadTime",
+        "assetClass",
+        "usefulLife",
+        "plants",
+        "status",
+        "replacement",
+        "alternates",
+        "openDocuments",
+        "history"
+      ]
+    }
+  ],
+  "integrations": [
+    {
+      "name": "ERP (for example SAP)",
+      "status": "simulated",
+      "detail": "On completion the sample returns an ERP material code and shows sync complete. Source of truth and failure handling are customer settings in the BRD and are not built."
+    }
+  ],
+  "constraints": [
+    "Do not modify the mirrored knowledge files or their sources [message]",
+    "Preview as-is now; enhancements come next [message]",
+    "Stack confirmed in setup: static HTML, CSS and JavaScript on Vite, multi-page routing, design tokens plus CSS, Vitest for scripts",
+    "Fonts and icons load from Google Fonts exactly as the source does, so the preview needs network access",
+    "Item Master: the admin configuration screen (BRD S11: field configuration, sequencing, ERP sync, audit, general settings) is excluded at the owner's request [message]"
+  ],
+  "assumptions": [
+    "ASSUMED: preview means the pages rendered unchanged apart from asset path rewrites needed by Vite; no visual or behavioural change is made before the owner asks.",
+    "ASSUMED: the original folder layout (root pages, modules/, templates/) is kept at the project root instead of the Studio's pages/ convention so relative links and data-root stay valid; vite.config.js build input was extended for modules/ and templates/.",
+    "ASSUMED: the Premium Storefront template chosen in setup does not apply; the supplied Procuresprint design system (tokens.css, ps.css, logo) is the design contract and the brief says a supplied system is law.",
+    "ASSUMED: no sign-in exists because the prototype has none; the Sign out, My profile, Preferences, Delegations and Notifications controls show the source's own 'Not wired up in this prototype' toast. Authentication and role guards are enhancement scope, so no qa-access.json is written.",
+    "ASSUMED: no services/api layer or openapi.yaml is written in this turn because every page carries its own inline sample data as the source does; introducing services would change the pages, which the owner asked not to do yet.",
+    "INFERRED: data entities and their fields are read from the inline sample data of the module pages; they describe the prototype, not a confirmed data model.",
+    "INFERRED: the domain is source-to-pay procurement, not retail eCommerce; the setup's eCommerce label is kept only as the catalogue marketplace inside procurement.",
+    "CONFIRMED from validation.html: PO and Invoice detail screens, Category Lead and CFO homes, and six assumed-scope modules are open gaps in the source itself; they are listed, not filled.",
+    "ASSUMED: the not-found page is the only page added beyond the source; it uses the source's own classes so it belongs.",
+    "ASSUMED: the uploaded zip was unpacked into an empty folder outside the product, read, and its pages, scripts, styles, tests and artifacts copied into this project; its own package.json already matched the confirmed setup, so no dependency changed.",
+    "ASSUMED: scripts/sync-from-knowledge.mjs was removed because it copies from a per-page knowledge mirror that does not exist in this project (the mirror here is one archive digest); the pages in this project are now the source.",
+    "ASSUMED: tests/pages.test.js was pointed at the pages on disk instead of the per-page mirror, and its mirror-shape check dropped, so the suite runs; every other check is unchanged.",
+    "ASSUMED: the award and renewal action (J-04) is served by Awarding, Award decision and Contract, where the contract record carries the renewal plan.",
+    "CONFIRMED from the owner's message: ignore the admin requirements. The admin screen (BRD S11 and prototype step 8) is not built, and every BRD item that is an admin setting is fixed at the BRD default instead: mandatory fields, the 85 and 70 percent similarity thresholds, the data quality threshold of 80, the code format G-, S-, A- plus 6 digits, the approval routing template, the 24 hour target, and the order MDM then finance then approver with the review step on for the category Food ingredients.",
+    "ASSUMED: the Item Master is a new sidebar group with five destinations (Item requests, Item master, Bulk upload, Request by chat, Item insights); its record, review and approval pages are reached from rows and next-step buttons. It stays separate from Master Data Management (S-44), which is unchanged.",
+    "ASSUMED: the prototype's similar-item panel (BRD S02) is a panel beside the form on the Item details step, and the prototype's Item created step is the completed state of the Item request page, so neither is a separate file.",
+    "ASSUMED: there is no sign-in, so MDM, review, finance and approval each have a task page that says which role it acts as. The signed-in user John Doe is the requester on three sample requests. The approver rule that the requester cannot approve is enforced when the names match.",
+    "ASSUMED: data is held in this browser (localStorage key ps-im-v1) with a Reset sample data action on Item requests; no backend or API layer was added, as in earlier turns.",
+    "ASSUMED: sample UNSPSC, HS, GL, tax and category values, person and plant names, and the conversion of INR prices to USD at 85 for the USD 5,000 approval limit are illustrative sample values to be confirmed by the MDM team.",
+    "ASSUMED: AI suggestions are keyword rules with fixed confidences (level L1 behaviour: 90 or more pre-filled with a tag, 70 to 89 shown to check, under 70 left empty), not a model. The chat agent follows the BRD L2 flow with the same rules.",
+    "ASSUMED: the BRD's P1 and P2 fields are partly included: GTIN with check digit, alternates and replacement item, hazard class and quality inspection are built; attribute templates, multi-language descriptions, weight and dimensions, packaging and sustainability attributes are left out as phase 1 or 2 items still open in the BRD (Q8, Q10, Q11).",
+    "ASSUMED: requirements.json was not extended in this turn (the turn forbids changes to it), so features F-12 to F-18 cite the BRD acceptance criteria AC01-AC36 in their source instead of FR ids. Search is substring based, not typo tolerant.",
+    "ASSUMED: file upload on a request and the bulk upload keep file names or read the CSV in the browser only; nothing is uploaded to a server."
+  ],
+  "edgeCases": [
+    "A tile filter or search that matches nothing shows the workbench's empty state with a way to clear the filter",
+    "Submitting a form with missing required fields shows an error summary whose links focus each field",
+    "Reverse auction with fewer than 3 confirmed bidders shows the warning that policy blocks the start",
+    "Collapsing the sidebar to 64 px keeps every destination reachable by icon with a tooltip label",
+    "Opening a module page with a wrong data-module still renders the shell with no active item",
+    "An address that is not a page renders the not-found page, not a blank screen",
+    "An exact duplicate or a blocked item disables Continue and offers Use this item or Extend",
+    "Data quality under 80 blocks MDM forwarding and names what is missing",
+    "Reject and send back need a comment; the dialog keeps the text and shows the error",
+    "The requester cannot approve their own request",
+    "A bulk file with a missing column is refused with the column named; rows with errors go to the error file and valid rows still submit",
+    "An item code or request number that does not exist shows a not-found state with a way back"
+  ],
+  "questions": []
+}

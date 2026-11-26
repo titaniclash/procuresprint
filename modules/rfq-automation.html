@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RFQ Automation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_b.py -->
+<body data-shell="buyer" data-root=".." data-group="sourcing" data-module="rfq-automation" data-crumbs="Sourcing|RFQ Automation">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+window.PAGE = {
+  title: 'RFQ automation',
+  meta: rows => `${rows.filter(r => r.status === 'active').length} rules turn approved PRs into RFQs without buyer effort · you review before anything is sent`,
+  banner: "<div class=\"ps-alert\" role=\"note\"><span class=\"ms\" aria-hidden=\"true\">info</span><div><div class=\"ps-alert__title\">Scope assumed</div><div class=\"ps-alert__text\">RFQ Automation is shown as a set of rules, each with its runs. There is no Figma reference for this module; fields and statuses follow common S2P practice. Confirm with the module owner (open question Q5).</div></div></div>",
+  actions: [{ label: 'Run log', icon: 'history' }, { label: 'New rule', icon: 'add', kind: 'primary' }],
+  statuses: { active: ['success', 'Active'], paused: ['', 'Paused'], failing: ['danger', 'Failing'], draft: ['', 'Draft'] },
+  tiles: [
+    { label: 'RFQs waiting for review', icon: 'rule', tone: 'warning', match: 'review', meta: m => `${sum(m, 'rev')} drafted by rules` },
+    { label: 'Failed runs', icon: 'error', tone: 'danger', match: 'failing', meta: m => `${sum(m, 'fail')} in the last 7 days` },
+    { label: 'Paused rules', icon: 'pause_circle', match: 'paused', meta: () => 'PRs fall back to manual RFQ' },
+    { label: 'RFQs auto-created', icon: 'smart_toy', static: { value: '48', meta: 'this month · 31% of all RFQs' } },
+  ],
+  views: [{ label: 'All rules', match: '' }, { label: 'Active', match: 'active' }, { label: 'Needs attention', match: 'attention' }, { label: 'Paused', match: 'paused' }],
+  tableTitle: 'Rules', search: 'Rule, category, supplier pool', total: 9,
+  columns: [
+    { key: 'n', label: 'Rule', sticky: true, render: r => `<a class="cell-id" href="#" data-preview="${esc(r.id)}">${esc(r.n)}</a>` },
+    { key: 'when', label: 'Runs when', wrap: true },
+    { opt: true, key: 'pool', label: 'Supplier pool', render: r => H.two(r.pool, r.poolN + ' suppliers') },
+    { key: 'runs', label: 'Runs · 30 d', num: true, sort: true },
+    { key: 'rev', label: 'To review', num: true, render: r => r.rev ? `<strong>${r.rev}</strong>` : '0' },
+    { opt: true, key: 'last', label: 'Last run' },
+    { key: 'status', label: 'Status', render: r => H.status(r) },
+  ],
+  bulk: ['Pause', 'Resume'],
+  rows: [
+    { id: 'R-01', n: 'MRO spares under ₹5 L', when: 'PR approved · category MRO · value < ₹5 L · no contract item', pool: 'MRO preferred', poolN: 6, runs: 19, rev: 3, fail: 0, last: 'Today 11:20', status: 'active', tags: 'active review attention' },
+    { id: 'R-02', n: 'IT peripherals', when: 'PR approved · IT Hardware · not in catalogue', pool: 'IT resellers', poolN: 4, runs: 11, rev: 1, fail: 0, last: 'Today 09:05', status: 'active', tags: 'active review attention' },
+    { id: 'R-03', n: 'Packaging re-orders', when: 'PR approved · Packaging · repeat item', pool: 'Packaging approved', poolN: 3, runs: 8, rev: 0, fail: 2, last: 'Yesterday', status: 'failing', tags: 'failing attention' },
+    { id: 'R-04', n: 'Lab consumables', when: 'PR approved · Quality dept · value < ₹2 L', pool: 'Lab suppliers', poolN: 3, runs: 6, rev: 0, fail: 0, last: '21 Nov', status: 'active', tags: 'active' },
+    { id: 'R-05', n: 'Facility repairs', when: 'PR approved · Facilities · service', pool: 'Facility vendors, South', poolN: 5, runs: 4, rev: 0, fail: 0, last: '12 Nov', status: 'paused', tags: 'paused' },
+  ],
+  below: `<section class="ps-card" aria-labelledby="runs-t"><div class="ps-card__head"><h2 class="ps-card__title" id="runs-t"><span class="ms" aria-hidden="true">history</span>Latest runs</h2></div><ul class="ps-list">
+    <li><span class="ms" aria-hidden="true" style="color:var(--ps-warning-fg)">rule</span><div class="ps-list__main"><span class="ps-list__title">RFQ-2025-646 drafted</span><span class="ps-list__meta">MRO spares · PR-2025-00125 · 4 suppliers · today 11:20</span></div><button class="ps-btn ps-btn--secondary ps-btn--sm" data-todo>Review</button></li>
+    <li><span class="ms" aria-hidden="true" style="color:var(--ps-success-fg)">check_circle</span><div class="ps-list__main"><span class="ps-list__title">RFQ-2025-643 sent</span><span class="ps-list__meta">IT peripherals · approved by Rohit Kumar · 09:12</span></div></li>
+    <li><span class="ms" aria-hidden="true" style="color:var(--ps-danger-fg)">error</span><div class="ps-list__main"><span class="ps-list__title">Run failed · Packaging re-orders</span><span class="ps-list__meta">Supplier pool has 1 eligible supplier; needs 3</span></div><button class="ps-btn ps-btn--secondary ps-btn--sm" data-todo>Fix</button></li>
+  </ul></section>`,
+  preview: {
+    title: r => r.n, sub: r => r.when,
+    alert: r => r.status === 'failing' ? `<div class="ps-alert ps-alert--danger"><span class="ms" aria-hidden="true">error</span><div><div class="ps-alert__title">${r.fail} runs failed in 7 days</div><div class="ps-alert__text">Only 1 supplier in the pool is approved and not blocked.</div></div></div>` : '',
+    fields: [['Supplier pool', r => `${esc(r.pool)} (${r.poolN})`], ['Runs, 30 days', r => r.runs], ['Waiting for review', r => r.rev], ['Last run', r => esc(r.last)]],
+    extra: () => `<div class="ps-alert"><span class="ms" aria-hidden="true">verified_user</span><div><div class="ps-alert__title">Human check on</div><div class="ps-alert__text">Rules draft RFQs; a buyer reviews and sends. Turning this off needs Category Lead approval.</div></div></div>`,
+    primary: r => r.rev ? `Review ${r.rev} RFQs` : r.status === 'paused' ? 'Resume rule' : 'Edit rule',
+  },
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

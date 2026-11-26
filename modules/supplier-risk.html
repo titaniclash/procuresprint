@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vendor Risk Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_d.py -->
+<body data-shell="buyer" data-root=".." data-group="suppliers" data-module="supplier-risk" data-crumbs="Supplier Management|Supplier Risk Analysis">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+const VR = [
+  ['RevOps Engineering','1db2024d8','Manufacturing',28,'Low',2500000,'Active','None'],
+  ['Sales Analytics','2bc3035e9','IT Services',72,'High',1800000,'Completed','03'],
+  ['Customer Management','3cd4046f0','Logistics',45,'Medium',950000,'Under Review','01'],
+  ['Product Management','4de5057g1','Raw Materials',92,'Critical',3200000,'Suspended','05'],
+  ['Market Analysis','5ef6068h2','Supply Chain',67,'Very Low',1600000,'Pending Approval','07'],
+  ['Data Analytics','6fg7079i3','Consulting',58,'Moderate',4000000,'Rejected','02'],
+  ['Sales Enablement','7gh8080j4','Research and Development',34,'Significant',750000,'In Progress','04'],
+  ['Performance Review','8hi9091k5','Customer Support',81,'Extreme',2300000,'Archived','06'],
+  ['Strategic Planning','—','Quality Assurance',19,'Minimal',1200000,'On Hold','08'],
+  ['Revenue Planning','—','Sales and Marketing',76,'Elevated',5100000,'Cancelled','09'],
+];
+const LV = { Minimal: 'success', 'Very Low': 'success', Low: 'success', Medium: 'warning', Moderate: 'warning', Significant: 'warning', Elevated: 'danger', High: 'danger', Critical: 'danger', Extreme: 'danger', Urgent: 'danger' };
+const ST = { Active: 'success', Completed: 'success', Finalized: 'success', 'Under Review': 'info', 'In Progress': 'info', 'Pending Approval': 'warning', 'On Hold': 'warning', Suspended: 'danger', Rejected: 'danger', Cancelled: 'danger', Archived: '' };
+const usd = n => '$' + Number(n).toLocaleString('en-US');
+window.PAGE = {
+  title: 'Vendor Risk Analytics',
+  kpis: [
+    { label: 'Total Vendors', value: '8', sub: '<span class="ps-tile__delta ps-tile__delta--good">+12%</span> Active partnerships', icon: 'groups', tone: 'info' },
+    { label: 'Critical Issues', value: '12', sub: '<span class="ps-tile__delta ps-tile__delta--good">-8%</span> Requires immediate attention', icon: 'report', tone: 'danger', match: 'critical' },
+    { label: 'Total Contract Value', value: '$14.3M', sub: '<span class="ps-tile__delta ps-tile__delta--good">+24%</span> Combined portfolio value', icon: 'payments', tone: 'success' },
+    { label: 'Avg Risk Score', value: '49', sub: '<span class="ps-tile__delta ps-tile__delta--good">-5%</span> Lower is better', icon: 'speed', tone: 'warning' },
+  ],
+  tableTitle: 'Vendor List', search: 'Search vendor, ID or category…', total: 11,
+  create: [{ label: 'Add Vendor', icon: 'add' }],
+  gridActions: [{ label: 'Financial Risk Insights', icon: 'account_balance' }, { label: 'Sanctions Risk Insights', icon: 'gpp_maybe' }],
+  views: [{ label: 'All', match: '' }, { label: 'High and above', match: 'critical' }, { label: 'Under watch', match: 'watch' }],
+  columns: [
+    { key: 'id', label: 'Vendor Details', sticky: true, sort: true, render: r => `<a class="cell-id" href="#" data-preview="${esc(r.id)}">${esc(r.id)}</a><br><small class="t-body-sm ink-3">ID: ${esc(r.vid)}</small>` },
+    { key: 'cat', label: 'Category', sort: true },
+    { key: 'score', label: 'Risk Score', num: true, sort: true },
+    { key: 'lvl', label: 'Risk Level', render: r => H.chip(LV[r.lvl], r.lvl) },
+    { key: 'cv', label: 'Contract Value', num: true, sort: true, render: r => usd(r.cv) },
+    { key: 'st', label: 'Status', render: r => H.chip(ST[r.st], r.st) },
+    { key: 'ci', label: 'Critical issues', num: true, render: r => r.ci === 'None' ? '<span class="ink-3">None</span>' : `<span class="num">${r.ci}</span>` },
+  ],
+  bulk: ['Request assessment', 'Add to watchlist', 'Export selected'],
+  rows: VR.map(([id, vid, cat, score, lvl, cv, st, ci]) => ({ id, vid, cat, score, lvl, cv, st, ci, tags: `${['High', 'Critical', 'Extreme', 'Elevated'].includes(lvl) ? 'critical' : ''} ${['Under Review', 'On Hold', 'Pending Approval'].includes(st) ? 'watch' : ''}` })),
+  rowMenu: r => [
+    { label: 'View risk profile', icon: 'visibility', preview: r.id },
+    { label: 'Open supplier profile', icon: 'storefront', href: 'supplier-profile.html' },
+    { label: 'Financial risk insights', icon: 'account_balance' },
+    { label: 'Sanctions screening', icon: 'gpp_maybe' },
+    { label: 'Request assessment', icon: 'assignment' },
+    '-', { label: 'Suspend vendor', icon: 'block', danger: true },
+  ],
+  preview: {
+    title: r => r.id, sub: r => `${r.cat} · ID ${r.vid}`, chip: r => H.chip(LV[r.lvl], r.lvl),
+    fields: [['Risk score', r => `${r.score} / 100`], ['Contract value', r => usd(r.cv)], ['Status', r => esc(r.st)], ['Critical issues', r => esc(r.ci)]],
+    primary: r => 'Request assessment', record: r => 'supplier-profile.html',
+  },
+  note: 'Content from Figma “Vendor Risk Analytics” (legacy screen). Figma uses US$ and 11 risk levels; both kept as designed — see open questions.',
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

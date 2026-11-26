@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Award AW-2025-041</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+<style>
+.split { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 16px; align-items: center; }
+.split input[type=range] { width: 100%; accent-color: var(--ps-brand); height: 32px; }
+.bar2 { display: flex; height: 12px; border-radius: 2px; overflow: hidden; }
+.bar2 i { display: block; height: 100%; }
+</style>
+</head>
+<!-- Detail · Event console (decision stage). Evidence on the left, decision on the right; non-approval needs a comment. -->
+<body data-shell="buyer" data-root=".." data-group="sourcing" data-module="e-awarding" data-crumbs="Sourcing|E-Awarding>modules/e-awarding.html|AW-2025-041">
+<main id="main">
+  <div class="ps-rec">
+    <a class="ps-back" href="e-awarding.html"><span class="ms" aria-hidden="true">arrow_back</span>Awards</a>
+    <div class="ps-rec__top">
+      <div class="ps-rec__title"><span class="ps-rec__id">AW-2025-041 · from ES-2025-022 · recommended by Amit Verma, 22 Nov</span><h1 class="t-headline">Corrugated boxes, West <span class="ps-chip ps-chip--warning">Waiting for you</span></h1><p class="ink-2">2-year rate contract · 3 box sizes · Pune and Hosur</p></div>
+    </div>
+    <dl class="ps-rec__facts">
+      <div><dt>Recommended</dt><dd>Pacific Packaging</dd></div>
+      <div><dt>Award value</dt><dd class="big">₹90,24,000</dd></div>
+      <div><dt>Saving vs baseline</dt><dd class="big" style="color:var(--ps-success-fg)">6.0%</dd></div>
+      <div><dt>Basis</dt><dd>L1 and highest technical score</dd></div>
+    </dl>
+  </div>
+
+  <div class="ps-split">
+    <div class="ps-stack">
+      <section class="ps-section" aria-labelledby="bd-t">
+        <div class="ps-section__head"><h2 class="ps-section__title" id="bd-t">Pacific is best on both price and quality</h2><span class="ps-section__sub">4 bids · technical pass mark 60</span></div>
+        <div class="ps-table-scroll"><table class="ps-matrix">
+          <thead><tr><th scope="col">Bidder</th><th scope="col">Technical</th><th scope="col">Price (₹)</th><th scope="col">vs L1</th><th scope="col">Risk</th></tr></thead>
+          <tbody>
+            <tr><td class="is-best"><strong>Pacific Packaging</strong></td><td class="is-best good">88</td><td class="is-best good">90,24,000</td><td class="is-best">L1</td><td class="is-best"><span class="ps-risk ps-risk--high"><span class="num">68</span><span class="ps-risk__bar"><i style="width:68%"></i></span>High</span></td></tr>
+            <tr><td>Greenline Packaging</td><td>82</td><td>93,40,000</td><td>+3.5%</td><td><span class="ps-risk ps-risk--low"><span class="num">24</span><span class="ps-risk__bar"><i style="width:24%"></i></span>Low</span></td></tr>
+            <tr><td>Shree Corrugators</td><td>79</td><td>95,10,000</td><td>+5.4%</td><td><span class="ps-risk ps-risk--medium"><span class="num">41</span><span class="ps-risk__bar"><i style="width:41%"></i></span>Medium</span></td></tr>
+            <tr><td>Metro Box</td><td>71</td><td>98,60,000</td><td>+9.3%</td><td><span class="ps-risk ps-risk--low"><span class="num">33</span><span class="ps-risk__bar"><i style="width:33%"></i></span>Low</span></td></tr>
+          </tbody>
+        </table></div>
+      </section>
+      <div class="ps-alert ps-alert--warning"><span class="ms" aria-hidden="true">warning</span><div><div class="ps-alert__title">Pacific Packaging is high risk on delivery</div><div class="ps-alert__text">Two late deliveries this quarter; on-time 89% against a 95% target. An improvement plan is overdue in SRM.</div><div class="ps-alert__actions"><a class="ps-btn ps-btn--secondary ps-btn--sm" href="srm.html">Open in SRM</a></div></div></div>
+      <section class="ps-section" aria-labelledby="sp-t">
+        <div class="ps-section__head"><div><h2 class="ps-section__title" id="sp-t">Try a split award</h2><p class="ps-section__sub">Second source with Greenline Packaging (L2, low risk). Changes the recommendation if you apply it.</p></div></div>
+        <div class="ps-section__body">
+          <div class="split">
+            <label for="pct" class="t-label-lg">Share to Pacific Packaging: <span id="pct-v">100%</span></label><span></span>
+            <input type="range" id="pct" min="50" max="100" step="10" value="100" aria-describedby="pct-out">
+            <span class="num t-label-lg" id="pct-out" aria-live="polite"></span>
+          </div>
+          <div class="bar2" aria-hidden="true"><i id="b1" style="background:var(--ps-cat-1)"></i><i id="b2" style="background:var(--ps-cat-3)"></i></div>
+          <div class="ps-legend"><span><i style="--c:var(--ps-cat-1)"></i>Pacific Packaging</span><span><i style="--c:var(--ps-cat-3)"></i>Greenline Packaging</span></div>
+        </div>
+      </section>
+    </div>
+
+    <aside class="ps-split__aside">
+      <section class="ps-card" aria-labelledby="dc-t">
+        <div class="ps-card__head"><h2 class="ps-card__title" id="dc-t"><span class="ms" aria-hidden="true">how_to_reg</span>Your decision</h2><span class="t-body-sm ink-3">Category Lead</span></div>
+        <div class="ps-card__body ps-stack" style="gap:12px">
+          <ol class="ps-timeline">
+            <li><span class="ps-timeline__mark ps-timeline__mark--done"><span class="ms" aria-hidden="true">check</span></span><div><div class="ps-timeline__title">Recommended · Amit Verma</div><div class="ps-timeline__meta">22 Nov</div></div></li>
+            <li><span class="ps-timeline__mark ps-timeline__mark--now"><span class="ms" aria-hidden="true">hourglass_top</span></span><div><div class="ps-timeline__title">Category Lead · you</div><div class="ps-timeline__meta">SLA 26 Nov</div></div></li>
+            <li><span class="ps-timeline__mark"><span class="ms" aria-hidden="true">more_horiz</span></span><div><div class="ps-timeline__title">Finance controller</div><div class="ps-timeline__meta">Above ₹50 L</div></div></li>
+          </ol>
+          <div class="ps-field"><label class="ps-field__label" for="cmt">Comment <span class="ps-field__opt">(required to return or reject)</span></label><textarea class="ps-textarea" id="cmt" aria-describedby="cmt-e"></textarea><span class="ps-field__error" id="cmt-e" hidden><span class="ms" aria-hidden="true">error</span>Tell the buyer what to change.</span></div>
+          <label class="ps-check"><input type="checkbox" id="coi">I have no conflict of interest with these bidders</label>
+          <span class="ps-field__error" id="coi-e" hidden><span class="ms" aria-hidden="true">error</span>Confirm the declaration to approve.</span>
+        </div>
+        <div class="ps-card__foot" style="flex-wrap:wrap"><button class="ps-btn ps-btn--danger-outline" data-act="reject">Reject</button><button class="ps-btn ps-btn--secondary" data-act="return">Return</button><button class="ps-btn ps-btn--primary" data-act="approve" id="appr">Approve award</button></div>
+      </section>
+    </aside>
+  </div>
+  <p class="t-body-sm ink-3">Sample data. Baseline ₹96,00,000.</p>
+</main>
+<script src="/assets/js/ps.js"></script>
+<script>
+{
+  const $ = id => document.getElementById(id);
+  const A = 9024000, B = 9340000;
+  const upd = () => { const p = +$('pct').value; const v = A * p / 100 + B * (100 - p) / 100; $('pct-v').textContent = p + '%'; $('b1').style.width = p + '%'; $('b2').style.width = (100 - p) + '%';
+    $('pct-out').textContent = p === 100 ? 'Single award · ₹90,24,000' : `₹${Math.round(v).toLocaleString('en-IN')} · +₹${Math.round(v - A).toLocaleString('en-IN')}`;
+    $('appr').textContent = p === 100 ? 'Approve award' : `Approve ${p}/${100 - p} split`; };
+  $('pct').addEventListener('input', upd); upd();
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-act]'); if (!b) return;
+    const a = b.dataset.act, c = $('cmt');
+    $('cmt-e').hidden = true; c.removeAttribute('aria-invalid'); $('coi-e').hidden = true;
+    if (a !== 'approve' && !c.value.trim()) { c.setAttribute('aria-invalid', 'true'); $('cmt-e').hidden = false; c.focus(); return; }
+    if (a === 'approve' && !$('coi').checked) { $('coi-e').hidden = false; $('coi').focus(); return; }
+    PS.toast({ approve: 'Award approved · sent to Finance controller', return: 'Returned to Amit Verma', reject: 'Award rejected' }[a]);
+  });
+}
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,35 @@
+{
+  "writtenAt": "2026-11-26T05:28:23Z",
+  "mode": "BUILD",
+  "intent": "new-product",
+  "summary": "Run the uploaded ProcureSprint zip with Vite and show the preview as it is: 52 pages (foundations, components, templates, screens, validation, 4 archetype templates, 42 buyer and supplier module pages, not-found), unchanged apart from Vite asset paths.",
+  "sources": [
+    {
+      "label": "procuresprint.zip",
+      "kind": "uploaded-archive",
+      "items": 92,
+      "mirror": ".ai/knowledge/uploaded-files-950927/att_940fd598d97b9286.md",
+      "status": "read-only; never modified; unpacked once into a separate empty folder and copied into this project"
+    }
+  ],
+  "confirmed": [
+    "The person wants a preview of the connected folder's HTML, then will enhance it [message]",
+    "The folder is the Procuresprint 2.0 HTML design system; README says open index.html or serve the folder [README.md]",
+    "Pages join the shell with <body data-shell=\"buyer|supplier\" data-root=\"..\" data-module=\"...\"> and relative links [README.md, assets/ps.js]",
+    "Fonts: Gilroy (if installed) then Plus Jakarta Sans from Google Fonts; icons: Material Symbols Rounded from Google Fonts [README.md, every page head]",
+    "Layout is 100% fluid; breakpoints 600 / 905 / 1240 / 1440; tested 320 to 2560 px [README.md, tokens.css]"
+  ],
+  "decisions": [
+    "Original directory structure kept at the project root (index.html, components.html, templates.html, screens.html, validation.html, modules/, templates/) so every relative link and data-root value works unchanged; vite.config.js build input extended to include modules/ and templates/.",
+    "Stylesheets moved to src/styles (tokens.css, ps.css, docs.css) and linked by absolute path so Vite bundles them; tokens.css keeps the Procuresprint tokens verbatim and appends Studio role aliases.",
+    "Shell and runtime scripts (ps.js, workbench.js, ps-charts.js) are classic scripts that share globals (window.PS, window.PAGE, window.H), so they are served verbatim from public/assets/js; converting them to ES modules would change execution order and is deferred to the enhancement phase.",
+    "The confirmed Premium Storefront template is overridden by the supplied Procuresprint design system, which the design brief makes law (see design-blueprint.direction.rationale).",
+    "Nothing in the connected folder is modified; the product is a faithful copy of the uploaded zip with path rewrites only."
+  ],
+  "deferred": [
+    "Enhancement requests (the person said they come after the preview)",
+    "Sign-in, session expiry and role guards: the prototype has no authentication; shells are chosen per page by data-shell",
+    "A typed services/api layer and openapi.yaml: every page carries its own illustrative sample data in an inline script, as the source does; moving data behind services is an enhancement, not a preview",
+    "Self-hosting Plus Jakarta Sans and Material Symbols (the source loads them from Google Fonts)"
+  ]
+}

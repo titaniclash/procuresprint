@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Item insights</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Insight. Item master BRD S10 MDM dashboard (phase 2): turnaround, queue age, first time right, duplicates prevented, data quality, requests by channel. -->
+<body data-shell="buyer" data-root=".." data-group="items" data-module="item-insights" data-crumbs="Item Master|Item insights">
+<main id="main"><p class="t-body-md ink-3" aria-busy="true">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script src="/assets/js/item-master.js"></script>
+<script src="/assets/js/item-ui.js"></script>
+<script>
+{
+  const U = IMUI, main = document.getElementById('main'), reqs = IM.db().reqs;
+  const days = (a, b) => Math.max(0, Math.round((new Date(b) - new Date(a)) / 864e5));
+  const doneNew = reqs.filter(r => r.status === 'Completed' && r.type === 'New');
+  const tat = doneNew.length ? (doneNew.reduce((a, r) => a + days(r.hist[0].at, r.hist.at(-1).at), 0) / doneNew.length) : 0;
+  const completed = reqs.filter(r => r.status === 'Completed');
+  const ftr = completed.length ? Math.round(100 * completed.filter(r => !r.hist.some(h => h.action === 'Sent back')).length / completed.length) : 0;
+  const dupes = reqs.filter(r => r.status === 'Closed – duplicate' || r.dup?.decision === 'Use existing item').length;
+  const open = reqs.filter(r => IM.stateOf(r.status) === 'In progress');
+  const dq = open.length ? Math.round(open.reduce((a, r) => a + IM.dqScore(r).score, 0) / open.length) : 0;
+  const bar = (label, n, max, href, tone) => `<a class="ps-hbar" href="${href}" style="text-decoration:none;color:inherit"><span>${U.esc(label)}</span><span class="ps-hbar__track"><i style="width:${max ? Math.round(100 * n / max) : 0}%;--c:${tone || 'var(--ps-cat-1)'}"></i></span><span class="ps-hbar__val">${n}</span></a>`;
+  const by = (list, key) => Object.entries(list.reduce((m, r) => (m[key(r)] = (m[key(r)] || 0) + 1, m), {})).sort((a, b) => b[1] - a[1]);
+  const chans = by(reqs, r => r.channel), maxC = chans[0]?.[1] || 1;
+  const STEP = [['Pending MDM', 'MDM team', 'mdm'], ['In review', 'Quality team', 'review'], ['Pending finance review', 'Finance (assets)', 'pending-finance-review'], ['Pending approval', 'Approvers', 'pending-approval'], ['Sent back', 'Requesters', 'sent-back']];
+  const steps = STEP.map(([s, who, v]) => { const l = reqs.filter(r => r.status === s), oldest = l.length ? Math.max(...l.map(r => days(r.hist.at(-1).at, IM.today()))) : 0; return { s, who, v, n: l.length, oldest, late: l.filter(r => days(r.hist.at(-1).at, IM.today()) >= 2).length }; });
+  const maxS = Math.max(1, ...steps.map(x => x.n));
+  const stat = (label, value, sub, icon, tone) => `<div class="ps-kpi ps-kpi--${tone}"><span class="ps-kpi__label"><span class="ps-kpi__icon" aria-hidden="true"><span class="ms">${icon}</span></span><span>${label}</span></span><span class="ps-kpi__value">${value}</span><span class="ps-kpi__sub">${sub}</span></div>`;
+  main.innerHTML = `<div class="ps-pagehead"><div class="ps-pagehead__text"><h1 class="t-headline">Item insights</h1><p class="ps-pagehead__meta">How fast items are created, where requests wait, and how clean the data is. Figures come from the requests in this browser.</p></div></div>
+    <section class="ps-kpis" aria-label="Key figures">${stat('Turnaround', tat.toFixed(1) + '<small>days</small>', 'New items, target under 2 days', 'timer', tat <= 2 ? 'success' : 'warning')}${stat('Right first time', ftr + '<small>%</small>', 'Completed without a send back, target 80%', 'task_alt', ftr >= 80 ? 'success' : 'warning')}${stat('Duplicates prevented', dupes, 'Existing item used instead', 'content_copy', 'info')}${stat('Data quality', dq + '<small>/ 100</small>', `Open requests, target 90`, 'verified', dq >= 90 ? 'success' : 'warning')}</section>
+    <div class="ps-grid ps-grid--2">
+      <section class="ps-section" aria-labelledby="q-t"><div class="ps-section__head"><div><h2 class="ps-section__title" id="q-t">Where requests wait</h2><p class="ps-section__sub">Open requests by step. Select a step to see them.</p></div></div><div class="ps-section__body">${steps.map(x => bar(x.who, x.n, maxS, 'item-requests.html?view=' + x.v)).join('')}
+        <div class="ps-table-scroll"><table class="ps-table"><caption class="sr-only">Queue age by step</caption><thead><tr><th>Step</th><th class="num">Waiting</th><th class="num">Oldest</th><th class="num">Past 24 h target</th></tr></thead><tbody>${steps.map(x => `<tr><td data-l="Step">${U.esc(x.who)}</td><td class="num" data-l="Waiting">${x.n}</td><td class="num" data-l="Oldest">${x.n ? x.oldest + ' d' : '—'}</td><td class="num" data-l="Past 24 h target">${x.late ? U.chip('danger', String(x.late)) : '0'}</td></tr>`).join('')}</tbody></table></div></div></section>
+      <section class="ps-section" aria-labelledby="c-t"><div class="ps-section__head"><div><h2 class="ps-section__title" id="c-t">Requests by channel</h2><p class="ps-section__sub">How requesters reach us. Target: over 40% through the Teams and Ask Me agents.</p></div></div><div class="ps-section__body">${chans.map(([c, n]) => bar(c, n, maxC, 'item-requests.html')).join('')}<p class="t-body-sm ink-3">Agent share: ${Math.round(100 * reqs.filter(r => /agent/.test(r.channel)).length / (reqs.length || 1))}% of ${reqs.length} requests.</p></div></section>
+    </div>
+    <p class="t-body-sm ink-3">Sample data saved in this browser.</p>`;
+}
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

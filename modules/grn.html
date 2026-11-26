@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Goods receipts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_a.py -->
+<body data-shell="buyer" data-root=".." data-group="procurement" data-module="grn" data-crumbs="Procurement|GRN">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+const GR = [
+  ['ASN020000013','PO-45682','Infosys BPO Ltd','24 Feb 2026','GRN-8904','50/50','posted','16.67','Excellent'],
+  ['ASN020000012','PO-45681','HP India Ltd','23 Feb 2026','—','80/100','process','',''],
+  ['ASN020000011','PO-45680','AWS India','24 Feb 2026','GRN-8902','0/10','rejected','1.00','Poor'],
+  ['ASN020000010','PO-45679','PrimeSo Materials','21 Feb 2026','GRN-8901','112/120','partial','3.33','Average'],
+  ['ASN020000009','PO-45678','Wipro Ltd','21 Feb 2026','GRN-8900','25/25','posted','14.20','Excellent'],
+  ['ASN020000008','PO-45677','Microsoft India','21 Feb 2026','GRN-8899','1/1','posted','12.80','Good'],
+  ['ASN020000007','PO-45676','TechCorp India','20 Feb 2026','DRAFT-118','0/60','draft','',''],
+  ['ASN020000006','PO-45675','Zenith Industrial Supplies','19 Feb 2026','—','0/200','awaiting','',''],
+  ['ASN020000005','PO-45674','Cobalt Logistics Ltd','19 Feb 2026','—','0/45','awaiting','',''],
+  ['ASN020000004','PO-45673','Nimbus Office Supplies','18 Feb 2026','—','0/75','awaiting','',''],
+];
+const SC = { Excellent: 'success', Good: 'info', Average: 'warning', Poor: 'danger' };
+window.PAGE = {
+  title: 'Goods receipts',
+  statuses: { posted: ['success', 'Posted'], process: ['warning', 'To process'], rejected: ['danger', 'Rejected'], partial: ['info', 'Partially posted'], draft: ['', 'Draft'], awaiting: ['', 'Awaiting receipt'] },
+  kpis: [
+    { label: 'Total receipts', value: '13', sub: '12 supplier · 1 buyer', icon: 'inventory', tone: 'info' },
+    { label: 'To be processed', value: '9', sub: 'Awaiting receipt', icon: 'pending_actions', tone: 'warning', match: 'awaiting' },
+    { label: 'GRN drafted', value: '1', sub: 'Ready to review', icon: 'edit_note', tone: 'brand', match: 'draft' },
+    { label: 'GRN processed', value: '3', sub: '1 partial · 1 rejected', icon: 'task_alt', tone: 'success', match: 'posted' },
+    { label: 'Exceptions', value: '1', sub: 'Action required', icon: 'error', tone: 'danger', match: 'rejected' },
+  ],
+  tableTitle: 'All receipt records', search: 'Search GRN, shipment, PO, or vendor…', total: 13, pages: 2,
+  create: [{ label: 'Record receipt', icon: 'add', href: 'grn-receive.html' }],
+  views: [{ label: 'All', match: '', count: 13 }, { label: 'To process', match: 'process', count: 1 }, { label: 'Draft', match: 'draft', count: 1 }, { label: 'Posted', match: 'posted', count: 3 }, { label: 'Partially posted', match: 'partial', count: 1 }, { label: 'Rejected', match: 'rejected', count: 1 }],
+  columns: [
+    { key: 'id', label: 'Shipment', sticky: true, sort: true, render: r => H.id(r.id) },
+    { key: 'po', label: 'PO Number', sort: true },
+    { key: 'vendor', label: 'Vendor', sort: true },
+    { opt: true, key: 'code', label: 'Vendor Code' },
+    { key: 'sent', label: 'Dispatched', sort: true, sortVal: r => r.id },
+    { key: 'grn', label: 'GRN Reference', render: r => H.dash(r.grn) },
+    { key: 'rcv', label: 'Received', num: true },
+    { key: 'status', label: 'Status', render: r => H.status(r) },
+    { key: 'score', label: 'Vendor Score', render: r => r.score ? `<span class="nowrap"><span class="num">${r.score}</span> · ${H.chip(SC[r.band], r.band)}</span>` : H.dash('') },
+  ],
+  bulk: ['Post selected', 'Export selected'],
+  rows: GR.map(([id, po, vendor, sent, grn, rcv, status, score, band]) => ({ id, po, vendor, code: '1084105', sent, grn, rcv, status, score, band, tags: status })),
+  rowMenu: r => [
+    { label: 'View receipt', icon: 'visibility', preview: r.id },
+    ['awaiting', 'process', 'draft'].includes(r.status) ? { label: r.status === 'draft' ? 'Continue draft' : 'Record receipt', icon: 'inventory', href: 'grn-receive.html' } : null,
+    r.status === 'rejected' ? { label: 'Raise return to vendor', icon: 'assignment_return' } : null,
+    r.grn.startsWith('GRN') ? { label: 'Download GRN', icon: 'download', toast: `${r.grn}.pdf downloaded` } : null,
+    { label: 'Rate vendor', icon: 'star' },
+    r.status === 'posted' ? '-' : null, r.status === 'posted' ? { label: 'Reverse GRN', icon: 'undo', danger: true } : null,
+  ],
+  preview: {
+    title: r => `${r.id} · ${r.vendor}`, sub: r => `${r.po} · Vendor code ${r.code}`,
+    fields: [['Dispatched', r => esc(r.sent)], ['GRN reference', r => H.dash(r.grn)], ['Received', r => esc(r.rcv)], ['Vendor score', r => r.score ? `${r.score} · ${esc(r.band)}` : H.dash('')]],
+    primary: r => ['awaiting', 'process', 'draft'].includes(r.status) ? 'Record receipt' : '', primaryHref: r => 'grn-receive.html',
+  },
+  note: 'Content from Figma “Goods receipts”. Vendor Code is 1084105 on every row in Figma.',
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

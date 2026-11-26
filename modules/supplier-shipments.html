@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shipments</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_c.py -->
+<body data-shell="supplier" data-root=".." data-group="shipments" data-module="supplier-shipments" data-crumbs="Shipments">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+window.PAGE = {
+  title: 'Shipments',
+  meta: rows => `Your advance shipping notices to Mindsprint Digital plants · ${rows.filter(r => r.status === 'transit').length} on the road`,
+  actions: [{ label: 'Create shipment notice', icon: 'add', kind: 'primary', href: 'supplier-asn-create.html' }],
+  statuses: { draft: ['', 'Draft'], transit: ['info', 'In transit', 'local_shipping'], received: ['success', 'Received'], rejected: ['danger', 'Rejected at receipt'] },
+  tiles: [
+    { label: 'Rejected at receipt', icon: 'assignment_return', tone: 'danger', match: 'rejected', meta: () => 'replace or issue credit note' },
+    { label: 'In transit', icon: 'local_shipping', tone: 'info', match: 'transit', meta: () => 'arriving this week' },
+    { label: 'Drafts', icon: 'edit_note', match: 'draft', meta: () => 'not yet sent' },
+    { label: 'Quality pass rate', icon: 'verified', static: { value: '98.2', unit: '%', meta: 'last 90 days' } },
+  ],
+  views: [{ label: 'All', match: '' }, { label: 'In transit', match: 'transit' }, { label: 'Received', match: 'received' }, { label: 'Rejected', match: 'rejected' }],
+  tableTitle: 'Shipment notices', search: 'ASN, PO', total: 22,
+  columns: [
+    { key: 'id', label: 'ASN', sticky: true, render: r => H.id(r.id) },
+    { key: 'po', label: 'PO' },
+    { key: 'to', label: 'Ship to' },
+    { key: 'disp', label: 'Dispatched' },
+    { key: 'eta', label: 'Expected' },
+    { key: 'status', label: 'Status', render: r => H.status(r) },
+  ],
+  rowAction: r => r.status === 'rejected' ? '<button class="ps-btn ps-btn--secondary ps-btn--sm" data-todo>See reason</button>' : r.status === 'draft' ? '<button class="ps-btn ps-btn--secondary ps-btn--sm" data-todo>Send</button>' : '',
+  rows: [
+    { id: 'ASN030000021', po: 'PO-2603148', to: 'Chennai plant', disp: '21 Nov', eta: '24 Nov', status: 'transit', tags: 'transit' },
+    { id: 'ASN030000016', po: 'PO-2603020', to: 'Pune plant', disp: '14 Nov', eta: '19 Nov', status: 'received', tags: 'received' },
+    { id: 'ASN030000010', po: 'PO-2602155', to: 'Pune plant', disp: '17 Nov', eta: '21 Nov', status: 'received', tags: 'received' },
+    { id: 'ASN020000009', po: 'PO-2602088', to: 'Chennai plant', disp: '10 Nov', eta: '14 Nov', status: 'rejected', tags: 'rejected' },
+    { id: 'ASN030000023', po: 'PO-2603102', to: 'Pune plant', disp: '—', eta: '—', status: 'draft', tags: 'draft' },
+  ],
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

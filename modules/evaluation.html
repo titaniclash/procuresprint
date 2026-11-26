@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evaluation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_b.py -->
+<body data-shell="buyer" data-root=".." data-group="sourcing" data-module="evaluation" data-crumbs="Sourcing|Evaluation">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+window.PAGE = {
+  title: 'Evaluation',
+  meta: rows => `${rows.filter(r => r.status !== 'done').length} events being scored · technical first, commercial envelopes open after`,
+  actions: [{ label: 'Scoring templates', icon: 'library_books' }],
+  statuses: { tech: ['info', 'Technical scoring'], commercial: ['warning', 'Commercial review'], negotiation: ['ai', 'Negotiation', 'handshake'], done: ['success', 'Recommended'] },
+  tiles: [
+    { label: 'Waiting for my scores', icon: 'edit_note', tone: 'warning', match: 'mine', meta: m => `${m.length} events · ${m.filter(r => r.tags.includes('late')).length} overdue` },
+    { label: 'Scoring overdue', icon: 'schedule', tone: 'danger', match: 'late', meta: () => 'evaluators past due date' },
+    { label: 'Ready to open commercials', icon: 'lock_open', tone: 'info', match: 'unlock', meta: () => 'all technical scores in' },
+    { label: 'Ready to recommend', icon: 'military_tech', tone: 'success', match: 'done', meta: m => `${lakh(sum(m, 'v'))} to award` },
+    { label: 'Time to evaluate', icon: 'timer', static: { value: '6.2', unit: 'days', meta: 'close of bids → recommendation' } },
+  ],
+  views: [{ label: 'All', match: '' }, { label: 'Technical', match: 'tech' }, { label: 'Commercial', match: 'commercial' }, { label: 'Negotiation', match: 'negotiation' }, { label: 'Recommended', match: 'done' }],
+  tableTitle: 'Events in evaluation', search: 'Event, supplier, evaluator', total: 9,
+  columns: [
+    { key: 'id', label: 'Event', sticky: true, render: r => H.id(r.id) },
+    { key: 't', label: 'Title', wrap: true, render: r => H.two(r.t, r.n + ' suppliers') },
+    { key: 'sc', label: 'Scores in', render: r => H.progress(Math.round(r.done / r.ev * 100), `${r.done} of ${r.ev} evaluators`) },
+    { opt: true, key: 'lead', label: 'Leading supplier', render: r => r.lead ? H.two(r.lead, r.why) : '<span class="ink-3">Sealed until technical done</span>' },
+    { key: 'v', label: 'Value (₹)', num: true, sort: true, render: r => inr(r.v) },
+    { key: 'due', label: 'Due', render: r => r.tags.includes('late') ? H.age(r.due + ' · overdue', 'late') : esc(r.due) },
+    { key: 'status', label: 'Stage', render: r => H.status(r) },
+  ],
+  rows: [
+    { id: 'ES-2025-028', t: 'Facility management, 3 plants', n: 5, ev: 4, done: 2, lead: '', why: '', v: 36000000, due: '21 Nov', status: 'tech', tags: 'tech mine late' },
+    { id: 'ES-2025-026', t: 'ESG data provider (RFI)', n: 2, ev: 3, done: 1, lead: '', why: '', v: 0, due: '28 Nov', status: 'tech', tags: 'tech mine' },
+    { id: 'RFQ-2025-636', t: 'HVAC servicing, Q4', n: 3, ev: 2, done: 2, lead: '', why: '', v: 1200000, due: '25 Nov', status: 'tech', tags: 'tech unlock' },
+    { id: 'ES-2025-024', t: 'Industrial lubricants, 2-year', n: 4, ev: 3, done: 3, lead: 'Gulf Oil Lubricants', why: 'Score 84 · 6% under budget', v: 21000000, due: '26 Nov', status: 'commercial', tags: 'commercial' },
+    { id: 'RFQ-2025-601', t: 'HR steel coils, Q1 FY27', n: 6, ev: 3, done: 3, lead: 'Kolon Industries', why: 'Best technical fit · 9% above L1', v: 77400000, due: '24 Nov', status: 'negotiation', tags: 'negotiation' },
+    { id: 'ES-2025-022', t: 'Corrugated boxes, West', n: 4, ev: 3, done: 3, lead: 'Pacific Packaging', why: 'Score 88 · L1', v: 9600000, due: '20 Nov', status: 'done', tags: 'done' },
+  ],
+  preview: {
+    title: r => `${r.id} · ${r.t}`, sub: r => `${r.n} suppliers · ${r.ev} evaluators`,
+    fields: [['Scores in', r => `${r.done} of ${r.ev}`], ['Leading', r => r.lead ? esc(r.lead) : 'Sealed'], ['Value', r => r.v ? '₹' + inr(r.v) : '—'], ['Due', r => esc(r.due)]],
+    extra: r => r.status === 'negotiation' ? `<div class="ps-ai"><div class="ps-ai__head"><span class="ms" aria-hidden="true">auto_awesome</span>Negotiation workspace ready</div><p class="ps-ai__text">Strategy, script and draft email prepared for Kolon Industries: target −5% on price, hold 21-day payment terms, request the missing financial statement.</p><div class="ps-ai__actions"><a class="ps-btn ps-btn--primary ps-btn--sm" href="negotiation.html">Open workspace</a></div></div>` : '',
+    primary: r => r.tags.includes('mine') ? 'Score now' : r.tags.includes('unlock') ? 'Open commercials' : r.status === 'done' ? 'Send to award' : 'Open evaluation',
+    primaryHref: r => r.id === 'ES-2025-028' ? 'evaluation-scoring.html' : r.id === 'RFQ-2025-601' ? 'negotiation.html' : '',
+    record: r => r.id === 'ES-2025-028' ? 'evaluation-scoring.html' : '',
+  },
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

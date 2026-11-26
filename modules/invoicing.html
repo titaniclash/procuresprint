@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invoicing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Module landing · archetype: Workbench · generated from build/pages_d.py -->
+<body data-shell="buyer" data-root=".." data-group="invoicing" data-module="invoicing" data-crumbs="Invoicing">
+<main id="main"><p class="t-body-md ink-3">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script>
+
+const IV = [
+  ['INV-9912','Nova Cloud Services','PO-8832',12000000,'18 Sep 2025','blocked','3-way match variance','Priya Nair'],
+  ['INV-9926','Aster Components','PO-8840',8000000,'20 Sep 2025','blocked','Missing goods receipt','Rohan Shah'],
+  ['INV-9940','Orbit Technologies','PO-8855',6000000,'22 Sep 2025','blocked','Tax code mismatch','Neha Patel'],
+  ['INV-9956','Nova Cloud Services','PO-8860',1800000,'25 Sep 2025','approval','','Neha Patel'],
+  ['INV-9961','Swift Logistics','PO-8871',420000,'26 Sep 2025','matched','','AP team'],
+  ['INV-9968','Shield Infotech','PO-8874',960000,'28 Sep 2025','matched','','AP team'],
+  ['INV-9972','Apex Software','PO-8878',2400000,'30 Sep 2025','scheduled','','AP team'],
+  ['INV-9975','Orbit Technologies','PO-8880',1400000,'25 Sep 2025','scheduled','','AP team'],
+  ['INV-9979','Aster Components','PO-8883',650000,'05 Sep 2025','paid','','AP team'],
+  ['INV-9981','Vertex Computing','PO-8885',310000,'02 Sep 2025','paid','','AP team'],
+];
+window.PAGE = {
+  title: 'Invoicing',
+  banner: '<div class="ps-alert" role="note"><span class="ms" aria-hidden="true">info</span><div><div class="ps-alert__title">No Figma reference</div><div class="ps-alert__text">Invoicing appears in the Figma navigation but has no screen yet. Figures reuse the CFO dashboard (₹31.2 Cr outstanding, ₹3.6 Cr blocked). Layout and actions follow the shared workbench pattern; content is representative sample data to confirm with the module owner.</div></div></div>',
+  statuses: { blocked: ['danger', 'Blocked'], approval: ['warning', 'Pending approval'], matched: ['info', 'Matched'], scheduled: ['', 'Scheduled for payment'], paid: ['success', 'Paid'] },
+  kpis: [
+    { label: 'Outstanding Invoice Liabilities', value: '₹31.2 Cr', sub: 'Unpaid posted invoices · 257', icon: 'receipt_long', tone: 'info' },
+    { label: 'Blocked', value: '₹3.6 Cr', sub: '14 invoices · match exceptions', icon: 'block', tone: 'danger', match: 'blocked' },
+    { label: 'Overdue', value: '₹8.4 Cr', sub: '75 invoices past due date', icon: 'schedule', tone: 'warning' },
+    { label: 'Due next 7 days', value: '₹6.4 Cr', sub: 'Next 30 days ₹14.2 Cr', icon: 'event', tone: 'success', match: 'scheduled' },
+  ],
+  tableTitle: 'Invoices', search: 'Invoice, PO or supplier…', total: 1024, pages: 103,
+  create: [{ label: 'Record invoice', icon: 'add' }],
+  gridActions: [{ label: 'Upload invoices', icon: 'upload_file' }],
+  views: [{ label: 'All', match: '' }, { label: 'Blocked', match: 'blocked' }, { label: 'Pending approval', match: 'approval' }, { label: 'Matched', match: 'matched' }, { label: 'Scheduled', match: 'scheduled' }, { label: 'Paid', match: 'paid' }],
+  columns: [
+    { key: 'id', label: 'Invoice', sticky: true, sort: true, render: r => H.id(r.id) },
+    { key: 'sup', label: 'Supplier', sort: true },
+    { key: 'po', label: 'PO Number' },
+    { key: 'v', label: 'Amount', num: true, sort: true, render: r => '₹ ' + inr(r.v) },
+    { key: 'due', label: 'Due date', sort: true, sortVal: r => r.id },
+    { key: 'status', label: 'Status', render: r => H.status(r) },
+    { opt: true, key: 'why', label: 'Exception', render: r => H.dash(r.why) },
+    { opt: true, key: 'owner', label: 'Owner' },
+  ],
+  bulk: ['Approve', 'Schedule payment', 'Export selected'],
+  rows: IV.map(([id, sup, po, v, due, status, why, owner]) => ({ id, sup, po, v, due, status, why, owner, tags: status })),
+  rowMenu: r => [
+    { label: 'View invoice', icon: 'visibility', preview: r.id },
+    r.status === 'blocked' ? { label: 'Resolve exception', icon: 'build' } : null,
+    r.status === 'approval' ? { label: 'Approve', icon: 'check', href: 'approvals.html' } : null,
+    r.status === 'matched' ? { label: 'Schedule payment', icon: 'event' } : null,
+    { label: 'View 3-way match', icon: 'join_inner' },
+    { label: 'Download PDF', icon: 'download', toast: `${r.id}.pdf downloaded` },
+    r.status === 'paid' ? null : '-', r.status === 'paid' ? null : { label: 'Put on hold', icon: 'pause_circle', danger: true },
+  ],
+  preview: {
+    title: r => `${r.id} · ${r.sup}`, sub: r => r.po,
+    alert: r => r.why ? `<div class="ps-alert ps-alert--danger"><span class="ms" aria-hidden="true">block</span><div><div class="ps-alert__title">${esc(r.why)}</div><div class="ps-alert__text">Owner: ${esc(r.owner)}</div></div></div>` : '',
+    fields: [['Amount', r => '₹ ' + inr(r.v)], ['Due date', r => esc(r.due)], ['Owner', r => esc(r.owner)]],
+    primary: r => r.status === 'blocked' ? 'Resolve exception' : r.status === 'approval' ? 'Approve' : '',
+  },
+};
+</script>
+<script src="/assets/js/workbench.js"></script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

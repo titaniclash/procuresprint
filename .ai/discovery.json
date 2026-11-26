@@ -1,0 +1,99 @@
+{
+  "state": "READY_TO_BUILD",
+  "confidence": 85,
+  "blueprint": {
+    "product": "ProcureSprint – a multi-page static web procurement portal (RFQs, awards, orders, shipments, goods receipt, supplier portal, administration, reports) previewed as-is.",
+    "users": [
+      "U-01 Buyer/procurement staff and administrators who run sourcing, receive goods and administer the system",
+      "U-02 Supplier who responds to RFQs, fulfils orders and ships"
+    ],
+    "problem": "The owner uploaded an existing ProcureSprint prototype and wants it run and previewed unchanged; enhancements come later.",
+    "journeys": [
+      "J-04 Follow an award through to a renewal action",
+      "J-05 Receive goods against a shipment: open ASN, GRN, Receive ASN, record quantities per line, confirm, see toast",
+      "J-06 Supplier responds to an RFQ, accepts terms, fixes errors, submits, creates a shipment notice and sees it in Shipments",
+      "J-07 Administer users, roles, master data and reports: Administration hub, Users filter and preview, Roles & Permissions, Master Data, Spend Analytics and Reports",
+      "J-01 to J-03 Other sourcing and order journeys exist in the uploaded project and are kept as-is",
+      "Run the zip with Vite and show the preview"
+    ],
+    "features": [
+      "Multi-page static HTML/CSS/JS served by Vite",
+      "Original folder layout kept (root pages, modules/, templates/)",
+      "Asset path rewrites only where Vite needs them",
+      "vite.config.js build input extended for modules/",
+      "Design tokens plus CSS custom design system, light theme",
+      "Vitest for scripts",
+      "Google Fonts and icons loaded from network",
+      "Supplier home with invitations, orders and shipments to act on",
+      "Users list with status filter and row preview",
+      "Roles and permissions",
+      "Master data management",
+      "Spend analytics and reports",
+      "ASN, GRN and Receive ASN with toast confirmation",
+      "RFQ response form with error summary and terms acceptance"
+    ],
+    "screens": [
+      "Supplier home [knowledge J-06]",
+      "Invitations / RFQ response [J-06]",
+      "Orders with Create shipment notice [J-06]",
+      "Shipments [J-06]",
+      "ASN [J-05]",
+      "GRN [J-05]",
+      "Receive ASN [J-05]",
+      "Administration hub [J-07]",
+      "Users with row preview [J-07]",
+      "Roles & Permissions [J-07]",
+      "Master Data Management [J-07]",
+      "Spend Analytics [J-07]",
+      "Reports [J-07]",
+      "Award and renewal action [J-04]"
+    ],
+    "businessRules": [],
+    "data": [
+      "User: name, email, role, status",
+      "Role: id, name, description, usersAssigned, kind",
+      "Report: id, name, area, schedule, status",
+      "Catalogue item: name, supplier, price, category"
+    ],
+    "platform": "Web, per confirmed project-setup.json (platform web, static-html, multi-page)",
+    "constraints": [
+      "Do not modify mirrored knowledge files or their sources",
+      "Preview as-is now; enhancements come next",
+      "Fonts and icons need network access"
+    ],
+    "assumptions": [
+      "Preview means pages render unchanged apart from Vite asset path rewrites",
+      "Unzip into a fresh empty directory, install dependencies, run the Vite dev server and show the preview",
+      "Screen list is partial because the knowledge excerpts were truncated; the full project files define the rest"
+    ],
+    "research": []
+  },
+  "facts": [
+    {
+      "statement": "Project setup is confirmed: web, static HTML, no backend, CSS variables, multi-page routing, custom design system",
+      "status": "confirmed",
+      "source": "procuresprint.zip project-setup.json"
+    },
+    {
+      "statement": "The user wants the zip run and previewed as-is",
+      "status": "confirmed",
+      "source": "message"
+    },
+    {
+      "statement": "Fonts and icons load from Google Fonts, so the preview needs network access",
+      "status": "confirmed",
+      "source": "procuresprint.zip"
+    },
+    {
+      "statement": "The knowledge passages were truncated, so the full journey and screen lists are not visible",
+      "status": "inferred",
+      "source": "knowledge"
+    }
+  ],
+  "conflicts": [],
+  "questions": [],
+  "researchTopics": [],
+  "at": "2026-11-26T05:23:41.794Z",
+  "asked": false,
+  "rounds": 1
+}
