@@ -98,8 +98,8 @@ if (r) {
     if (!here) return `<a class="ps-btn ps-btn--secondary" href="item-request.html?id=${U.esc(r.id)}">Open the request</a>`;
     if (ROLE === 'mdm') { const fwd = r.type === 'New' && IM.financeOn(r) ? 'Forward to finance' : IM.approvalFor(r) ? 'Forward to approver' : r.type === 'New' ? 'Approve and create item' : 'Approve and apply change';
       return b('a-reject', 'Reject', 'danger-outline') + b('a-back', 'Send back', 'secondary') + (r.review?.done ? '' : b('a-review', 'Send to review', 'secondary')) + b('a-save', 'Save changes', 'text') + b('a-fwd', fwd, 'primary'); }
-    if (ROLE === 'review') return b('a-reject', 'Reject', 'danger-outline') + b('a-back', 'Send back to requester', 'secondary') + b('a-ok', 'Approve, to MDM', 'primary');
-    if (ROLE === 'finance') return b('a-reject', 'Reject', 'danger-outline') + b('a-fback', 'Send back to MDM', 'secondary') + b('a-ffwd', IM.approvalFor(r) ? 'Forward to approver' : 'Approve and create item', 'primary');
+    if (ROLE === 'review') return b('a-reject', 'Reject', 'danger-outline') + b('a-back', 'Send back', 'secondary') + b('a-ok', 'Approve, to MDM', 'primary');
+    if (ROLE === 'finance') return b('a-reject', 'Reject', 'danger-outline') + b('a-back', 'Send back', 'secondary') + b('a-ffwd', IM.approvalFor(r) ? 'Forward to approver' : 'Approve and create item', 'primary');
     return b('a-reject', 'Reject', 'danger-outline') + b('a-back', 'Send back', 'secondary') + b('a-ok', 'Approve', 'primary');
   };
   const who = () => ({ requester: ME, mdm: 'MDM team', review: 'Quality team', finance: 'Finance (assets)', approval: r.approval?.approver || 'Approver' }[ROLE]);
@@ -114,13 +114,32 @@ if (r) {
   const decide = async (kind) => {
     const cmt = $('rem')?.value.trim() || '';
     const verb = { reject: ['Reject', `Reject ${r.id}?`, 'The requester is told why and the request ends. This cannot be undone.', true], back: ['Send back', `Send ${r.id} back?`, 'The requester changes it and submits again.', false] }[kind];
-    if (kind === 'reject' || kind === 'back') {
+    if (kind === 'back') return sendBack();
+    if (kind === 'reject') {
       const c = await U.confirm({ title: verb[1], text: verb[2], confirm: verb[0], danger: verb[3], icon: 'block', comment: { label: 'Comment', required: true }, keep: 'Keep request' }); if (!c.ok) return;
-      const map = { mdm: { reject: 'mdm-reject', back: 'mdm-sendback' }, review: { reject: 'review-reject', back: 'review-sendback' }, approval: { reject: 'appr-reject', back: 'appr-sendback' }, finance: { reject: 'fin-reject', back: 'mdm-sendback' } }[ROLE];
+      const map = { mdm: 'mdm-reject', review: 'review-reject', approval: 'appr-reject', finance: 'fin-reject' };
       if (ROLE === 'mdm') IM.act(r.id, 'mdm-save', { fields: mdmFields(), checks: checks(), remarks: cmt });
-      run(map[kind], { comment: c.comment }, () => kind === 'reject' ? `${r.id} rejected. The requester is told why` : `${r.id} sent back to ${r.requester}`);
+      run(map[ROLE], { comment: c.comment }, () => `${r.id} rejected. The requester is told why`);
     }
   };
+  /* one Send back button: asks which earlier step the request goes back to */
+  const sendBack = () => new Promise(res => {
+    const order = ['requester', 'review', 'mdm', 'finance'], mine = { review: 'review', mdm: 'mdm', finance: 'finance', approval: 'approval' }[ROLE];
+    const reached = { requester: true, review: !!r.review?.on, mdm: ['mdm', 'finance', 'approval'].includes(ROLE) || r.status !== 'In review', finance: IM.financeOn(r) && (ROLE === 'approval') };
+    const label = { requester: [r.requester + ' (requester)', 'Changes the request and submits it again'], review: ['Review · ' + (r.review?.team || 'Quality team'), 'Reviewer checks it again'], mdm: ['MDM review', 'MDM corrects the data'], finance: ['Finance, asset class', 'Finance sets the asset class again'] };
+    const list = order.filter(k => reached[k] && k !== mine && order.indexOf(k) < (mine === 'approval' ? 9 : order.indexOf(mine)));
+    const d = document.createElement('dialog'); d.className = 'ps-dialog'; d.setAttribute('aria-labelledby', 'sb-t');
+    d.innerHTML = `<form method="dialog"><div class="ps-dialog__head"><span class="ps-dialog__icon" style="background:var(--ps-warning-bg);color:var(--ps-warning-fg)"><span class="ms" aria-hidden="true">reply</span></span><h2 class="ps-dialog__title" id="sb-t">Send ${U.esc(r.id)} back</h2></div>
+      <div class="ps-dialog__body"><fieldset style="border:0;padding:0"><legend class="ps-field__label" style="margin-bottom:8px">Which step should it go back to?</legend><div class="ps-stack" style="gap:6px">${list.map((k, i) => `<label class="ps-radio"><input type="radio" name="sbto" value="${k}"${i === 0 ? ' checked' : ''}><span><strong>${U.esc(label[k][0])}</strong><br><span class="t-body-sm ink-3">${U.esc(label[k][1])}</span></span></label>`).join('')}</div></fieldset>
+      <div class="ps-field"><label class="ps-field__label" for="sb-c">Comment</label><textarea class="ps-textarea" id="sb-c" style="min-height:72px" aria-describedby="sb-e">${U.esc($('rem')?.value || '')}</textarea><span class="ps-field__error" id="sb-e" hidden><span class="ms" aria-hidden="true">error</span>This comment is mandatory (BR32).</span></div></div>
+      <div class="ps-dialog__foot"><button class="ps-btn ps-btn--text" type="button" data-no>Keep request</button><button class="ps-btn ps-btn--primary" type="submit">Send back</button></div></form>`;
+    document.body.append(d); const close = () => { d.close(); d.remove(); res(); };
+    d.querySelector('[data-no]').addEventListener('click', close); d.addEventListener('cancel', () => { d.remove(); res(); });
+    d.querySelector('form').addEventListener('submit', e => { e.preventDefault(); const c = d.querySelector('#sb-c').value.trim(); if (!c) { d.querySelector('#sb-e').hidden = false; d.querySelector('#sb-c').focus(); return; }
+      const to = d.querySelector('input[name="sbto"]:checked').value; if (ROLE === 'mdm') IM.act(r.id, 'mdm-save', { fields: mdmFields(), checks: checks(), remarks: c });
+      close(); run('sendback-to', { to, comment: c }, () => `${r.id} sent back to ${label[to][0]}`); });
+    d.showModal(); d.querySelector('input[name="sbto"]')?.focus();
+  });
   main.addEventListener('click', async e => { const id = e.target.closest('button')?.id; if (!id) return;
     if (id === 'a-reject') return decide('reject'); if (id === 'a-back') return decide('back');
     if (id === 'a-withdraw') { const c = await U.confirm({ title: `Withdraw ${r.id}?`, text: 'Approvals are reset. You can edit it and submit it again. It cancels itself after 7 days without action.', confirm: 'Withdraw request', danger: true, icon: 'undo', keep: 'Keep request', comment: { label: 'Reason', required: false } }); if (c.ok) run('withdraw', { who: ME, comment: c.comment }, () => `${r.id} withdrawn`); return; }
@@ -130,7 +149,6 @@ if (r) {
     if (id === 'a-fwd') { return run('mdm-forward', { fields: mdmFields(), checks: checks(), remarks: $('rem').value }, q => q.status === 'Completed' ? `Item ${q.itemCode || ''} created. Requester and MDM notified` : `${r.id} forwarded to ${q.status === 'Pending finance review' ? 'finance' : q.approval?.approver}`); }
     if (id === 'a-ok' && ROLE === 'review') { r.review.checks = checks(); r.review.remarks = $('rem').value; IM.save(); return run('review-approve', { remarks: $('rem').value }, () => `${r.id} approved by review, now with MDM`); }
     if (id === 'a-ok' && ROLE === 'approval') return run('appr-approve', { comment: $('rem').value }, q => `${r.id} approved. Item ${q.itemCode || 'updated'}`);
-    if (id === 'a-fback') { const c = await U.confirm({ title: `Send ${r.id} back to MDM?`, text: 'MDM corrects the data and forwards it to finance again.', confirm: 'Send back', keep: 'Keep request', comment: { label: 'Comment', required: true } }); if (c.ok) run('fin-sendback', { comment: c.comment }, () => `${r.id} sent back to MDM`); return; }
     if (id === 'a-ffwd') { ['fcls', 'flife', 'fgl'].forEach(k => U.setErr(k, '')); const p = { cls: $('fcls').value, reg: $('freg').value, life: $('flife').value, dep: $('fdep').value, gl: $('fgl').value };
       const errs = []; if (!p.cls) errs.push(['fcls', 'Choose the asset class.']); if (p.reg !== 'cwip' && !(+p.life > 0)) errs.push(['flife', 'Enter the useful life in months.']); if (!p.gl) errs.push(['fgl', 'Choose the asset GL account.']);
       if (errs.length) { errs.forEach(([k, m]) => U.setErr(k, m)); U.errsum($('errs'), errs.map(([k, m]) => ({ id: k, msg: m }))); return; }

@@ -1713,30 +1713,28 @@
     },
     {
       "id": "S-63",
-      "name": "Request by chat",
-      "route": "/modules/item-ask-me.html",
-      "file": "modules/item-ask-me.html",
-      "purpose": "Request an item in a conversation through the Ask Me or MS Teams agent, with a summary card to confirm [Item master BRD S08, Autonomy and AI Agent L2]",
-      "archetype": "conversation with summary card",
+      "name": "Item master settings",
+      "route": "/modules/item-settings.html",
+      "file": "modules/item-settings.html",
+      "purpose": "Admin settings for the item master as five tabs: field configuration, sequencing, ERP sync, audit, general [Item master BRD S11]",
+      "archetype": "admin settings with tabs",
       "shell": "buyer",
       "features": [
-        "F-17"
+        "F-19"
       ],
       "journeys": [
         "J-14"
       ],
       "states": [
-        "empty",
-        "blocked",
-        "confirmation",
         "success"
       ],
       "components": [
-        "channel switch",
-        "conversation log",
-        "duplicate buttons",
-        "summary card with Submit, Edit in portal, Cancel",
-        "what the agent does and never does"
+        "tabs",
+        "field configuration table",
+        "code format and request number",
+        "ERP sync settings and queue",
+        "audit log",
+        "workflow, duplicate, notification, timing and AI settings"
       ]
     },
     {
@@ -1760,6 +1758,35 @@
         "KPI row",
         "where requests wait bars and queue age table",
         "requests by channel bars"
+      ]
+    },
+    {
+      "id": "S-65",
+      "name": "Bulk upload results",
+      "route": "/modules/item-bulk-results.html",
+      "file": "modules/item-bulk-results.html",
+      "purpose": "Full-screen results of a bulk upload: fix rows in a side panel, duplicates view, error log, re-upload [Item master BRD S06]",
+      "archetype": "full-screen result table with side panel",
+      "shell": "buyer",
+      "features": [
+        "F-15"
+      ],
+      "journeys": [
+        "J-13"
+      ],
+      "states": [
+        "empty",
+        "validation",
+        "error",
+        "success"
+      ],
+      "components": [
+        "result KPIs as filters",
+        "views: all, need fixing, duplicates and similar, ready",
+        "row side panel with fields in error",
+        "error log download",
+        "upload again",
+        "submit valid rows"
       ]
     }
   ],

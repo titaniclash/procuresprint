@@ -127,17 +127,42 @@ describe('workflow', () => {
   });
 });
 
+describe('27 Nov walkthrough rules', () => {
+  beforeEach(() => IM.reset());
+  it('the field registry holds the 52 fields of the mapping, numbered 1 to 52', () => {
+    expect(IM.FIELDS.map((f) => f.no)).toEqual(Array.from({ length: 52 }, (_, i) => i + 1));
+  });
+  it('shows asset class and GL only for assets, GTIN only for goods', () => {
+    const f = (k) => IM.FIELDS.find((x) => x.key === k);
+    expect(IM.appliesTo(f('assetClass'), 'Asset')).toBe(true); expect(IM.appliesTo(f('assetClass'), 'Goods')).toBe(false);
+    expect(IM.appliesTo(f('gtin'), 'Goods')).toBe(true); expect(IM.appliesTo(f('gtin'), 'Service')).toBe(false);
+  });
+  it('scores completeness as fields filled of fields that apply, and rises as fields are filled', () => {
+    const r = IM.blank('New', 'Goods', 'John Doe'); const a = IM.completeness(r);
+    Object.assign(r.f, { desc: 'CABLE, USB-C, 1 M', long: 'USB-C cable', cat: 'it-net', uom: 'EA', hs: '8544.42', mfr: 'Belkin', mpn: 'C1', justification: 'Kits' });
+    const b = IM.completeness(r); expect(b.pct).toBeGreaterThan(a.pct); expect(b.total).toBe(a.total);
+    expect(IM.masterDq()).toBeGreaterThan(50);
+  });
+  it('one Send back asks for the step: approver can return a request to MDM, finance or the requester', () => {
+    const r = IM.getReq('IR26000078'); expect(r.status).toBe('Pending approval');
+    expect(IM.act(r.id, 'sendback-to', { to: 'mdm' }).ok).toBe(false);
+    expect(IM.act(r.id, 'sendback-to', { to: 'mdm', comment: 'Check the storage location' }).req.status).toBe('Pending MDM');
+    expect(IM.act(r.id, 'sendback-to', { to: 'requester', comment: 'Add the reason' }).req.status).toBe('Sent back');
+  });
+});
+
 describe('the Item master screens', () => {
   const item = screens.filter((s) => s.file.startsWith('modules/item-'));
-  it('twelve screens are registered, built, and cite features and journeys', () => {
-    expect(item).toHaveLength(12);
+  it('thirteen screens are registered, built, and cite features and journeys', () => {
+    expect(item).toHaveLength(13);
     for (const s of item) { expect(exists(s.file)).toBe(true); expect(s.features.length).toBeGreaterThan(0); expect(s.journeys.length).toBeGreaterThan(0); }
   });
-  it('the admin configuration screen is not built', () => {
-    expect(item.some((s) => /admin|settings/i.test(s.name))).toBe(false);
+  it('the admin configuration screen is built (27 Nov) and Request by chat stays in Teams', () => {
+    expect(item.some((s) => /settings/i.test(s.name))).toBe(true);
+    expect(item.some((s) => /by chat/i.test(s.name))).toBe(false);
   });
   it('the sidebar has an Item Master group pointing at them', () => {
     const js = read('public/assets/js/ps.js');
-    for (const h of ['item-requests', 'item-master', 'item-bulk-upload', 'item-ask-me', 'item-insights']) expect(js).toContain(`modules/${h}.html`);
+    for (const h of ['item-requests', 'item-master', 'item-bulk-upload', 'item-settings', 'item-insights']) expect(js).toContain(`modules/${h}.html`);
   });
 });

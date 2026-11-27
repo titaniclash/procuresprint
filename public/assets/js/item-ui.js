@@ -37,5 +37,12 @@
 
   const errsum = (el, errs) => { el.innerHTML = `<span class="ms" aria-hidden="true">error</span><div><div class="ps-alert__title">${errs.length} ${errs.length === 1 ? 'thing needs' : 'things need'} attention</div><ul>${errs.map(e => `<li><a href="#${esc(e.id)}">${esc(e.msg)}</a></li>`).join('')}</ul></div>`; el.hidden = false; el.focus(); };
   const qs = new URLSearchParams(location.search);
-  window.IMUI = { esc, fmtDate, age, chip, statusChip, itemChip, typeChip, num, money, field, options, setErr, timeline, history, confirm, errsum, qs };
+  /* Title Case for labels, buttons, tabs and headings on Item master screens (27 Nov: fix the casing across screens). Data values are never touched. */
+  const SMALL = new Set(['a', 'an', 'and', 'as', 'at', 'by', 'for', 'from', 'in', 'into', 'of', 'on', 'or', 'per', 'the', 'to', 'vs', 'via', 'with']);
+  const tc = t => t.replace(/[A-Za-z][A-Za-z']*/g, (w, i) => (i > 0 && SMALL.has(w.toLowerCase())) || /[A-Z]/.test(w.slice(1)) ? w : w[0].toUpperCase() + w.slice(1));
+  const CASE_SEL = '.ps-topbar__h1, .ps-topbar h1, .ps-crumbs li, .ps-btn, .ps-tab, .ps-section__title, .ps-field__label, .ps-table th, .ps-kpi__label, .ps-dialog__title, .ps-drawer__title, .ps-dl dt, .ps-alert__title, .ps-pagehead h1, .ps-step__text, .ps-ai__head, .ps-menu [role="menuitem"], .im-actions strong, .ps-actionbar__sum span, .t-title-sm, .t-title-md';
+  const caseFix = root => root.querySelectorAll?.(CASE_SEL).forEach(el => { const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, { acceptNode: n => n.parentElement.closest('.ms, .ps-field__opt, .ps-step__sub, .ps-count, code, .im-fno, .im-aibtn, .ps-chip') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT }); let n; while ((n = w.nextNode())) { const v = tc(n.nodeValue); if (v !== n.nodeValue) n.nodeValue = v; } });
+  if (document.body.dataset.group === 'items') { let q = false; const run = () => { q = false; caseFix(document.body); }; new MutationObserver(() => { if (!q) { q = true; requestAnimationFrame(run); } }).observe(document.body, { childList: true, subtree: true }); document.addEventListener('DOMContentLoaded', run); setTimeout(run, 0); }
+
+  window.IMUI = { tc, caseFix, esc, fmtDate, age, chip, statusChip, itemChip, typeChip, num, money, field, options, setErr, timeline, history, confirm, errsum, qs };
 }
