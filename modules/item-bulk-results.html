@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bulk upload results</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=swap">
+<link rel="stylesheet" href="/src/styles/tokens.css">
+<link rel="stylesheet" href="/src/styles/ps.css">
+</head>
+<!-- Detail · Full-screen results of a bulk upload. Every row with its result; click a row to fix it in a side panel (fields with errors in red), save without uploading again;
+     duplicates and similar items view; error log with the reason per row; re-upload; submit valid rows. -->
+<body data-shell="buyer" data-root=".." data-group="items" data-module="item-bulk-results" data-crumbs="Item Master|Bulk upload|Results">
+<main id="main"><p class="t-body-md ink-3" aria-busy="true">Loading…</p></main>
+<script src="/assets/js/ps.js"></script>
+<script src="/assets/js/item-master.js"></script>
+<script src="/assets/js/item-ui.js"></script>
+<script src="/assets/js/item-bulk.js"></script>
+<script>
+{
+  const U = IMUI, B = IMB, main = document.getElementById('main'), ME = 'Karthik Subramanian', $ = id => document.getElementById(id);
+  const saved = B.store.load();
+  if (!saved) { main.innerHTML = `<div class="ps-state"><div class="ps-state__art"><span class="ms" aria-hidden="true">upload_file</span></div><div class="ps-state__title">No upload to show</div><p class="ps-state__text">Upload a file first. Its results open here.</p><a class="ps-btn ps-btn--primary" href="item-bulk-upload.html">Open bulk upload</a></div>`; }
+  else {
+    const A = saved.action, COLS = B.COLS[A], act = B.ACTIONS[A];
+    let rows = saved.rows.map(x => B.check(A, x.rec, x.n)), view = 'all', open = null;
+    const STATE = { ready: ['success', 'Ready', 'check'], similar: ['warning', 'Similar item', 'content_copy'], duplicate: ['danger', 'Duplicate', 'block'], error: ['danger', 'Error', 'error'] };
+    const cnt = s => rows.filter(x => s === 'all' || x.state === s || (s === 'dups' && ['similar', 'duplicate'].includes(x.state)) || (s === 'fix' && ['error', 'duplicate'].includes(x.state))).length;
+    const shown = () => rows.filter(x => view === 'all' || (view === 'fix' ? ['error', 'duplicate'].includes(x.state) : view === 'dups' ? ['similar', 'duplicate'].includes(x.state) : x.state === view));
+    const persist = () => B.store.save({ ...saved, rows: rows.map(x => ({ n: x.n, rec: x.rec })) });
+    const key = A === 'create' ? ['short_description', 'item_type', 'category', 'plant'] : A === 'update' ? ['item_code', 'short_description', 'tax_code', 'standard_price'] : A === 'extend' ? ['item_code', 'plant', 'storage_location'] : A === 'block' ? ['item_code', 'action'] : ['item_code', 'replacement_item'];
+    const table = () => { const list = shown();
+      if (view === 'dups') return `<div class="ps-table-scroll"><table class="ps-table"><caption class="sr-only">Duplicates and similar items</caption><thead><tr><th>Row</th><th>Your item</th><th>Matches</th><th>Result</th><th></th></tr></thead><tbody>${list.map(x => `<tr class="im-click" data-row="${x.n}"><td data-l="Row">${x.n}</td><td data-l="Your item"><strong>${U.esc(x.label)}</strong><div class="t-body-sm ink-3">${U.esc(x.type)}</div></td><td data-l="Matches">${x.dup.map(m => `<div><a href="item-record.html?code=${U.esc(m.code)}" data-stop>${U.esc(m.code)}</a> · ${U.esc(m.desc)} · <strong>${m.pct}%</strong> <span class="t-body-sm ink-3">${U.esc(m.rule)}</span></div>`).join('') || '—'}</td><td data-l="Result">${U.chip(...STATE[x.state])}</td><td><button type="button" class="ps-btn ps-btn--text ps-btn--sm" data-row="${x.n}">Review</button></td></tr>`).join('') || '<tr><td colspan="5" class="ink-3">No duplicates or similar items.</td></tr>'}</tbody></table></div>`;
+      return `<div class="ps-table-scroll"><table class="ps-table"><caption class="sr-only">Rows</caption><thead><tr><th class="col-sticky">Row</th>${key.map(k => `<th>${k.replace(/_/g, ' ')}</th>`).join('')}<th>Result</th><th>What to fix</th><th class="col-actions"><span class="sr-only">Open</span></th></tr></thead><tbody>${list.map(x => `<tr class="im-click" data-row="${x.n}"><td class="col-sticky" data-l="Row">${x.n}</td>${key.map(k => { const bad = x.errs.some(e => e.col === k); return `<td data-l="${k}"${bad ? ' class="im-errcell"' : ''}>${U.esc(B.v(x.rec, k)) || '<span class="ink-3">—</span>'}${bad ? ' <span class="ms" aria-label="Error">error</span>' : ''}</td>`; }).join('')}<td data-l="Result">${U.chip(...STATE[x.state])}</td><td data-l="What to fix" class="t-body-sm">${x.errs.length ? `<span class="im-bad">${U.esc(x.errs.map(e => e.msg).join('. '))}</span>` : x.warn.length ? U.esc(x.warn[0].msg) : '<span class="ink-3">Nothing</span>'}</td><td class="col-actions"><button type="button" class="ps-iconbtn ps-iconbtn--sm" data-row="${x.n}" aria-label="Open row ${x.n}"><span class="ms" aria-hidden="true">chevron_right</span></button></td></tr>`).join('') || `<tr><td colspan="${key.length + 4}" class="ink-3">No rows in this view.</td></tr>`}</tbody></table></div>`; };
+    const draw = () => { const ok = rows.filter(x => ['ready', 'similar'].includes(x.state)).length;
+      main.innerHTML = `<div class="ps-pagehead"><div class="ps-pagehead__text"><a class="ps-back" href="item-bulk-upload.html?action=${A}"><span class="ms" aria-hidden="true">arrow_back</span>Bulk upload</a><h1 class="t-headline">Results · ${U.esc(act.label)}</h1><p class="ps-pagehead__meta">${U.esc(saved.file)} · ${rows.length} rows · checked ${new Date(saved.at).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}. Click a row to fix it here; no need to upload again.</p></div><div class="ps-pagehead__actions"><a class="ps-btn ps-btn--secondary" href="item-bulk-upload.html?action=${A}"><span class="ms" aria-hidden="true">upload_file</span>Upload again</a><button type="button" class="ps-btn ps-btn--secondary" id="dl-err"${rows.some(x => x.errs.length || x.warn.length) ? '' : ' disabled'}><span class="ms" aria-hidden="true">download</span>Error log</button></div></div>
+        <section class="ps-kpis" aria-label="Upload results">${[['Rows', rows.length, 'In the file', 'table_rows', 'info', 'all'], ['Ready', cnt('ready'), 'Pass every check', 'check', 'success', 'ready'], ['Similar items', cnt('similar'), 'MDM confirms them', 'content_copy', 'warning', 'similar'], ['Need fixing', cnt('fix'), 'Errors and exact duplicates', 'error', 'danger', 'fix']].map(([l, v, s, i, t, m]) => `<button class="ps-kpi ps-tile ps-kpi--${t}" type="button" aria-pressed="${view === m}" data-view="${m}"><div class="ps-kpi__head"><span class="ps-kpi__label">${l}</span><span class="ps-kpi__icon"><span class="ms" aria-hidden="true">${i}</span></span></div><div class="ps-kpi__value">${v}</div><div class="ps-kpi__sub">${s}</div></button>`).join('')}</section>
+        <section class="ps-section ps-tablecard"><div class="ps-tabs" role="tablist" aria-label="Views">${[['all', 'All rows'], ['fix', 'Need fixing'], ['dups', 'Duplicates and similar'], ['ready', 'Ready']].map(([m, l]) => `<button class="ps-tab" type="button" role="tab" aria-selected="${view === m}" data-view="${m}">${l} <span class="ps-count">${cnt(m)}</span></button>`).join('')}</div>${table()}</section>
+        <div class="ps-actionbar"><div class="ps-actionbar__sum"><div><span>Rows</span><b>${rows.length}</b></div><div><span>Ready to submit</span><b>${ok}</b></div><div><span>Need fixing</span><b>${cnt('fix')}</b></div></div><div class="ps-actionbar__btns"><button type="button" class="ps-btn ps-btn--primary" id="submit"${ok ? '' : ' disabled'}>Submit ${ok} ${ok === 1 ? 'row' : 'rows'}</button></div></div>`; };
+
+    /* side panel: fields of one row, errors in red, fix and save */
+    const panel = document.createElement('dialog'); panel.className = 'ps-drawer'; panel.id = 'rowpanel'; panel.setAttribute('aria-labelledby', 'rp-t'); document.body.append(panel);
+    const openRow = n => { const x = rows.find(r => r.n === n); if (!x) return; open = n; const err = c => x.errs.find(e => e.col === c), wrn = c => x.warn.find(e => e.col === c);
+      const ctl = c => { const k = c === 'action' ? 'action' : c, val = B.v(x.rec, c); if (B.LISTS[k]) return `<select class="ps-select" id="rf-${c}" data-col="${c}"><option value="">—</option>${B.LISTS[k].map(o => `<option${o === val ? ' selected' : ''}>${U.esc(o)}</option>`).join('')}${val && !B.LISTS[k].includes(val) ? `<option selected>${U.esc(val)}</option>` : ''}</select>`; return /long|justification/.test(c) ? `<textarea class="ps-textarea" id="rf-${c}" data-col="${c}" style="min-height:64px">${U.esc(val)}</textarea>` : `<input class="ps-input" id="rf-${c}" data-col="${c}" value="${U.esc(val)}">`; };
+      const order = [...COLS].sort((a, b) => (err(b[0]) ? 1 : 0) - (err(a[0]) ? 1 : 0));
+      panel.innerHTML = `<div class="ps-drawer__head"><div style="flex:1"><h2 class="ps-drawer__title" id="rp-t">Row ${x.n} · ${U.esc(x.label)}</h2><p class="t-body-sm ink-3">${x.errs.length ? x.errs.length + ' ' + (x.errs.length === 1 ? 'field needs' : 'fields need') + ' fixing. They are shown first, in red.' : 'Passes every check.'}</p></div>${U.chip(...STATE[x.state])}<button class="ps-iconbtn" type="button" data-close aria-label="Close row"><span class="ms" aria-hidden="true">close</span></button></div>
+        <div class="ps-drawer__body">${x.dup.length ? `<div class="ps-alert ps-alert--${x.state === 'duplicate' ? 'danger' : 'warning'}" role="note"><span class="ms" aria-hidden="true">content_copy</span><div><div class="ps-alert__title">${x.state === 'duplicate' ? 'Exact duplicate' : 'Similar items'}</div><div class="ps-alert__text">${x.dup.map(m => `<a href="item-record.html?code=${U.esc(m.code)}">${U.esc(m.code)}</a> ${U.esc(m.desc)} · ${m.pct}%`).join('<br>')}${x.state === 'duplicate' ? '<br>Change the row so it is a different item, or remove it and extend the existing item.' : ''}</div></div></div>` : ''}
+          <div class="ps-stack" style="gap:12px">${order.map(([c, no, w, m]) => { const e = err(c), wn = wrn(c); return `<div class="ps-field${e ? ' im-field-err' : ''}"><label class="ps-field__label" for="rf-${c}">${no ? `<span class="im-fno">${no}</span>` : ''}${c.replace(/_/g, ' ')}${m ? '' : ' <span class="ps-field__opt">(optional)</span>'}</label>${ctl(c)}${e ? `<span class="ps-field__error"><span class="ms" aria-hidden="true">error</span>${U.esc(e.msg)}</span>` : wn ? `<span class="ps-field__help im-warn">${U.esc(wn.msg)}</span>` : `<span class="ps-field__help">${U.esc(w)}</span>`}</div>`; }).join('')}</div></div>
+        <div class="ps-drawer__foot"><button class="ps-btn ps-btn--text" type="button" id="rp-del">Remove row</button><button class="ps-btn ps-btn--secondary" type="button" id="rp-next">Next to fix</button><button class="ps-btn ps-btn--primary" type="button" id="rp-save">Save and check</button></div>`;
+      if (!panel.open) panel.showModal(); (panel.querySelector('.im-field-err .ps-input, .im-field-err .ps-select, .im-field-err .ps-textarea') || panel.querySelector('[data-close]')).focus(); };
+    const saveRow = () => { const x = rows.find(r => r.n === open); panel.querySelectorAll('[data-col]').forEach(el => { x.rec[el.dataset.col] = el.value; }); const y = B.check(A, x.rec, x.n); rows = rows.map(r => r.n === open ? y : r); persist(); draw(); return y; };
+    panel.addEventListener('click', e => { if (e.target.closest('#rp-save')) { const y = saveRow(); PS.toast(y.errs.length ? `Row ${y.n} still has ${y.errs.length} ${y.errs.length === 1 ? 'issue' : 'issues'}` : `Row ${y.n} is ${y.state === 'similar' ? 'ready, MDM checks the similar item' : 'ready'}`, { error: !!y.errs.length }); openRow(y.n); }
+      if (e.target.closest('#rp-next')) { saveRow(); const nx = rows.find(r => r.n > open && r.errs.length) || rows.find(r => r.errs.length); if (nx) openRow(nx.n); else { panel.close(); PS.toast('No more rows to fix'); } }
+      if (e.target.closest('#rp-del')) { rows = rows.filter(r => r.n !== open); persist(); panel.close(); draw(); PS.toast('Row removed from this upload'); } });
+
+    main.addEventListener('click', e => { if (e.target.closest('[data-stop]')) return; const v = e.target.closest('[data-view]'); if (v) { view = v.dataset.view; draw(); return; }
+      const r = e.target.closest('[data-row]'); if (r) { openRow(+r.dataset.row); return; }
+      if (e.target.closest('#dl-err')) { const bad = rows.filter(x => x.errs.length || x.warn.length); B.download(`item-${A}-error-log.csv`, B.csvLine(['row', 'result', 'reason', ...COLS.map(c => c[0])]) + '\n' + bad.map(x => B.csvLine([x.n, STATE[x.state][1], [...x.errs, ...x.warn].map(e => `${e.col}: ${e.msg}`).join('; '), ...COLS.map(c => x.rec[c[0]] || '')])).join('\n')); PS.toast(`${bad.length} rows written to the error log, with the reason per row`); }
+      if (e.target.closest('#submit')) { const ok = rows.filter(x => ['ready', 'similar'].includes(x.state)); let made = 0; ok.forEach(x => { if (B.submitRow(A, x, ME)) made++; }); rows = rows.filter(x => !ok.includes(x)); persist(); PS.toast(`${made} item requests created from the upload${rows.length ? '. ' + rows.length + ' rows left to fix' : ''}`); setTimeout(() => { location.href = rows.length ? location.href : 'item-requests.html?view=mdm'; }, 1000); } });
+    draw(); const first = U.qs.get('row'); if (first) openRow(+first);
+  }
+}
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

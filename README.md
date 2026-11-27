@@ -37,20 +37,20 @@ tests/                    Vitest checks: links resolve, every page is complete, 
 
 ## Item Master
 
-Built from the Item Master BRD pack (v5, 26 Nov 2026) and its prototype. The admin configuration screen (BRD S11) is left out; every setting it would hold is fixed at the BRD default.
+Built from the Item Master BRD pack (v5, 26 Nov 2026) and its prototype, revised after the 26 Nov walkthrough (tracker of 27 Nov): one-page request form with all 52 fields, AI per field and OCR, change requests started from the item record, bulk actions with a full-screen results page, single Send back with a step choice, the Ask Me frame, and the admin settings screen (BRD S11). Request by chat stays in MS Teams and is no longer built here.
 
 | Page | What it does |
 |---|---|
-| `modules/item-requests.html` | Tracker, MDM worklist and In review queue |
-| `modules/item-request-new.html` | One form for New, Update, Extend and Block, Unblock, Inactivate, with the similar-item panel and AI suggestions |
+| `modules/item-requests.html` | Tracker, MDM worklist and In review queue; AI command bar that works without Ask Me; Item master data quality KPI; Request ID column frozen |
+| `modules/item-request-new.html` | One page. New item: all 52 fields shown or greyed by item type, live data quality, AI per field, create from a document, image upload, workflow journey, approval chain, summary pop-up on submit. Update, Extend, Block, Unblock and Inactivate open from the item record |
 | `modules/item-request.html` | One request: workflow, activity, withdraw, resubmit, created item |
 | `modules/item-mdm-review.html`, `item-review.html`, `item-finance-review.html`, `item-approval.html` | The MDM, quality review, asset class and approval steps |
-| `modules/item-master.html`, `item-record.html` | Search the items and open one |
-| `modules/item-bulk-upload.html` | CSV upload with row checks and an error file |
-| `modules/item-ask-me.html` | Request by chat (Ask Me or MS Teams agent) |
+| `modules/item-master.html`, `item-record.html` | Search the items and open one; Update, Extend, Block and Inactivate are buttons at the top right; every field shown by section |
+| `modules/item-bulk-upload.html`, `item-bulk-results.html` | Choose create, update, extend, block or inactivate; Excel template with every field and dropdowns; upload or create from supplier documents; loader with live counts; full-screen results with a fix-in-place side panel, duplicates view and error log |
+| `modules/item-settings.html` | Admin: Item Field Configuration, Item Sequencing, Item ERP Sync, Item Management Audit, General Settings |
 | `modules/item-insights.html` | Turnaround, right first time, queue age, channels |
 
-The sample items and requests, the workflow rules, the duplicate check and the data quality score live in `public/assets/js/item-master.js` (`window.IM`). They are saved in this browser under the key `ps-im-v1`; use More, Reset sample data on Item requests to start again. To connect a real API, replace the functions on `IM` (`act`, `saveRequest`, `dupCheck`, `getReq`, `getItem`) with service calls.
+The 52-field registry, the sample items and requests, the workflow rules, the duplicate check and the data quality score live in `public/assets/js/item-master.js` (`window.IM`). They are saved in this browser under the key `ps-im-v1`; use More, Reset sample data on Item requests to start again. To connect a real API, replace the functions on `IM` (`act`, `saveRequest`, `dupCheck`, `getReq`, `getItem`) with service calls.
 
 ## Install, run, test, build
 

@@ -313,14 +313,19 @@
       "file": "modules/item-bulk-upload.html"
     },
     {
-      "path": "/modules/item-ask-me.html",
+      "path": "/modules/item-settings.html",
       "screen": "S-63",
-      "file": "modules/item-ask-me.html"
+      "file": "modules/item-settings.html"
     },
     {
       "path": "/modules/item-insights.html",
       "screen": "S-64",
       "file": "modules/item-insights.html"
+    },
+    {
+      "path": "/modules/item-bulk-results.html",
+      "screen": "S-65",
+      "file": "modules/item-bulk-results.html"
     }
   ],
   "components": [
@@ -385,7 +390,8 @@
         "S-61",
         "S-62",
         "S-63",
-        "S-64"
+        "S-64",
+        "S-65"
       ]
     },
     {
@@ -498,7 +504,8 @@
         "S-61",
         "S-62",
         "S-63",
-        "S-64"
+        "S-64",
+        "S-65"
       ]
     },
     {
@@ -580,7 +587,8 @@
         "S-61",
         "S-62",
         "S-63",
-        "S-64"
+        "S-64",
+        "S-65"
       ]
     },
     {
@@ -650,7 +658,8 @@
         "S-61",
         "S-62",
         "S-63",
-        "S-64"
+        "S-64",
+        "S-65"
       ]
     },
     {
@@ -727,7 +736,8 @@
         "S-61",
         "S-62",
         "S-63",
-        "S-64"
+        "S-64",
+        "S-65"
       ]
     },
     {
@@ -745,7 +755,8 @@
         "S-61",
         "S-62",
         "S-63",
-        "S-64"
+        "S-64",
+        "S-65"
       ]
     },
     {
@@ -763,7 +774,8 @@
         "S-61",
         "S-62",
         "S-63",
-        "S-64"
+        "S-64",
+        "S-65"
       ]
     },
     {

@@ -58,7 +58,7 @@
     item({ code: 'G-100623', desc: 'CHAIR, ERGONOMIC, MESH BACK', long: 'Ergonomic task chair, mesh back, adjustable lumbar support and armrests.', type: 'Goods', cat: 'off-fur', uom: 'EA', mfr: 'Featherlite', mpn: 'FL-ERG-2', price: 8750, lead: 6, status: 'Active', plants: [plant('PNQ1')], created: '2026-11-24', history: [d('2026-11-24', 'MDM team', 'Item created', 'From IR26000073')] }),
   ];
 
-  const fld = o => ({ desc: '', long: '', cat: '', uom: '', hs: '', mfr: '', mpn: '', gtin: '', country: '', hazard: 'None', plants: [], storage: '', tax: '', gl: '', price: '', cur: 'INR', lead: '', moq: '', catalog: true, qi: false, justification: '', priority: 'Medium', needBy: '', attachments: [], ...o });
+  const fld = o => ({ desc: '', long: '', cat: '', uom: '', hs: '', mfr: '', mpn: '', gtin: '', country: '', hazard: 'None', plants: [], storage: '', tax: '', gl: '', price: '', cur: 'INR', lead: '', moq: '', catalog: true, qi: false, justification: '', priority: 'Medium', needBy: '', attachments: [], image: '', matType: '', svcType: '', assetClass: '', life: '', weight: '', pack: '', sustain: '', attrs: '', ...o });
   const REQS = [
     { id: 'IR26000081', type: 'New', itemType: 'Asset', requester: 'John Doe', channel: 'Portal form', status: 'Pending MDM', created: '2026-11-25', f: fld({ desc: 'LAPTOP, LENOVO THINKPAD T14, 16GB', long: '14 inch Lenovo ThinkPad T14, Intel Core i7, 16 GB RAM, 512 GB SSD, for new joiners in Chennai.', cat: 'it-lap', uom: 'EA', hs: '8471.30', mfr: 'Lenovo', mpn: '21HD0013', country: 'China', plants: ['CHN1'], gl: '520100', tax: 'GST 18%', price: 98500, justification: 'Twelve new joiners in Chennai in December need laptops.', needBy: '2026-12-02', attachments: ['T14-datasheet.pdf'] }), dup: { checked: true, matches: ['A-200118'], decision: 'Not a duplicate', reason: 'Different MPN and destination plant.' }, mdmChecks: [1, 1, 1, 1, 0], hist: [d('2026-11-25', 'John Doe', 'Submitted'), d('2026-11-25', 'System', 'Checks passed', 'Similar item A-200118 noted, requester gave a reason')] },
     { id: 'IR26000080', type: 'New', itemType: 'Goods', requester: 'Anna Reddy', channel: 'Teams agent', status: 'Completed', created: '2026-11-24', itemCode: 'G-100330', erp: '10004102', f: fld({ desc: 'GLOVES, NITRILE, SIZE M, BOX 100', long: 'Disposable nitrile examination gloves, powder free, size M, box of 100.', cat: 'ppe-glv', uom: 'BX', hs: '4015.19', mfr: '3M India', mpn: 'NG-M-100', plants: ['CHN1'], storage: 'WH01', gl: '530200', tax: 'GST 18%', price: 640, justification: 'Replenish stores gloves.', needBy: '2026-11-28' }), dup: { checked: true, matches: [] }, mdmChecks: [1, 1, 1, 1, 1], hist: [d('2026-11-24', 'Anna Reddy', 'Submitted'), d('2026-11-24', 'MDM team', 'Forwarded'), d('2026-11-25', 'System', 'Item created', 'G-100330, ERP 10004102')] },
@@ -165,6 +165,60 @@
     return { score, missing, goodMissing: gm, checks: cd };
   };
 
+
+  /* ---------- field registry: the 52 fields of the Item Master field mapping v4 (Pranav's list) ----------
+     [no, section, label, key, filled by (req requester · mdm · fin finance · sys system), applies to (All · GA goods+asset · G · S · A), level (M mandatory · G good · O okay), phase] */
+  const FIELDS = [
+    [1, 'Request', 'Request number', 'reqNo', 'sys', 'All', 'M'], [2, 'Request', 'Request type', 'reqType', 'req', 'All', 'M'], [3, 'Request', 'Requested by', 'requester', 'sys', 'All', 'M'],
+    [4, 'Request', 'Company and plants', 'plants', 'req', 'All', 'M'], [5, 'Request', 'Business justification', 'justification', 'req', 'All', 'M'], [6, 'Request', 'Channel', 'channel', 'sys', 'All', 'G'],
+    [7, 'Request', 'Attachments', 'attachments', 'req', 'All', 'G'], [8, 'Request', 'Priority', 'priority', 'req', 'All', 'G'], [9, 'Request', 'Required by', 'needBy', 'req', 'All', 'G'],
+    [10, 'Basic data', 'Item type', 'itemType', 'req', 'All', 'M'], [11, 'Basic data', 'Material type', 'matType', 'mdm', 'GA', 'G'], [12, 'Basic data', 'Short description', 'desc', 'req', 'All', 'M'],
+    [13, 'Basic data', 'Long description and specification', 'long', 'req', 'All', 'M'], [14, 'Basic data', 'Material category', 'cat', 'req', 'All', 'M'], [15, 'Basic data', 'UNSPSC code', 'unspsc', 'sys', 'All', 'G'],
+    [16, 'Basic data', 'Material group', 'matGroup', 'sys', 'All', 'O'], [17, 'Basic data', 'Base unit of measure', 'uom', 'req', 'All', 'M'], [18, 'Basic data', 'Manufacturer', 'mfr', 'req', 'GA', 'G'],
+    [19, 'Basic data', 'Manufacturer part number', 'mpn', 'req', 'GA', 'G'], [20, 'Basic data', 'Attributes and specifications', 'attrs', 'req', 'GA', 'G', 'P1'], [21, 'Basic data', 'Item image', 'image', 'req', 'GA', 'O'],
+    [22, 'Basic data', 'Material code (CPN)', 'cpn', 'sys', 'All', 'M'], [23, 'Basic data', 'ERP material code', 'erp', 'sys', 'All', 'G'], [24, 'Basic data', 'Item and request status', 'status', 'sys', 'All', 'M'],
+    [25, 'Basic data', 'Country of origin', 'country', 'req', 'GA', 'G'], [26, 'Basic data', 'GTIN or barcode', 'gtin', 'req', 'G', 'O', 'P1'], [27, 'Basic data', 'Weight and dimensions', 'weight', 'mdm', 'GA', 'O', 'P1'],
+    [28, 'Basic data', 'Packaging type', 'pack', 'mdm', 'G', 'O', 'P1'], [29, 'Basic data', 'Multi-language description', 'lang', 'mdm', 'All', 'O', 'P2'], [30, 'Compliance and quality', 'Hazard class and SDS', 'hazard', 'req', 'G', 'G'],
+    [31, 'Compliance and quality', 'Quality inspection at receipt', 'qi', 'req', 'GA', 'G'], [32, 'Compliance and quality', 'Sustainability attributes', 'sustain', 'req', 'GA', 'O', 'P1'], [33, 'Tax and finance', 'HSN, SAC or HS code', 'hs', 'req', 'All', 'M'],
+    [34, 'Tax and finance', 'Default tax code', 'tax', 'req', 'All', 'G'], [35, 'Tax and finance', 'Account assignment', 'accAssign', 'sys', 'All', 'M'], [36, 'Tax and finance', 'Default GL account', 'gl', 'mdm', 'All', 'G'],
+    [37, 'Tax and finance', 'Standard price', 'price', 'req', 'All', 'G'], [38, 'Tax and finance', 'Currency', 'cur', 'req', 'All', 'G'], [39, 'Tax and finance', 'Price basis', 'priceBasis', 'sys', 'All', 'M'],
+    [40, 'Procurement data', 'Lead time (days)', 'lead', 'req', 'GA', 'G'], [41, 'Procurement data', 'Minimum order quantity', 'moq', 'req', 'G', 'O'], [42, 'Procurement data', 'Catalogue eligible', 'catalog', 'req', 'All', 'G'],
+    [43, 'Service', 'Service type', 'svcType', 'req', 'S', 'G', 'P1'], [44, 'Asset', 'Asset class', 'assetClass', 'fin', 'A', 'M'], [45, 'Asset', 'Useful life (months)', 'life', 'fin', 'A', 'G'],
+    [46, 'Plant data', 'Storage location', 'storage', 'req', 'GA', 'M'], [47, 'Lifecycle', 'Alternate or substitute item', 'alternates', 'mdm', 'G', 'O', 'P1'], [48, 'Lifecycle', 'Replacement item (when inactive)', 'replacement', 'mdm', 'All', 'O', 'P1'],
+    [49, 'MDM control', 'Duplicate and similar item check', 'dup', 'sys', 'All', 'M'], [50, 'MDM control', 'MDM remarks', 'mdmRemarks', 'mdm', 'All', 'M'], [51, 'MDM control', 'Approval history', 'apprHist', 'sys', 'All', 'M'],
+    [52, 'MDM control', 'Data quality score', 'dq', 'sys', 'All', 'G'],
+  ].map(([no, sec, label, key, who, applies, level, phase]) => ({ no, sec, label, key, who, applies, level, phase: phase || 'P0' }));
+  const appliesTo = (fd, type) => fd.applies === 'All' || (fd.applies === 'GA' && type !== 'Service') || (fd.applies === 'G' && type === 'Goods') || (fd.applies === 'S' && type === 'Service') || (fd.applies === 'A' && type === 'Asset');
+  const SVC_TYPES = { repair: 'Repair', maint: 'Maintenance', install: 'Installation', calib: 'Calibration', consult: 'Consulting', other: 'Other' };
+  const MAT_TYPES = { cons: 'Consumable', spare: 'Spare part', raw: 'Raw material', trade: 'Trading good', capex: 'Capital good' };
+  const PACKS = { box: 'Box', carton: 'Carton', bag: 'Bag', drum: 'Drum', pallet: 'Pallet', each: 'Loose, each' };
+
+  /* request completeness: applicable fields of the 52 that hold a value now (system fields count when the system has set them) */
+  const reqFieldVal = (r, k) => { const f = r.f, c = CATS[f.cat];
+    switch (k) { case 'reqNo': return r.submitted ? r.id : ''; case 'reqType': return r.type; case 'requester': return r.requester; case 'channel': return r.channel; case 'itemType': return r.itemType;
+      case 'unspsc': case 'matGroup': return c ? c.unspsc : ''; case 'cpn': return r.itemCode || ''; case 'erp': return r.erp || ''; case 'status': return r.status;
+      case 'accAssign': case 'priceBasis': return r.itemType; case 'dup': return r.dup?.checked || (f.desc || '').length >= 4 ? 'checked' : ''; case 'mdmRemarks': return r.mdmRemarks || '';
+      case 'apprHist': return (r.hist || []).some(h => /Approved/.test(h.action)) ? 'yes' : ''; case 'dq': return 'live'; case 'catalog': return 'set'; case 'qi': return 'set'; case 'cur': return f.cur || '';
+      case 'assetClass': return r.fin?.cls || f.assetClass; case 'life': return r.fin?.life || f.life; case 'lang': return ''; case 'alternates': return ''; case 'replacement': return r.replacement || '';
+      default: return f[k]; } };
+  const completeness = r => { const list = FIELDS.filter(fd => appliesTo(fd, r.itemType)); const done = list.filter(fd => filled(reqFieldVal(r, fd.key))).length; return { done, total: list.length, pct: Math.round(100 * done / list.length) }; };
+  /* item master data quality: the same 52-field count on a live item record */
+  const itemFieldVal = (it, k) => { const c = CATS[it.cat] || {};
+    return { reqNo: 'x', reqType: 'x', requester: 'x', plants: it.plants, justification: 'x', channel: 'x', attachments: it.docs, priority: 'x', needBy: 'x', itemType: it.type, matType: it.matType, desc: it.desc, long: it.long, cat: it.cat, unspsc: c.unspsc, matGroup: c.unspsc, uom: it.uom, mfr: it.mfr, mpn: it.mpn, attrs: it.attrs, image: it.image, cpn: it.code, erp: it.erp, status: it.status, country: it.country, gtin: it.gtin, weight: it.weight, pack: it.pack, lang: '', hazard: it.hazard, qi: 'x', sustain: it.sustain, hs: c.hs, tax: it.plants[0]?.tax, accAssign: 'x', gl: c.gl, price: it.price || '', cur: it.cur, priceBasis: 'x', lead: it.lead || '', moq: it.moq || '', catalog: 'x', svcType: it.svcType, assetClass: it.assetClass, life: it.life || '', storage: it.plants[0]?.storage, alternates: it.alternates, replacement: it.replacement, dup: 'x', mdmRemarks: 'x', apprHist: it.history, dq: 'x' }[k]; };
+  const itemDq = it => { const list = FIELDS.filter(fd => appliesTo(fd, it.type)); const done = list.filter(fd => filled(itemFieldVal(it, fd.key))).length; return { done, total: list.length, pct: Math.round(100 * done / list.length) }; };
+  const masterDq = () => { const live = db.items.filter(i => i.status !== 'Inactive'); return live.length ? Math.round(live.reduce((a, i) => a + itemDq(i).pct, 0) / live.length) : 0; };
+
+  /* approval criteria table (from the approval module) used to show the chain before submit */
+  const CRITERIA = [
+    { rule: 'Hazardous item (any value)', when: 'Goods with a hazard class', approver: 'Deepa Krishnan', role: 'HSE approver' },
+    { rule: 'Asset above USD 5,000', when: 'Item type Asset, price over USD 5,000', approver: 'Vikram Sen', role: 'Finance controller' },
+    { rule: 'Asset (any value)', when: 'Item type Asset, up to USD 5,000', approver: 'Category owner', role: 'From the category' },
+    { rule: 'Goods above USD 5,000', when: 'Goods or service, price over USD 5,000', approver: 'Category owner', role: 'From the category' },
+    { rule: 'Critical field changed (BR42)', when: 'Update to tax, unit, category, asset class or description', approver: 'Vikram Sen', role: 'Finance controller' },
+    { rule: 'Block, Unblock or Inactivate', when: 'Any lifecycle change', approver: 'Nirmala Bhat', role: 'Compliance approver' },
+    { rule: 'Extend a hazardous item', when: 'Extend request for a hazardous item', approver: 'Deepa Krishnan', role: 'HSE approver' },
+  ];
+
   /* ---------- routing helpers ---------- */
   const usd = f => f.cur === 'USD' ? Number(f.price) || 0 : (Number(f.price) || 0) / USD_INR;
   const reviewRule = r => REVIEW_CATS.includes(r.f.cat) && r.type === 'New' ? { on: true, rule: 'Category = Food ingredients', team: 'Quality team' } : null;
@@ -235,6 +289,11 @@
       case 'discard': if (!['Draft', 'Withdrawn', 'Sent back'].includes(S)) return bad('Only a draft, withdrawn or sent back request can be discarded.'); r.status = 'Cancelled'; log(r, r.requester, 'Discarded'); return done();
       case 'review-approve': r.review.done = true; r.review.remarks = p.remarks ?? r.review.remarks; r.status = 'Pending MDM'; log(r, who, 'Review approved', r.review.remarks); return done();
       case 'review-sendback': case 'mdm-sendback': case 'appr-sendback': { const m = need(c, 'Add a comment. It is mandatory when you send a request back (BR32).'); if (m) return bad(m); r.status = 'Sent back'; log(r, who, 'Sent back', c); return done(); }
+      case 'sendback-to': { const m = need(c, 'Add a comment. It is mandatory when you send a request back (BR32).'); if (m) return bad(m);
+        const to = { requester: 'Sent back', review: 'In review', mdm: 'Pending MDM', finance: 'Pending finance review' }[p.to]; if (!to) return bad('Choose the step to send it back to.');
+        if (p.to === 'review') { r.review = { ...(r.review || { on: true, rule: 'Sent back by ' + who, team: 'Quality team', checks: [0, 0, 0, 0] }), done: false }; }
+        if (p.to === 'finance' && r.fin) r.fin.done = false; r.approval = p.to === 'requester' ? null : r.approval; r.status = to;
+        log(r, who, p.to === 'requester' ? 'Sent back' : 'Sent back to ' + { review: 'review', mdm: 'MDM', finance: 'finance' }[p.to], c); return done(); }
       case 'review-reject': case 'mdm-reject': case 'fin-reject': case 'appr-reject': { const m = need(c, 'Add a comment. It is mandatory when you reject a request (BR32).'); if (m) return bad(m); r.status = 'Rejected'; log(r, who, 'Rejected', c); return done(); }
       case 'mdm-review': if (r.review?.done) return bad('This request has already been reviewed.'); r.review = { on: true, rule: 'Sent by MDM (BR47)', team: 'Quality team', checks: [0, 0, 0, 0], remarks: c || '' }; r.status = 'In review'; log(r, who, 'Sent to review', c || ''); return done();
       case 'mdm-save': Object.assign(r.f, p.fields || {}); if (p.checks) r.mdmChecks = p.checks; if (p.remarks != null) r.mdmRemarks = p.remarks; return done();
@@ -271,5 +330,5 @@
   };
 
   window.IM = { db: () => db, reset, save, today, getReq, getItem, saveRequest, blank, act, validate, dupCheck, suggest, dqScore, approvalFor, financeOn, steps, norm, sim, gtinOk,
-    CATS, PLANTS, UOM, ASSET_CLASSES, STATUS, ITEM_STATUS, stateOf, DQ_MIN, LIMIT_USD, MAND, GOOD, newItemCode: nextCode, usd };
+    CATS, PLANTS, UOM, ASSET_CLASSES, FIELDS, appliesTo, completeness, reqFieldVal, itemDq, masterDq, CRITERIA, SVC_TYPES, MAT_TYPES, PACKS, STATUS, ITEM_STATUS, stateOf, DQ_MIN, LIMIT_USD, MAND, GOOD, newItemCode: nextCode, usd };
 }

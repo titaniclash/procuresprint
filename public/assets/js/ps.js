@@ -41,9 +41,9 @@
         { id: 'items', label: 'Item Master', icon: 'inventory_2', items: [
           { id: 'item-requests', label: 'Item requests', href: 'modules/item-requests.html', also: ['item-request-new', 'item-request', 'item-mdm-review', 'item-review', 'item-finance-review', 'item-approval'] },
           { id: 'item-master', label: 'Item master', href: 'modules/item-master.html', also: ['item-record'] },
-          { id: 'item-bulk-upload', label: 'Bulk upload', href: 'modules/item-bulk-upload.html' },
-          { id: 'item-ask-me', label: 'Request by chat', href: 'modules/item-ask-me.html' },
-          { id: 'item-insights', label: 'Item insights', href: 'modules/item-insights.html' } ] },
+          { id: 'item-bulk-upload', label: 'Bulk upload', href: 'modules/item-bulk-upload.html', also: ['item-bulk-results'] },
+          { id: 'item-insights', label: 'Item insights', href: 'modules/item-insights.html' },
+          { id: 'item-settings', label: 'Item master settings', href: 'modules/item-settings.html' } ] },
         { id: 'mdm', label: 'Master Data Management', icon: 'dns', href: 'modules/mdm.html' },
         { id: 'admin', label: 'Administration', icon: 'admin_panel_settings', href: 'modules/administration.html' },
       ],
@@ -178,15 +178,28 @@
     /* "/" focuses global search */
   }
 
+  /* Ask Me: the AI-native S2P frame (black and red) with starter prompts. Item master pages get item starters. */
   function assistant() {
     const d = document.createElement('dialog');
-    d.className = 'ps-drawer'; d.id = 'ps-assistant'; d.setAttribute('aria-labelledby', 'ps-assistant-title');
-    d.innerHTML = `<div class="ps-drawer__head"><span class="ms ms--fill" style="color:var(--ps-ai-fg)" aria-hidden="true">auto_awesome</span><div style="flex:1"><h2 class="ps-drawer__title" id="ps-assistant-title">Assistant</h2><p class="t-body-sm ink-3">Answers from your Procuresprint data. Always check before you act.</p></div><button class="ps-iconbtn" type="button" data-close aria-label="Close assistant"><span class="ms" aria-hidden="true">close</span></button></div>
-      <div class="ps-drawer__body"><div class="ps-chat">
-        <div class="ps-chat__msg ps-chat__msg--me">Which approved PRs have been waiting longest for a PO?</div>
-        <div class="ps-chat__msg ps-chat__msg--ai">Three approved PRs are older than 7 days without a PO: <strong>PR-2025-00114</strong> (₹10,00,000, 9 days), <strong>PR-2025-00115</strong> (₹75,000, 8 days) and <strong>PR-2025-00116</strong> (₹18,00,000, 7 days). Two have a preferred supplier with a live contract, so you can raise POs directly.<div class="ps-chat__cite ps-ai-tag"><span class="ms" aria-hidden="true">link</span>From PR Workbench · 3 records</div></div>
-      </div></div>
-      <div class="ps-drawer__foot" style="justify-content:stretch"><label class="sr-only" for="ps-ask">Ask the assistant</label><input class="ps-input" id="ps-ask" placeholder="Ask about PRs, suppliers, spend…" style="flex:1"><button class="ps-btn ps-btn--primary" type="button" aria-label="Send"><span class="ms" aria-hidden="true">send</span></button></div>`;
+    d.className = 'ps-drawer im-askme'; d.id = 'ps-assistant'; d.setAttribute('aria-labelledby', 'ps-assistant-title');
+    const items = body.dataset.group === 'items';
+    const S = items ? [['upload_file', 'Bulk upload new items', 'item-bulk-upload.html?action=create', 'Open bulk upload. Download the template, fill one row per item, upload it, and I check every row for you.'],
+      ['edit_note', 'Bulk update items', 'item-bulk-upload.html?action=update', 'Open bulk update. The template has the item code plus only the fields you want to change.'],
+      ['add_circle', 'Create an item', 'item-request-new.html', 'Open a new item request. Type what you need or drop a supplier PDF and I fill the fields.'],
+      ['add_location', 'Extend an item to a plant', 'item-master.html?pick=Extend', 'Open the item master. Pick the item, then Extend to plant.'],
+      ['reply', 'Show my requests that were sent back', 'item-requests.html?view=sent-back', 'One request is waiting for you. Opening the list.'],
+      ['fact_check', 'How good is our item data?', 'item-requests.html', 'Item master data quality is shown on the Item requests page, with the fields most often missing.']]
+      : [['receipt_long', 'Which approved PRs are waiting for a PO?', '', 'Three approved PRs are older than 7 days without a PO: PR-2025-00114, PR-2025-00115 and PR-2025-00116.'], ['groups', 'Find suppliers for a category', '', 'Tell me the category and region and I search supplier scout.'], ['upload_file', 'Bulk upload items', 'item-bulk-upload.html', 'Opening bulk upload.']];
+    const root = body.dataset.root || '..';
+    d.innerHTML = `<div class="ps-drawer__head"><span class="im-askme__logo"><span class="ms" aria-hidden="true">smart_toy</span></span><div style="flex:1"><h2 class="ps-drawer__title" id="ps-assistant-title">Ask Me</h2><p class="t-body-sm">Your procurement agent. It acts on your data; always check before you confirm.</p></div><button class="ps-iconbtn" type="button" data-close aria-label="Close Ask Me"><span class="ms" aria-hidden="true">close</span></button></div>
+      <div class="ps-drawer__body"><div class="ps-chat" id="ps-ask-chat"><div class="ps-chat__msg ps-chat__msg--ai">Hi${body.dataset.user ? ' ' + esc(body.dataset.user) : ''}. What should we do${items ? ' with the item master' : ''} today?</div></div>
+        <div class="im-askme__starters" id="ps-ask-starters" aria-label="Starter prompts">${S.map((x, i) => `<button type="button" data-ask="${i}"><span class="ms" aria-hidden="true">${x[0]}</span>${esc(x[1])}</button>`).join('')}</div></div>
+      <div class="ps-drawer__foot" style="justify-content:stretch"><label class="sr-only" for="ps-ask">Ask me</label><input class="ps-input" id="ps-ask" placeholder="Ask or tell me what to do…" style="flex:1"><button class="ps-btn ps-btn--primary" type="button" id="ps-ask-send" aria-label="Send"><span class="ms" aria-hidden="true">send</span></button></div>`;
+    const chat = d.querySelector('#ps-ask-chat');
+    const add = (me, html) => { const m = document.createElement('div'); m.className = 'ps-chat__msg ps-chat__msg--' + (me ? 'me' : 'ai'); m.innerHTML = html; chat.append(m); m.scrollIntoView({ block: 'nearest' }); };
+    const answer = x => { add(true, esc(x[1])); setTimeout(() => add(false, esc(x[3]) + (x[2] ? `<div class="ps-chat__cite"><a href="${root}/modules/${x[2]}" style="color:inherit">Open it <span class="ms" aria-hidden="true">arrow_forward</span></a></div>` : '')), 250); };
+    d.addEventListener('click', e => { const b = e.target.closest('[data-ask]'); if (b) answer(S[+b.dataset.ask]); if (e.target.closest('#ps-ask-send')) { const q = d.querySelector('#ps-ask'); const v = q.value.trim(); if (!v) return; const hit = S.find(x => x[1].toLowerCase().split(' ').filter(w => w.length > 3).some(w => v.toLowerCase().includes(w))); q.value = ''; hit ? answer([hit[0], v, hit[2], hit[3]]) : (add(true, esc(v)), setTimeout(() => add(false, 'I can help with that. Try one of the starters, or be more specific about the item, plant or request.'), 250)); } });
+    d.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.id === 'ps-ask') { e.preventDefault(); d.querySelector('#ps-ask-send').click(); } });
     return d;
   }
 

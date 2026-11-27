@@ -23,6 +23,8 @@
   const n = m => rows.filter(r => r.tags.split(' ').includes(m)).length;
   window.PAGE = {
     title: 'Item master',
+    banner: (() => { const q = IMUI.qs, pick = q.get('pick'), miss = q.get('missing'); if (!pick && !miss) return '';
+      return `<div class="ps-alert ps-alert--info" role="status"><span class="ms" aria-hidden="true">${miss ? 'search_off' : 'ads_click'}</span><div><div class="ps-alert__title">${miss ? 'No item has the code ' + IMUI.esc(miss) : 'Open the item you want to ' + IMUI.esc({ Update: 'update', Extend: 'extend', Block: 'block', Unblock: 'unblock', Inactivate: 'inactivate' }[pick] || 'change')}</div><div class="ps-alert__text">${miss ? 'Search by code, description or part number below.' : 'Update, Extend to plant, Block and Inactivate are buttons at the top right of every item.'}</div></div></div>`; })(),
     meta: () => `${rows.length} items · one code for every plant, search by code, ERP code, description, part number or barcode`,
     statuses: IM.ITEM_STATUS,
     kpis: [
